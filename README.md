@@ -1,9 +1,12 @@
+# Morphaway
 # 
 
 Das leere Gerüst um eine App aufzubauen.
 
 ## Autor
 
-Samuel Wehrli (wehs@zhaw.ch)
+Chiara Nauli (naulichi@students.zhaw.ch),
+Katarina Djuric (djurikat@students.zhaw.ch),
+Kirisha Tharmaratnam (tharmkir@students.zhaw.ch)
 
 
