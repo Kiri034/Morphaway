@@ -1,7 +1,8 @@
 # Morphaway
-# 
+ 
 
-Das leere Gerüst um eine App aufzubauen.
+## App beschreibung:
+
 
 ## Autor
 
