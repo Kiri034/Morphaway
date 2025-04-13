@@ -26,6 +26,7 @@ Neue Ideen:
 Neue Probleme:
 -	Schwierigkeiten dabei, alle Zellen auf eine Seite zu bringen mit Handy-Display
 -	Fehlen an Knowhow bei Installation von Cellcounter
+- (später) grosse Datenmenge beim Laden der Differenzierungsseiten, Zell-Icons JPEG's
 
 ### fertiges Wireframe, nach Änderungen und Fehlerüberarbeitung
 ![fertiges Wireframe](https://github.com/Kiri034/Morphaway/blob/45c85dc829e46301f68b9a91d696b6ed84e5201f/Bilder/Wireframe_Morphaway_v3.jpg)
