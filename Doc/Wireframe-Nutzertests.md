@@ -2,6 +2,7 @@
 
 !!(Zwischenstand)!!
 
+![Wireframe mit Feedback aus Nutzertest]()
 *Was war gut?*
 -	Logische Reihenfolge
 -	Passendes Design
@@ -24,4 +25,4 @@ Einteilung wäre besser in: Leukozyten, Zellbeurteilung und Leukozyten und Zellb
 
 *Neue Probleme:*
 
-![fertiges Wireframe](https://zhaw-my.sharepoint.com/:i:/r/personal/naulichi_students_zhaw_ch/Documents/AA_BMLD/2.%20Semester/Informatik%202/Morphaway%20Dokumente/Bilder/Wireframe_Morphaway_v3.jpg?csf=1&web=1&e=LzV86z)
+![fertiges Wireframe](https://github.com/Kiri034/Morphaway/blob/45c85dc829e46301f68b9a91d696b6ed84e5201f/Bilder/Wireframe_Morphaway_v3.jpg)
