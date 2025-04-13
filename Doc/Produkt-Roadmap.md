@@ -2,4 +2,4 @@
 Dieses Dokument beschreibt die Funktionen der App und den Verlauf der Entwicklung.
 
 ## Bild
-![Roadmap](./Screenshot%202025-04-13%20162247.png)
+![Roadmap](https://github.com/Kiri034/Morphaway/issues/1#issue-2991339861)
