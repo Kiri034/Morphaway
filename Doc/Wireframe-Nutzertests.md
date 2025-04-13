@@ -1,29 +1,30 @@
 # Wireframe-Nutzertest
 
-!!(Zwischenstand)!!
+###Wireframe mit Feedback aus Nutzertest
+![Wireframe mit Feedback aus Nutzertest](https://github.com/Kiri034/Morphaway/blob/160cef76a5beb80409597eee22342cf79020f8d5/Bilder/Wireframe_Morphaway_mitFeedback.png){ width="600" height="400" }
 
-![Wireframe mit Feedback aus Nutzertest](https://github.com/Kiri034/Morphaway/blob/160cef76a5beb80409597eee22342cf79020f8d5/Bilder/Wireframe_Morphaway_mitFeedback.png){ width=600px height=400px }
-
-*Was war gut?*
+Was war gut?
 -	Logische Reihenfolge
 -	Passendes Design
 -	Logische Symbole; es war klar, was wo zu finden war.
 -	Übersichtlich
 -	Die meisten nötigen Tools vorhanden
 
-*Was war schlecht?*
+Was war schlecht?
 -	Pfeil von Morphaway-Titelblatt zu User page fehlte
 -	Beim Hauptmenü:
-•	Button für Cellscanner fehlt
 •	Einteilung unklar
 -	Total Cellcount auf Leukozytenseite; wie viele Zellen bisher differenziert worden sind
+-	Button für Cellscanner fehlt
 
-*Neue Ideen:*
+Neue Ideen:
 -	Hauptmenü:
-Einteilung wäre besser in: Leukozyten, Zellbeurteilung und Leukozyten und Zellbeurteilung, da so bei der Zellbeurteilung die Erythrozyten, die Thrombozyten und die Leukozyten beurteilt werden können. Zudem: Auswahl, ob 100 oder 200 Leukozyten differenziert werden sollen
+•	Einteilung wäre besser in: Leukozyten, Zellbeurteilung und Leukozyten und Zellbeurteilung, da so bei der Zellbeurteilung die Erythrozyten, die Thrombozyten und die Leukozyten beurteilt werden können. Zudem: Auswahl, ob 100 oder 200 Leukozyten differenziert werden sollen
 -	Aufgrund des obengenannten Punkts auch Anpassung der Folgeseiten:
 •	Eine Seite für Leukozytendifferenzierung, eine Seite für Leukozytenbeurteilung und eine Seite für Beurteilung von Erythrozyten und Thrombozyten
 
-*Neue Probleme:*
+Neue Probleme:
+-	Schwierigkeiten dabei, alle Zellen auf eine Seite zu bringen mit Handy-Display
+-	Fehlen an Knowhow bei Installation von Cellcounter
 
 ![fertiges Wireframe](https://github.com/Kiri034/Morphaway/blob/45c85dc829e46301f68b9a91d696b6ed84e5201f/Bilder/Wireframe_Morphaway_v3.jpg)
