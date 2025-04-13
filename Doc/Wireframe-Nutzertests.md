@@ -2,7 +2,7 @@
 
 !!(Zwischenstand)!!
 
-![Wireframe mit Feedback aus Nutzertest]()
+![Wireframe mit Feedback aus Nutzertest](https://github.com/Kiri034/Morphaway/blob/160cef76a5beb80409597eee22342cf79020f8d5/Bilder/Wireframe_Morphaway_mitFeedback.png)
 *Was war gut?*
 -	Logische Reihenfolge
 -	Passendes Design
