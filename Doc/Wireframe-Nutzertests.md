@@ -1,7 +1,7 @@
 # Wireframe-Nutzertest
 
-###Wireframe mit Feedback aus Nutzertest
-![Wireframe mit Feedback aus Nutzertest](https://github.com/Kiri034/Morphaway/blob/160cef76a5beb80409597eee22342cf79020f8d5/Bilder/Wireframe_Morphaway_mitFeedback.png){ width="600" height="400" }
+### Wireframe mit Feedback aus Nutzertest
+![Wireframe mit Feedback aus Nutzertest](https://github.com/Kiri034/Morphaway/blob/160cef76a5beb80409597eee22342cf79020f8d5/Bilder/Wireframe_Morphaway_mitFeedback.png){ width=600 height=400 }
 
 Was war gut?
 -	Logische Reihenfolge
