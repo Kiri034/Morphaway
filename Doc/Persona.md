@@ -1,3 +1,3 @@
 # Persona
 
-![Persona](https://zhaw-my.sharepoint.com/:i:/r/personal/naulichi_students_zhaw_ch/Documents/AA_BMLD/2.%20Semester/Informatik%202/Morphaway%20Dokumente/Bilder/Persona_Morphaway.png?csf=1&web=1&e=dHXANF)
+![Persona](https://github.com/Kiri034/Morphaway/blob/ee8985ff94e36b04621d97ed1f0b99cab10c82fd/Bilder/Persona_Morphaway.png)
