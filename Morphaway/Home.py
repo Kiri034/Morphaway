@@ -22,9 +22,9 @@ def history_page():
     st.write("Hier kannst du die Historie einsehen.")
     st.write("Funktionalität wird noch hinzugefügt.")
 
-# Sidebar-Navigation
+# Sidebar-Navigation mit Dropdown-Menü
 st.sidebar.title("Navigation")
-page = st.sidebar.radio("Seite auswählen", ["Home", "Cell Counter", "History"])
+page = st.sidebar.selectbox("Seite auswählen", ["Home", "Cell Counter", "History"])
 
 # Inhalte basierend auf der Auswahl anzeigen
 if page == "Home":
