@@ -23,7 +23,7 @@ def history_page():
     st.write("Funktionalität wird noch hinzugefügt.")
 
 # Sidebar-Navigation
-st.sidebar.title("Navigation")
+st.sidebar.title("Morphaway")
 page = st.sidebar.radio("Seite auswählen", ["Home", "Cell Counter", "History"])
 
 # Inhalte basierend auf der Auswahl anzeigen
