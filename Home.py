@@ -8,6 +8,6 @@ st.write("Während deiner Differenzierung kannst du deine gefundenen Zellen zäh
 st.write("Um direkt mit Deiner Differenzierung loszulegen, drücke auf den unteren Knopf. Für andere Funktionen kannst Du die Sidebar benutzen.")
 
 if st.button("Zum Cell-Counter"):
-    st.experimental_set_query_params(page="Cell-Counter")
+    st.query_params(page="Cell-Counter")
     st.write("Du wirst zum Cell-Counter weitergeleitet...")
 
