@@ -3,9 +3,9 @@ import streamlit as st
 st.title("Cell Counter")
 
 # Auswahlmöglichkeit für die Funktionalität
-option = st.selectbox(
+option = st.radio(
     "Wähle eine Funktion:",
-    ["50 Zellen differenzieren", "100 Zellen differenzieren", "200 Zellen differenzieren", "Zellbeurteilung"]
+    ["50 Zellen differenzieren", "100 Zellen differenzieren", "200 Zellen differenzieren"]
 )
 
 # Inhalte basierend auf der Auswahl anzeigen
@@ -18,6 +18,3 @@ elif option == "100 Zellen differenzieren":
 elif option == "200 Zellen differenzieren":
     st.write("Du hast ausgewählt: 200 Zellen differenzieren.")
     st.write("Hier kannst du die Funktionalität für das Differenzieren von 200 Zellen hinzufügen.")
-elif option == "Zellbeurteilung":
-    st.write("Du hast ausgewählt: Zellbeurteilung.")
-    st.write("Hier kannst du die Funktionalität für die Zellbeurteilung hinzufügen.")
