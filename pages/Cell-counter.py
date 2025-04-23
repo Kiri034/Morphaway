@@ -2,6 +2,8 @@ import streamlit as st
 
 st.title("Cell Counter")
 
+praep_name = st.text_input(" Gib einen Namen für das Präparat ein:")
+
 # Auswahlmöglichkeit für die Funktionalität
 option = st.radio(
     "Wähle eine Funktion:",
