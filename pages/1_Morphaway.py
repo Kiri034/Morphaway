@@ -37,19 +37,19 @@ images = [
     {"path": "https://via.placeholder.com/150?text=Button+3", "label": "Eosinophil"},
     {"path": "https://via.placeholder.com/150?text=Button+4", "label": "Basophil"},
     {"path": "https://via.placeholder.com/150?text=Button+5", "label": "Segmentkernige Granulozyten"},
-    {"path": "https://via.placeholder.com/150?text=Button+5", "label": "Stabkernige Granulozyten"},
-    {"path": "https://via.placeholder.com/150?text=Button+6", "label": "Erythroblast"},
-    {"path": "https://via.placeholder.com/150?text=Button+7", "label": "Blasten"},
-    {"path": "https://via.placeholder.com/150?text=Button+8", "label": "Promyelozyt"},
-    {"path": "https://via.placeholder.com/150?text=Button+9", "label": "Myelozyt"},
-    {"path": "https://via.placeholder.com/150?text=Button+10", "label": "Metamyelozyt"},
-    {"path": "https://via.placeholder.com/150?text=Button+11", "label": "reactive Lymphozyt"},
-    {"path": "https://via.placeholder.com/150?text=Button+12", "label": "Abnormale Lymphozyten"},
-    {"path": "https://via.placeholder.com/150?text=Button+13", "label": "Large granular lymphocyte"},
-    {"path": "https://via.placeholder.com/150?text=Button+14", "label": "NRBC"},
-    {"path": "https://via.placeholder.com/150?text=Button+15", "label": "Mastzelle"},
-    {"path": "https://via.placeholder.com/150?text=Button+16", "label": "Plasmazelle"},
-    {"path": "https://via.placeholder.com/150?text=Button+17", "label": "smudged cells"},   
+    {"path": "https://via.placeholder.com/150?text=Button+6", "label": "Stabkernige Granulozyten"},
+    {"path": "https://via.placeholder.com/150?text=Button+7", "label": "Erythroblast"},
+    {"path": "https://via.placeholder.com/150?text=Button+8", "label": "Blasten"},
+    {"path": "https://via.placeholder.com/150?text=Button+9", "label": "Promyelozyt"},
+    {"path": "https://via.placeholder.com/150?text=Button+10", "label": "Myelozyt"},
+    {"path": "https://via.placeholder.com/150?text=Button+11", "label": "Metamyelozyt"},
+    {"path": "https://via.placeholder.com/150?text=Button+12", "label": "reactive Lymphozyt"},
+    {"path": "https://via.placeholder.com/150?text=Button+13", "label": "Abnormale Lymphozyten"},
+    {"path": "https://via.placeholder.com/150?text=Button+14", "label": "Large granular lymphocyte"},
+    {"path": "https://via.placeholder.com/150?text=Button+15", "label": "NRBC"},
+    {"path": "https://via.placeholder.com/150?text=Button+16", "label": "Mastzelle"},
+    {"path": "https://via.placeholder.com/150?text=Button+17", "label": "Plasmazelle"},
+    {"path": "https://via.placeholder.com/150?text=Button+18", "label": "smudged cells"},   
 ]
 
 # Anordnung der Buttons in mehreren Reihen
@@ -61,4 +61,3 @@ for idx, image in enumerate(images):
         if st.button(image["label"]):
             st.session_state[f"button_{idx + 1}_count"] += 1
         st.image(image["path"], caption=image["label"], use_column_width=True)
-        st.write(f"Geklickt: {st.session_state[f'button_{idx + 1}_count']} Mal")
