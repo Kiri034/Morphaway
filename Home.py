@@ -8,4 +8,4 @@ st.write("Während deiner Differenzierung kannst du deine gefundenen Zellen zäh
 st.write("Um direkt mit Deiner Differenzierung loszulegen, drücke auf den unteren Knopf. Für andere Funktionen kannst Du die Sidebar benutzen.")
 
 # Button zur Navigation zu Morphaway.py
-st.link_button("Jetzt differenzieren", "Morphaway.py")
+st.link_button("Jetzt differenzieren", "https://morphaway.streamlit.app/~/+/Morphaway")
