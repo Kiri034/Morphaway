@@ -25,6 +25,8 @@ else:
 for i in range(1, 19):  # 18 Bilder
     if f"button_{i}_count" not in st.session_state:
         st.session_state[f"button_{i}_count"] = 0
+    if f"button_{i}_clicked" not in st.session_state:
+        st.session_state[f"button_{i}_clicked"] = False
 
 # Berechne den Total Counter
 total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 19))
@@ -62,7 +64,10 @@ for idx, image in enumerate(images):
     with col:
         # Klickbares Bild als Button
         if st.button("", key=f"button_{idx + 1}"):
-            st.session_state[f"button_{idx + 1}_count"] += 0
+            st.session_state[f"button_{idx + 1}_clicked"] = True
+        if st.session_state[f"button_{idx + 1}_clicked"]:
+            st.session_state[f"button_{idx + 1}_count"] += 1
+            st.session_state[f"button_{idx + 1}_clicked"] = False
         st.image(image["path"], use_column_width=True)
         # Beschriftung unter dem Bild
         st.write(f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}")
