@@ -8,6 +8,4 @@ st.write("Während deiner Differenzierung kannst du deine gefundenen Zellen zäh
 st.write("Um direkt mit Deiner Differenzierung loszulegen, drücke auf den unteren Knopf. Für andere Funktionen kannst Du die Sidebar benutzen.")
 
 # Button zur Navigation zu Morphaway.py
-morphaway_url = "/Morphaway"  # Relativer Pfad zur Morphaway-Seite
-st.markdown(f'<a href="{morphaway_url}" target="_self" style="text-decoration:none;"><button style="background-color:#4CAF50; color:white; border:none; padding:10px 20px; cursor:pointer;">Zum Morphaway</button></a>', unsafe_allow_html=True)
-
+st.link_button("Jetzt differenzieren", "Morphaway.py")
