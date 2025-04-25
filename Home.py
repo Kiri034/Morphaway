@@ -7,7 +7,7 @@ st.write("Durch eine individuelle Auswahl der Differenzier-Möglichkeiten ist un
 st.write("Während deiner Differenzierung kannst du deine gefundenen Zellen zählen und anschliessend werden deine Werte prozentual kalkuliert und grafisch dargestellt. Diese Daten sind nun auch zum PDF-Download verfügbar und können durch das eigene Nutzerlogin im Menü «History» auch später erneut abgerufen werden.")
 st.write("Um direkt mit Deiner Differenzierung loszulegen, drücke auf den unteren Knopf. Für andere Funktionen kannst Du die Sidebar benutzen.")
 
-if st.button("Zum Cell-Counter"):
-    st.query_params(page="Cell-Counter")
+if st.button("Zum Morphaway"):
+    st.experimental_set_query_params(page="Morphaway")
     st.write("Du wirst zum Cell-Counter weitergeleitet...")
 
