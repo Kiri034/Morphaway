@@ -6,11 +6,20 @@ st.title("Cell Counter")
 # Eingabe für den Namen des Präparats
 praep_name = st.text_input("Gib einen Namen für das Präparat ein:")
 
-# Auswahlmöglichkeit für die Funktionalität
-option = st.radio(
-    "Wähle eine Funktion:",
-    ["50 Zellen differenzieren", "100 Zellen differenzieren", "200 Zellen differenzieren"]
-)
+# Überprüfen, ob eine Option bereits ausgewählt wurde
+if "selected_option" not in st.session_state:
+    st.session_state["selected_option"] = None
+
+# Zeige die Auswahloptionen nur, wenn noch keine Option ausgewählt wurde
+if st.session_state["selected_option"] is None:
+    option = st.radio(
+        "Wähle eine Funktion:",
+        ["50 Zellen differenzieren", "100 Zellen differenzieren", "200 Zellen differenzieren"]
+    )
+    if option:
+        st.session_state["selected_option"] = option
+else:
+    st.write(f"Du hast ausgewählt: {st.session_state['selected_option']}")
 
 # Initialisiere Zähler für jeden Button im Session State
 for i in range(1, 19):  # 18 Bilder
@@ -59,9 +68,9 @@ for idx, image in enumerate(images):
         st.write(f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}")
 
 # Überprüfen, ob die gewünschte Anzahl an Klicks erreicht wurde
-if (option == "50 Zellen differenzieren" and total_count >= 50) or \
-   (option == "100 Zellen differenzieren" and total_count >= 100) or \
-   (option == "200 Zellen differenzieren" and total_count >= 200):
+if (st.session_state["selected_option"] == "50 Zellen differenzieren" and total_count >= 50) or \
+   (st.session_state["selected_option"] == "100 Zellen differenzieren" and total_count >= 100) or \
+   (st.session_state["selected_option"] == "200 Zellen differenzieren" and total_count >= 200):
     if st.button("Auswertung starten"):
         st.success(f"Auswertung für {praep_name} abgeschlossen!")
         st.write("Hier kannst du die Ergebnisse der Auswertung anzeigen.")
