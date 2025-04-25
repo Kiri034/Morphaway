@@ -23,8 +23,6 @@ else:
 for i in range(1, 19):  # 18 Bilder
     if f"button_{i}_count" not in st.session_state:
         st.session_state[f"button_{i}_count"] = 0
-    if f"button_{i}_clicked" not in st.session_state:
-        st.session_state[f"button_{i}_clicked"] = False
 
 # Berechne den Total Counter
 total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 19))
@@ -33,34 +31,53 @@ total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 19))
 if (st.session_state["selected_option"] == "50 Zellen differenzieren" and total_count >= 50) or \
    (st.session_state["selected_option"] == "100 Zellen differenzieren" and total_count >= 100) or \
    (st.session_state["selected_option"] == "200 Zellen differenzieren" and total_count >= 200):
-    # Blockiere die gesamte Benutzeroberfläche und zeige eine Vollbild-Meldung
-    st.markdown(
-        """
-        <style>
-        .fullscreen-message {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 2rem;
-            z-index: 9999;
-        }
-        </style>
-        <div class="fullscreen-message">
-            🎉 Du hast die gewünschte Anzahl an Klicks erreicht! 🎉
+    # Blockiere die gesamte Benutzeroberfläche und zeige eine Vollbild-Meldung mit einem Button
+st.markdown(
+    """
+    <style>
+    .fullscreen-message {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: 2rem;
+        z-index: 9999;
+    }
+    .button-container {
+        margin-top: 20px;
+    }
+    .link-button {
+        padding: 10px 20px;
+        font-size: 1.5rem;
+        color: white;
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    .link-button:hover {
+        background-color: #0056b3;
+    }
+    </style>
+    <div class="fullscreen-message">
+        🎉 Du hast die gewünschte Anzahl an Klicks erreicht! 🎉
+        <div class="button-container">
+            <a href="https://morphaway.streamlit.app/Auswertung" class="link-button">
+                Auswertung starten
+            </a>
         </div>
-        """,
-        unsafe_allow_html=True
-    )
-    if st.button("Auswertung starten"):
-        st.success(f"Auswertung für {praep_name} abgeschlossen!")
-        st.write("Hier kannst du die Ergebnisse der Auswertung anzeigen.")
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 else:
     # Zeige den Total Counter oben an
     st.write(f"**Total Klicks:** {total_count}")
@@ -95,10 +112,7 @@ else:
         with col:
             # Klickbares Bild als Button
             if st.button("", key=f"button_{idx + 1}"):
-                st.session_state[f"button_{idx + 1}_clicked"] = True
-            if st.session_state[f"button_{idx + 1}_clicked"]:
                 st.session_state[f"button_{idx + 1}_count"] += 1
-                st.session_state[f"button_{idx + 1}_clicked"] = False
             st.image(image["path"], use_column_width=True)
             # Beschriftung unter dem Bild
             st.write(f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}")
