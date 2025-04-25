@@ -76,6 +76,7 @@ for idx, image in enumerate(images):
 if (st.session_state["selected_option"] == "50 Zellen differenzieren" and total_count >= 50) or \
    (st.session_state["selected_option"] == "100 Zellen differenzieren" and total_count >= 100) or \
    (st.session_state["selected_option"] == "200 Zellen differenzieren" and total_count >= 200):
+    st.success("Du hast die gewünschte Anzahl an Klicks erreicht!")
     if st.button("Auswertung starten"):
         st.success(f"Auswertung für {praep_name} abgeschlossen!")
         st.write("Hier kannst du die Ergebnisse der Auswertung anzeigen.")
