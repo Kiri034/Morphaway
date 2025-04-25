@@ -41,3 +41,9 @@ for idx, image in enumerate(images):
         st.image(image["path"], use_column_width=True)
         # Beschriftung unter dem Bild
         st.write(f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}")
+
+# Berechne den Total Counter
+total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 19))
+
+# Zeige den Total Counter an
+st.write(f"**Total Klicks:** {total_count}")
