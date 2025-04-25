@@ -40,5 +40,4 @@ for idx, image in enumerate(images):
             st.session_state[f"button_{idx + 1}_count"] += 1
         st.image(image["path"], use_column_width=True)
         # Beschriftung unter dem Bild
-        st.write(image["label"])
-        st.write(f"{image['label']} - Geklickt: {st.session_state[f'button_{idx + 1}_count']} Mal")
+        st.write(f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}")
