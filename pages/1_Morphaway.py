@@ -29,8 +29,8 @@ total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 19))
 
 # Überprüfen, ob die gewünschte Anzahl an Klicks erreicht wurde
 if (st.session_state["selected_option"] == "50 Zellen differenzieren" and total_count >= 50) or \
-   (st.session_state["selected_option"] == "100 Zellen differenzieren" and total_count >= 100) or \
-   (st.session_state["selected_option"] == "200 Zellen differenzieren" and total_count >= 200):
+    (st.session_state["selected_option"] == "100 Zellen differenzieren" and total_count >= 100) or \
+    (st.session_state["selected_option"] == "200 Zellen differenzieren" and total_count >= 200):
     # Blockiere die gesamte Benutzeroberfläche und zeige eine Vollbild-Meldung mit einem Button
 st.markdown(
     """
