@@ -1,11 +1,38 @@
 import streamlit as st
 
-st.title("Leukozyten Differenzierung")
+st.title("Cell Counter")
 
-# Initialisiere Zähler für jeden Button im Session State
+praep_name = st.text_input(" Gib einen Namen für das Präparat ein:")
+
+# Auswahlmöglichkeit für die Funktionalität
+option = st.radio(
+    "Wähle eine Funktion:",
+    ["50 Zellen differenzieren", "100 Zellen differenzieren", "200 Zellen differenzieren"]
+)
+
+# Inhalte basierend auf der Auswahl anzeigen
+if option == "50 Zellen differenzieren":
+    st.write("Du hast ausgewählt: 50 Zellen differenzieren.")
+    st.write("Hier kannst du die Funktionalität für das Differenzieren von 50 Zellen hinzufügen.")
+elif option == "100 Zellen differenzieren":
+    st.write("Du hast ausgewählt: 100 Zellen differenzieren.")
+    st.write("Hier kannst du die Funktionalität für das Differenzieren von 100 Zellen hinzufügen.")
+elif option == "200 Zellen differenzieren":
+    st.write("Du hast ausgewählt: 200 Zellen differenzieren.")
+    st.write("Hier kannst du die Funktionalität für das Differenzieren von 200 Zellen hinzufügen.")
+
+
+
+# Counter start hier:
 for i in range(1, 19):  # 18 Bilder
     if f"button_{i}_count" not in st.session_state:
         st.session_state[f"button_{i}_count"] = 0
+
+# Berechne den Total Counter
+total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 19))
+
+# Zeige den Total Counter oben an
+st.write(f"**Total Klicks:** {total_count}")
 
 # Liste der Bildnamen und Beschriftungen
 images = [
@@ -41,9 +68,3 @@ for idx, image in enumerate(images):
         st.image(image["path"], use_column_width=True)
         # Beschriftung unter dem Bild
         st.write(f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}")
-
-# Berechne den Total Counter
-total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 19))
-
-# Zeige den Total Counter an
-st.write(f"**Total Klicks:** {total_count}")
