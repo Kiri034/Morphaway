@@ -60,4 +60,4 @@ for idx, image in enumerate(images):
     with col:
         if st.button(image["label"]):
             st.session_state[f"button_{idx + 1}_count"] += 1
-        st.image(image["path"], caption=image["label"], use_column_width=True)
+        st.image(image["path"], use_column_width=True)
