@@ -4,8 +4,14 @@ import streamlit as st
 st.title("Cell Counter")
 
 # Eingabe für den Namen des Präparats
+# Eingabe für den Namen des Präparats
 praep_name = st.text_input("Gib einen Namen für das Präparat ein:")
 
+# Speichere den Präparatnamen in st.session_state
+if praep_name:
+    st.session_state["praep_name"] = praep_name
+
+    
 # Überprüfen, ob ein Präparatname eingegeben wurde
 if not praep_name:
     st.warning("Bitte gib einen Namen für das Präparat ein, bevor du fortfährst.")
