@@ -5,7 +5,7 @@ st.title("Cell Counter")
 
 # Eingabefeld für den Präparatnamen
 if "praep_name" not in st.session_state:
-    st.session_state["praep_name"] = ""
+    st.session_state["praep_name"] = None
 
 praep_name = st.text_input("Gib einen Namen für das Präparat ein:", value=st.session_state["praep_name"])
 if praep_name:
@@ -67,12 +67,6 @@ else:
                 🎉 Du hast die gewünschte Anzahl an Zellen erreicht! 🎉
             </div>
             """,
-            unsafe_allow_html=True
-        )
-    else:
-        # Zeige den Total Counter oben an
-        st.markdown(
-            f"<h2 style='text-align: center; color: white; padding: 10px;'>Total Klicks: {total_count}</h2>",
             unsafe_allow_html=True
         )
 
