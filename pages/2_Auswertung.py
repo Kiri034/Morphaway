@@ -4,9 +4,16 @@ import plotly.express as px
 from fpdf import FPDF
 import io
 
+# Überprüfen, ob die Seite über die Query-Parameter aufgerufen wurde
+query_params = st.experimental_get_query_params()
+if query_params.get("page", [""])[0] != "Auswertung":
+    st.warning("Bitte kehre zur Hauptseite zurück und starte die Auswertung erneut.")
+    st.stop()
+
 # Titel der Seite
 praep_name = st.session_state.get("praep_name", "Präparat")
 st.title(f"Auswertung für {praep_name}")
+
 
 # Überprüfen, ob Zählerdaten aus 1_Morphaway.py vorhanden sind
 if any(f"button_{i}_count" in st.session_state for i in range(1, 19)):
