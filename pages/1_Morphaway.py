@@ -74,12 +74,6 @@ else:
             """,
             unsafe_allow_html=True
         )
-    else:
-        # Zeige den Total Counter oben an
-        st.markdown(
-            f"<h2 style='text-align: center; color: white; padding: 10px;'>Total Klicks: {total_count}</h2>",
-            unsafe_allow_html=True
-        )
 
     # Liste der Bildnamen und Beschriftungen
     images = [
