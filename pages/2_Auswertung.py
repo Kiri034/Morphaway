@@ -4,11 +4,9 @@ import plotly.express as px
 from fpdf import FPDF
 import io
 
-
 # Titel der Seite
 praep_name = st.session_state.get("praep_name", "Präparat")
 st.title(f"Auswertung für {praep_name}")
-
 
 # Überprüfen, ob Zählerdaten aus 1_Morphaway.py vorhanden sind
 if any(f"button_{i}_count" in st.session_state for i in range(1, 19)):
@@ -56,14 +54,13 @@ if any(f"button_{i}_count" in st.session_state for i in range(1, 19)):
         fig = px.pie(filtered_df, names="Zelle", values="Anzahl", title="Verteilung der Zelltypen")
         st.plotly_chart(fig)
 
-        # Diagramm als Bild speichern
+        # Diagramm als Bild in Bytes speichern
         img_bytes = io.BytesIO()
         fig.write_image(img_bytes, format="png")
         img_bytes.seek(0)
-        diagram_image = Image.open(img_bytes)
     else:
         st.warning("Keine Daten für das Kreisdiagramm verfügbar. Alle Zellen haben 0 Klicks.")
-        diagram_image = None
+        img_bytes = None
 
     # PDF erstellen
     pdf = FPDF()
@@ -83,13 +80,11 @@ if any(f"button_{i}_count" in st.session_state for i in range(1, 19)):
         pdf.cell(200, 10, txt=f"{row['Zelle']}: {row['Anzahl']} Klicks ({row['Relativer Anteil (%)']}%)", ln=True)
 
     # Diagramm in die PDF einfügen
-    if diagram_image:
+    if img_bytes:
         pdf.ln(10)
         pdf.cell(200, 10, txt="Kreisdiagramm der Ergebnisse:", ln=True)
         pdf.ln(5)
-        img_path = "diagram.png"
-        diagram_image.save(img_path)
-        pdf.image(img_path, x=10, y=pdf.get_y(), w=180)
+        pdf.image(img_bytes, x=10, y=pdf.get_y(), w=180)
 
     # PDF als Download anbieten
     pdf_output = io.BytesIO()
