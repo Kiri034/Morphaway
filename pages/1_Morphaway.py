@@ -26,7 +26,7 @@ else:
         )
     else:
         # Präparatname und Auswahlmöglichkeiten verschwinden
-        st.write(f"Du hast ausgewählt: {st.session_state['selected_option']}")
+        st.empty()  # Entfernt die Anzeige des Präparatnamens und der Auswahlmöglichkeiten
 
     # Initialisiere Zähler für jeden Button im Session State
     for i in range(1, 19):  # 18 Bilder
@@ -36,8 +36,11 @@ else:
     # Berechne den Total Counter
     total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 19))
 
-    # Zeige den Total Counter oben an (größer dargestellt)
-    st.markdown(f"<h2 style='text-align: center; color: black;'>Total Klicks: {total_count}</h2>", unsafe_allow_html=True)
+    # Zeige den Total Counter oben an (größer dargestellt und in Weiß)
+    st.markdown(
+        f"<h2 style='text-align: center; color: white; background-color: black; padding: 10px;'>Total Klicks: {total_count}</h2>",
+        unsafe_allow_html=True
+    )
 
     # Liste der Bildnamen und Beschriftungen
     images = [
