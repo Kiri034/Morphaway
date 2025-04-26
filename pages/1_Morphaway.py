@@ -37,6 +37,12 @@ else:
     # Berechne den Total Counter
     total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 19))
 
+       # Zeige den Total Counter oben an (größer dargestellt und in Weiß)
+    st.markdown(
+        f"<h2 style='text-align: center; color: white; background-color: black; padding: 10px;'>Total Klicks: {total_count}</h2>",
+        unsafe_allow_html=True
+    )
+
     # Überprüfen, ob die gewünschte Anzahl an Klicks erreicht wurde
     if (st.session_state["selected_option"] == "50 Zellen differenzieren" and total_count >= 50) or \
        (st.session_state["selected_option"] == "100 Zellen differenzieren" and total_count >= 100) or \
