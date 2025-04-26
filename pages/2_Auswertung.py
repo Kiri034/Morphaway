@@ -45,9 +45,13 @@ if any(f"button_{i}_count" in st.session_state for i in range(1, 19)):
     st.subheader("Tabelle der Ergebnisse")
     st.dataframe(df)
 
-    # Kreisdiagramm erstellen
-    st.subheader("Kreisdiagramm der Ergebnisse")
-    fig = px.pie(df, names="Zelle", values="Anzahl", title="Verteilung der Zelltypen")
-    st.plotly_chart(fig)
+    # Kreisdiagramm erstellen (nur Zellen mit Anzahl > 0)
+    filtered_df = df[df["Anzahl"] > 0]  # Filtere Zellen mit Anzahl > 0
+    if not filtered_df.empty:
+        st.subheader("Kreisdiagramm der Ergebnisse")
+        fig = px.pie(filtered_df, names="Zelle", values="Anzahl", title="Verteilung der Zelltypen")
+        st.plotly_chart(fig)
+    else:
+        st.warning("Keine Daten für das Kreisdiagramm verfügbar. Alle Zellen haben 0 Klicks.")
 else:
     st.warning("Keine Daten verfügbar. Bitte kehre zurück und zähle Zellen in Morphaway.")
