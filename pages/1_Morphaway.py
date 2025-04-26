@@ -24,9 +24,6 @@ else:
             "Wähle eine Funktion:",
             ["50 Zellen differenzieren", "100 Zellen differenzieren", "200 Zellen differenzieren"]
         )
-    else:
-        # Präparatname und Auswahlmöglichkeiten verschwinden
-        st.empty()  # Entfernt die Anzeige des Präparatnamens und der Auswahlmöglichkeiten
 
     # Initialisiere Zähler für jeden Button im Session State
     for i in range(1, 19):  # 18 Bilder
@@ -38,7 +35,7 @@ else:
 
     # Zeige den Total Counter oben an (größer dargestellt und in Weiß)
     st.markdown(
-        f"<h2 style='text-align: center; color: white; background-color: black; padding: 10px;'>Total Klicks: {total_count}</h2>",
+        f"<h2 style='text-align: center; color: white; padding: 10px;'>Total Klicks: {total_count}</h2>",
         unsafe_allow_html=True
     )
 
