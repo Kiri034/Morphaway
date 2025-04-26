@@ -3,15 +3,18 @@ import streamlit as st
 # Titel der Seite
 st.title("Cell Counter")
 
-# Eingabe für den Namen des Präparats
-praep_name = st.text_input("Gib einen Namen für das Präparat ein:")
-
-# Speichere den Präparatnamen in st.session_state
-if praep_name:
-    st.session_state["praep_name"] = praep_name
+# Überprüfen, ob ein Präparatname bereits in st.session_state gespeichert ist
+if "praep_name" not in st.session_state:
+    # Eingabefeld für den Präparatnamen
+    praep_name = st.text_input("Gib einen Namen für das Präparat ein:")
+    if praep_name:
+        st.session_state["praep_name"] = praep_name
+else:
+    # Zeige nur den gespeicherten Präparatnamen an
+    st.markdown(f"### Präparat: **{st.session_state['praep_name']}**")
 
 # Überprüfen, ob ein Präparatname eingegeben wurde
-if not praep_name:
+if "praep_name" not in st.session_state:
     st.warning("Bitte gib einen Namen für das Präparat ein, bevor du fortfährst.")
 else:
     # Überprüfen, ob eine Option bereits ausgewählt wurde
