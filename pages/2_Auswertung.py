@@ -50,4 +50,4 @@ if any(f"button_{i}_count" in st.session_state for i in range(1, 19)):
     fig = px.pie(df, names="Zelle", values="Anzahl", title="Verteilung der Zelltypen")
     st.plotly_chart(fig)
 else:
-    st.warning("Keine Daten verfügbar. Bitte führe eine Differenzierung durch, bevor du zur Auswertung wechselst.")
+    st.warning("Keine Daten verfügbar. Bitte kehre zurück und zähle Zellen in Morphaway.")
