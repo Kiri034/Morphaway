@@ -6,3 +6,6 @@ fsspec
 matplotlib
 numpy
 plotly
+plotly-express
+io
+fpdf 

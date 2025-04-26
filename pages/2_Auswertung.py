@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+from fpdf import FPDF
+import io
 
 # Titel der Seite
 praep_name = st.session_state.get("praep_name", "Präparat")
@@ -51,7 +53,52 @@ if any(f"button_{i}_count" in st.session_state for i in range(1, 19)):
         st.subheader("Kreisdiagramm der Ergebnisse")
         fig = px.pie(filtered_df, names="Zelle", values="Anzahl", title="Verteilung der Zelltypen")
         st.plotly_chart(fig)
+
+        # Diagramm als Bild speichern
+        img_bytes = io.BytesIO()
+        fig.write_image(img_bytes, format="png")
+        img_bytes.seek(0)
+        diagram_image = Image.open(img_bytes)
     else:
         st.warning("Keine Daten für das Kreisdiagramm verfügbar. Alle Zellen haben 0 Klicks.")
+        diagram_image = None
+
+    # PDF erstellen
+    pdf = FPDF()
+    pdf.add_page()
+    pdf.set_font("Arial", size=12)
+
+    # Titel
+    pdf.set_font("Arial", style="B", size=16)
+    pdf.cell(200, 10, txt=f"Auswertung für {praep_name}", ln=True, align="C")
+    pdf.ln(10)
+
+    # Tabelle in die PDF einfügen
+    pdf.set_font("Arial", size=12)
+    pdf.cell(200, 10, txt="Tabelle der Ergebnisse:", ln=True)
+    pdf.ln(5)
+    for index, row in df.iterrows():
+        pdf.cell(200, 10, txt=f"{row['Zelle']}: {row['Anzahl']} Klicks ({row['Relativer Anteil (%)']}%)", ln=True)
+
+    # Diagramm in die PDF einfügen
+    if diagram_image:
+        pdf.ln(10)
+        pdf.cell(200, 10, txt="Kreisdiagramm der Ergebnisse:", ln=True)
+        pdf.ln(5)
+        img_path = "diagram.png"
+        diagram_image.save(img_path)
+        pdf.image(img_path, x=10, y=pdf.get_y(), w=180)
+
+    # PDF als Download anbieten
+    pdf_output = io.BytesIO()
+    pdf.output(pdf_output)
+    pdf_output.seek(0)
+
+    st.download_button(
+        label="📄 PDF herunterladen",
+        data=pdf_output,
+        file_name=f"Auswertung_{praep_name}.pdf",
+        mime="application/pdf",
+    )
 else:
     st.warning("Keine Daten verfügbar. Bitte kehre zurück und zähle Zellen in Morphaway.")
