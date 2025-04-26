@@ -42,6 +42,42 @@ else:
         unsafe_allow_html=True
     )
 
+    # Überprüfen, ob die gewünschte Anzahl an Klicks erreicht wurde
+if (st.session_state["selected_option"] == "50 Zellen differenzieren" and total_count >= 50) or \
+   (st.session_state["selected_option"] == "100 Zellen differenzieren" and total_count >= 100) or \
+   (st.session_state["selected_option"] == "200 Zellen differenzieren" and total_count >= 200):
+    # Blockiere die gesamte Benutzeroberfläche und zeige eine Vollbild-Meldung
+    st.markdown(
+        """
+        <style>
+        .fullscreen-message {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            z-index: 9999;
+        }
+        </style>
+        <div class="fullscreen-message">
+            🎉 Du hast die gewünschte Anzahl an Zellen erreicht! 🎉
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+else:
+    # Zeige den Total Counter oben an
+    st.markdown(
+        f"<h2 style='text-align: center; color: white; padding: 10px;'>Total Klicks: {total_count}</h2>",
+        unsafe_allow_html=True
+    )
+
     # Liste der Bildnamen und Beschriftungen
     images = [
         {"path": "https://via.placeholder.com/150?text=Button+1", "label": "Lymphozyt"},
