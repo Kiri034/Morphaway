@@ -10,8 +10,6 @@ if query_params.get("page", [""])[0] != "Auswertung":
     st.warning("Bitte kehre zur Hauptseite zurück und starte die Auswertung erneut.")
     st.stop()
 
-st.write("Session State:", st.session_state)
-
 # Titel der Seite
 praep_name = st.session_state.get("praep_name", "Präparat")
 st.title(f"Auswertung für {praep_name}")
