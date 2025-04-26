@@ -72,7 +72,7 @@ else:
             }
             </style>
             <div class="fullscreen-message">
-                🎉 Du hast die gewünschte Anzahl an Klicks erreicht! 🎉
+                🎉 Du hast die gewünschte Anzahl Zellen erreicht! 🎉
                 <div class="button-container">
                     <a href="https://morphaway.streamlit.app/Auswertung" class="link-button">
                         Auswertung starten
