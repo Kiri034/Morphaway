@@ -71,31 +71,19 @@ else:
             .button-container {
                 margin-top: 20px;
             }
-            .link-button {
-                padding: 10px 20px;
-                font-size: 1.5rem;
-                color: white;
-                background-color: #007bff;
-                border: none;
-                border-radius: 5px;
-                text-decoration: none;
-                cursor: pointer;
-            }
-            .link-button:hover {
-                background-color: #0056b3;
-            }
             </style>
             <div class="fullscreen-message">
                 🎉 Du hast die gewünschte Anzahl an Zellen erreicht! 🎉
                 <div class="button-container">
-                    <button onclick="window.location.href='?page=Auswertung'" class="link-button">
-                        Auswertung starten
-                    </button>
-                </div>
-            </div>
             """,
             unsafe_allow_html=True
         )
+
+        # Streamlit-Button für die Navigation
+        if st.button("Auswertung starten"):
+            st.experimental_set_query_params(page="Auswertung")
+
+        st.markdown("</div></div>", unsafe_allow_html=True)
 
     # Liste der Bildnamen und Beschriftungen
     images = [
