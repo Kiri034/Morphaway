@@ -3,8 +3,16 @@ import streamlit as st
 # Titel der Seite
 st.title("Cell Counter")
 
-# Überprüfen, ob ein Präparatname eingegeben wurde
+# Eingabefeld für den Präparatnamen
 if "praep_name" not in st.session_state:
+    st.session_state["praep_name"] = ""
+
+praep_name = st.text_input("Gib einen Namen für das Präparat ein:", value=st.session_state["praep_name"])
+if praep_name:
+    st.session_state["praep_name"] = praep_name
+
+# Überprüfen, ob ein Präparatname eingegeben wurde
+if not praep_name:
     st.warning("Bitte gib einen Namen für das Präparat ein, bevor du fortfährst.")
 else:
     # Initialisiere "selected_option", falls es nicht existiert
@@ -67,7 +75,7 @@ else:
             f"<h2 style='text-align: center; color: white; padding: 10px;'>Total Klicks: {total_count}</h2>",
             unsafe_allow_html=True
         )
-        
+
     # Liste der Bildnamen und Beschriftungen
     images = [
         {"path": "https://via.placeholder.com/150?text=Button+1", "label": "Lymphozyt"},
