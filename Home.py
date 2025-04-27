@@ -3,9 +3,9 @@ import streamlit as st
 
 st.title("Home")
 st.write("Willkommen bei Morphaway! Morphaway ist eine einfache und übersichtliche Variante, um ein Blutbild auszuzählen. ")
-st.write("Durch eine individuelle Auswahl der Differenzier-Möglichkeiten ist unsere App sehr nutzerfreundlich aufgebaut und kann so in verschiedene Situationen angewendet werden. Ob du nur 50 Leukozyten differenzieren kannst, um deinem Dozenten schnell die prozentualen Zahlen nennen zu können, 100 für eine schnelle aber genauere Differenzierung oder aber eine vollständige Leukozytendifferenzierung mit 200 Zellen - mit Morphaway ist alles möglich.")
-st.write("Während deiner Differenzierung kannst du deine gefundenen Zellen zählen und anschliessend werden deine Werte prozentual kalkuliert und grafisch dargestellt. Diese Daten sind nun auch zum PDF-Download verfügbar und können durch das eigene Nutzerlogin im Menü «History» auch später erneut abgerufen werden.")
-st.write("Um direkt mit Deiner Differenzierung loszulegen, drücke auf den unteren Knopf. Für andere Funktionen kannst Du die Sidebar benutzen.")
+st.write("Durch eine individuelle Auswahl der Differenzier-Möglichkeiten ist unsere App sehr nutzerfreundlich aufgebaut und kann so in verschiedene Situationen angewendet werden. Egal, ob du dein:e Dozent:in mit einer schnellen 50er-Leukozytendifferenzierung beeindrucken möchtest, 100 Leukozyten für eine genauere Bestimmung brauchst oder ganze 200 Leukozyten zur Labordiagnostik differenzieren möchtest - Morphaway bietet dir die Unterstützung.")
+st.write('Die Werte der ausgezählten Zellen findest du prozentual sowie grafisch dargestellt unter "History". Durch dein Nutzerlogin kannst du sie jederzeit als PDF-Datei herunterladen.')
+st.write("Drücke auf den unteren Knopf, um mit der Differenzierung zu starten oder nutze die Seitenleiste für andere Funktionen!")
 
 # Button zur Navigation zu Morphaway.py
 st.link_button("Jetzt differenzieren", "https://morphaway.streamlit.app/~/+/Morphaway")
