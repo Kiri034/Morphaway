@@ -75,24 +75,21 @@ if 'data_df' in st.session_state and not st.session_state['data_df'].empty:
     data_df = st.session_state['data_df']
     
 # PDF-Erstellung
-if 'df' in locals() or 'df' in globals():
-    pdf = FPDF()
-    pdf.add_page()
-    pdf.set_font("Arial", size=12)
+pdf = FPDF()
+pdf.add_page()
+pdf.set_font("Arial", size=12)
 
-    # Titel
-    pdf.set_font("Arial", style="B", size=16)
-    pdf.cell(200, 10, txt="Zellzählungsergebnisse", ln=True, align="C")
-    pdf.ln(10)
+# Titel
+pdf.set_font("Arial", style="B", size=16)
+pdf.cell(200, 10, txt="Zellzählungsergebnisse", ln=True, align="C")
+pdf.ln(10)
 
-    # Tabelle in die PDF einfügen
-    pdf.set_font("Arial", size=12)
-    pdf.cell(200, 10, txt="Tabelle der Ergebnisse:", ln=True)
-    pdf.ln(5)
-    for index, row in df.iterrows():
-        pdf.cell(200, 10, txt=f"{row['Zelle']}: {row['Anzahl']} Klicks ({row['Relativer Anteil (%)']}%)", ln=True)
-else:
-    st.error("Die Tabelle der Ergebnisse (df) ist nicht definiert. Bitte überprüfen Sie die vorherigen Schritte.")
+# Tabelle in die PDF einfügen
+pdf.set_font("Arial", size=12)
+pdf.cell(200, 10, txt="Tabelle der Ergebnisse:", ln=True)
+pdf.ln(5)
+for index, row in df.iterrows():
+    pdf.cell(200, 10, txt=f"{row['Zelle']}: {row['Anzahl']} Klicks ({row['Relativer Anteil (%)']}%)", ln=True)
 
 # Diagramm in die PDF einfügen
 if img_bytes:
@@ -105,21 +102,11 @@ if img_bytes:
         temp_file.write(img_bytes.getvalue())  # Schreibe das Bild in die temporäre Datei
         temp_file_path = temp_file.name  # Speichere den Pfad der temporären Datei
 
-    # Verfügbare Höhe auf der Seite berechnen
-    current_y = pdf.get_y()  # Aktuelle Y-Position
-    page_height = 297  # Höhe einer A4-Seite in mm
-    margin_bottom = 10  # Unterer Rand in mm
-    available_height = page_height - current_y - margin_bottom
-
     # Füge das Bild aus der temporären Datei in die PDF ein
-    pdf.image(temp_file_path, x=10, y=current_y, w=180, h=available_height)
+    pdf.image(temp_file_path, x=10, y=pdf.get_y(), w=180)
 
     # Lösche die temporäre Datei nach der Verwendung
     os.remove(temp_file_path)
-
-if current_y + available_height > page_height - margin_bottom:
-    pdf.add_page()
-    pdf.image(temp_file_path, x=10, y=10, w=180)
 
 # PDF direkt in eine Datei schreiben
 output_file_path = "zellzaehlung_ergebnisse.pdf"  # Pfad zur Ausgabedatei
