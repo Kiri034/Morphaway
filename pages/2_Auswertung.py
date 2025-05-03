@@ -67,7 +67,7 @@ if any(f"button_{i}_count" in st.session_state for i in range(1, 19)):
         img_bytes.seek(0)
     else:
         st.warning("Keine Daten für das Kreisdiagramm verfügbar. Alle Zellen haben 0 Klicks.")
-        img_bytes = None
+        img_bytes = io.BytesIO()  # Initialize img_bytes to avoid undefined variable error
 else:
     st.warning("Keine Zählerdaten vorhanden. Bitte kehren Sie zurück und geben Sie Ihre Werte ein.")
 
