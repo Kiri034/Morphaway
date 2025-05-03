@@ -6,6 +6,9 @@ import io
 import json
 import os
 
+# Abrufen des Präparatnamens aus st.session_state
+praep_name = st.session_state.get("praep_name", "Präparat")
+
 # Verzeichnis für gespeicherte Auswertungen
 history_directory = "history_exports"
 if not os.path.exists(history_directory):
