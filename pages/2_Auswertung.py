@@ -116,14 +116,15 @@ if img_bytes:
     # Lösche die temporäre Datei nach der Verwendung
     os.remove(temp_file_path)
 
-# PDF als Download anbieten
-pdf_output = io.BytesIO()
-pdf.output(pdf_output, dest='F')  # Use 'F' to write to the BytesIO object
-pdf_output.seek(0)
+# PDF direkt in eine Datei schreiben
+output_file_path = "zellzaehlung_ergebnisse.pdf"  # Pfad zur Ausgabedatei
+pdf.output(output_file_path)  # Schreibe die PDF in die Datei
 
-st.download_button(
-    label="📄 PDF herunterladen",
-    data=pdf_output,
-    file_name="zellzaehlung_ergebnisse.pdf",
-    mime="application/pdf",
-)
+# Download-Button für die gespeicherte Datei
+with open(output_file_path, "rb") as pdf_file:
+    st.download_button(
+        label="📄 PDF herunterladen",
+        data=pdf_file,
+        file_name="zellzaehlung_ergebnisse.pdf",
+        mime="application/pdf",
+    )
