@@ -14,6 +14,10 @@ history_directory = "history_exports"
 if not os.path.exists(history_directory):
     os.makedirs(history_directory)
 
+# Initialisiere die Daten und den Zähler
+data = []
+total_count = 0
+
 # Speichere die Auswertung in einer JSON-Datei
 history_data = {
     "praep_name": praep_name,
