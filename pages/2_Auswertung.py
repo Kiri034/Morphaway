@@ -69,50 +69,50 @@ if any(f"button_{i}_count" in st.session_state for i in range(1, 19)):
         st.warning("Keine Daten für das Kreisdiagramm verfügbar. Alle Zellen haben 0 Klicks.")
         img_bytes = None
 
-# PDF erstellen
-pdf = FPDF()
-pdf.add_page()
-pdf.set_font("Arial", size=12)
+    # PDF erstellen
+    pdf = FPDF()
+    pdf.add_page()
+    pdf.set_font("Arial", size=12)
 
-# Titel
-pdf.set_font("Arial", style="B", size=16)
-pdf.cell(200, 10, txt=f"Auswertung für {praep_name}", ln=True, align="C")
-pdf.ln(10)
-
-# Tabelle in die PDF einfügen
-pdf.set_font("Arial", size=12)
-pdf.cell(200, 10, txt="Tabelle der Ergebnisse:", ln=True)
-pdf.ln(5)
-for index, row in df.iterrows():
-    pdf.cell(200, 10, txt=f"{row['Zelle']}: {row['Anzahl']} Klicks ({row['Relativer Anteil (%)']}%)", ln=True)
-
-# Diagramm in die PDF einfügen
-if img_bytes:
+    # Titel
+    pdf.set_font("Arial", style="B", size=16)
+    pdf.cell(200, 10, txt=f"Auswertung für {praep_name}", ln=True, align="C")
     pdf.ln(10)
-    pdf.cell(200, 10, txt="Kreisdiagramm der Ergebnisse:", ln=True)
+
+    # Tabelle in die PDF einfügen
+    pdf.set_font("Arial", size=12)
+    pdf.cell(200, 10, txt="Tabelle der Ergebnisse:", ln=True)
     pdf.ln(5)
+    for index, row in df.iterrows():
+        pdf.cell(200, 10, txt=f"{row['Zelle']}: {row['Anzahl']} Klicks ({row['Relativer Anteil (%)']}%)", ln=True)
 
-    # Temporäre Datei erstellen
-    with tempfile.NamedTemporaryFile(delete=False, suffix=".png") as temp_file:
-        temp_file.write(img_bytes.getvalue())  # Schreibe das Bild in die temporäre Datei
-        temp_file_path = temp_file.name  # Speichere den Pfad der temporären Datei
+    # Diagramm in die PDF einfügen
+    if img_bytes:
+        pdf.ln(10)
+        pdf.cell(200, 10, txt="Kreisdiagramm der Ergebnisse:", ln=True)
+        pdf.ln(5)
 
-    # Füge das Bild aus der temporären Datei in die PDF ein
-    pdf.image(temp_file_path, x=10, y=pdf.get_y(), w=180)
+        # Temporäre Datei erstellen
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".png") as temp_file:
+            temp_file.write(img_bytes.getvalue())  # Schreibe das Bild in die temporäre Datei
+            temp_file_path = temp_file.name  # Speichere den Pfad der temporären Datei
 
-    # Lösche die temporäre Datei nach der Verwendung
-    os.remove(temp_file_path)
+        # Füge das Bild aus der temporären Datei in die PDF ein
+        pdf.image(temp_file_path, x=10, y=pdf.get_y(), w=180)
 
-# PDF als Download anbieten
-pdf_output = io.BytesIO()
-pdf.output(pdf_output)
-pdf_output.seek(0)
+        # Lösche die temporäre Datei nach der Verwendung
+        os.remove(temp_file_path)
 
-st.download_button(
-    label="📄 PDF herunterladen",
-    data=pdf_output,
-    file_name=f"Auswertung_{praep_name}.pdf",
-    mime="application/pdf",
-)
+    # PDF als Download anbieten
+    pdf_output = io.BytesIO()
+    pdf.output(pdf_output)
+    pdf_output.seek(0)
+
+    st.download_button(
+        label="📄 PDF herunterladen",
+        data=pdf_output,
+        file_name=f"Auswertung_{praep_name}.pdf",
+        mime="application/pdf",
+    )
 else:
     st.warning("Keine Daten verfügbar. Bitte kehre zurück und zähle Zellen in Morphaway.")
