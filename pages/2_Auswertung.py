@@ -84,12 +84,12 @@ pdf.ln(10)
 # Tabelle in die PDF einfügen
 if not df.empty:
     pdf.set_font("Arial", size=12)
-    pdf.cell(200, 10, txt="Tabelle der Ergebnisse:", ln=True)
+    pdf.cell(0, 5, txt="Tabelle der Ergebnisse:", ln=True)
     pdf.ln(5)
     for index, row in df.iterrows():
-        pdf.cell(200, 10, txt=f"{row['Zelle']}: {row['Anzahl']} Klicks ({row['Relativer Anteil (%)']}%)", ln=True)
+        pdf.cell(0, 5, txt=f"{row['Zelle']}: {row['Anzahl']} Klicks ({row['Relativer Anteil (%)']}%)", ln=True)
 else:
-    pdf.cell(200, 10, txt="Keine Daten verfügbar.", ln=True)
+    pdf.cell(0, 5, txt="Keine Daten verfügbar.", ln=True)
 
 # Diagramm in die PDF einfügen
 if img_bytes:
