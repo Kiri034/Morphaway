@@ -68,12 +68,8 @@ if any(f"button_{i}_count" in st.session_state for i in range(1, 19)):
     else:
         st.warning("Keine Daten für das Kreisdiagramm verfügbar. Alle Zellen haben 0 Klicks.")
         img_bytes = None
-
-
-# Überprüfen, ob 'data_df' in st.session_state existiert
-if 'data_df' in st.session_state and not st.session_state['data_df'].empty:
-    data_df = st.session_state['data_df']
-
+else:
+    st.warning("Keine Zählerdaten vorhanden. Bitte kehren Sie zurück und geben Sie Ihre Werte ein.")
 
 # PDF-Erstellung
 pdf = FPDF()
@@ -81,21 +77,44 @@ pdf.add_page()
 pdf.set_font("Arial", size=12)
 
 # Titel
+pdf.set_font("Arial", style="B", size=16)
 pdf.cell(200, 10, txt="Auswertung der Ergebnisse", ln=True, align="C")
 pdf.ln(10)
 
-# Beispiel-Inhalt
-pdf.cell(200, 10, txt="Dies ist ein Beispieltext für die PDF-Datei.", ln=True)
+# Tabelle in die PDF einfügen
+if not df.empty:
+    pdf.set_font("Arial", size=12)
+    pdf.cell(200, 10, txt="Tabelle der Ergebnisse:", ln=True)
+    pdf.ln(5)
+    for index, row in df.iterrows():
+        pdf.cell(200, 10, txt=f"{row['Zelle']}: {row['Anzahl']} Klicks ({row['Relativer Anteil (%)']}%)", ln=True)
+else:
+    pdf.cell(200, 10, txt="Keine Daten verfügbar.", ln=True)
+
+# Diagramm in die PDF einfügen
+if img_bytes:
+    pdf.ln(10)
+    pdf.cell(200, 10, txt="Kreisdiagramm der Ergebnisse:", ln=True)
+    pdf.ln(5)
+
+    # Temporäre Datei erstellen
+    with open("diagram.png", "wb") as f:
+        f.write(img_bytes.getvalue())
+
+    pdf.image("diagram.png", x=10, y=pdf.get_y(), w=180)
 
 # PDF in eine Datei speichern
 pdf_file_path = "auswertung.pdf"
 pdf.output(pdf_file_path)
 
 # PDF-Download-Button
-with open(pdf_file_path, "rb") as pdf_file:
-    st.download_button(
-        label="📄 PDF herunterladen",
-        data=pdf_file,
-        file_name="auswertung.pdf",
-        mime="application/pdf",
-    )
+if os.path.exists(pdf_file_path):
+    with open(pdf_file_path, "rb") as pdf_file:
+        st.download_button(
+            label="📄 PDF herunterladen",
+            data=pdf_file,
+            file_name="auswertung.pdf",
+            mime="application/pdf",
+        )
+else:
+    st.error("Die PDF-Datei konnte nicht erstellt werden.")
