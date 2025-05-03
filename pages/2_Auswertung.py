@@ -7,6 +7,8 @@ import json
 import os
 import tempfile
 
+st.title("Auswertung")
+
 # Abrufen des Präparatnamens aus st.session_state
 praep_name = st.session_state.get("praep_name", "Präparat")
 
