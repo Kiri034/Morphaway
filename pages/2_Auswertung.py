@@ -3,6 +3,27 @@ import pandas as pd
 import plotly.express as px
 from fpdf import FPDF
 import io
+import json
+import os
+
+# Verzeichnis für gespeicherte Auswertungen
+history_directory = "history_exports"
+if not os.path.exists(history_directory):
+    os.makedirs(history_directory)
+
+# Speichere die Auswertung in einer JSON-Datei
+history_data = {
+    "praep_name": praep_name,
+    "data": data,  # Die Tabelle der Ergebnisse
+    "total_count": total_count,
+}
+
+# Dateiname basierend auf dem Präparatnamen
+history_file = os.path.join(history_directory, f"{praep_name}.json")
+with open(history_file, "w", encoding="utf-8") as f:
+    json.dump(history_data, f, ensure_ascii=False, indent=4)
+
+st.success(f"Die Auswertung für {praep_name} wurde gespeichert.")
 
 # Titel der Seite
 praep_name = st.session_state.get("praep_name", "Präparat")
