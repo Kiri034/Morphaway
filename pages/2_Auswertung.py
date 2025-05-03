@@ -82,34 +82,48 @@ if 'data_df' in st.session_state and not st.session_state['data_df'].empty:
         file_name="zellzaehlung_daten.csv",
         mime="text/csv",
     )
+# PDF-Erstellung
+pdf = FPDF()
+pdf.add_page()
+pdf.set_font("Arial", size=12)
 
-    # PDF-Erstellung
-    pdf = FPDF()
-    pdf.add_page()
-    pdf.set_font("Arial", size=12)
+# Titel
+pdf.set_font("Arial", style="B", size=16)
+pdf.cell(200, 10, txt="Zellzählungsergebnisse", ln=True, align="C")
+pdf.ln(10)
 
-    # Titel
-    pdf.set_font("Arial", style="B", size=16)
-    pdf.cell(200, 10, txt="Zellzählungsergebnisse", ln=True, align="C")
+# Tabelle in die PDF einfügen
+pdf.set_font("Arial", size=12)
+pdf.cell(200, 10, txt="Tabelle der Ergebnisse:", ln=True)
+pdf.ln(5)
+for index, row in df.iterrows():
+    pdf.cell(200, 10, txt=f"{row['Zelle']}: {row['Anzahl']} Klicks ({row['Relativer Anteil (%)']}%)", ln=True)
+
+# Diagramm in die PDF einfügen
+if img_bytes:
     pdf.ln(10)
-
-    # Tabelle in die PDF einfügen
-    pdf.set_font("Arial", size=12)
-    pdf.cell(200, 10, txt="Tabelle der Ergebnisse:", ln=True)
+    pdf.cell(200, 10, txt="Kreisdiagramm der Ergebnisse:", ln=True)
     pdf.ln(5)
-    for index, row in data_df.iterrows():
-        pdf.cell(200, 10, txt=f"{row['Datum']}: {row['Wert']} ({row['Einheit']})", ln=True)
 
-    # PDF als Download anbieten
-    pdf_output = io.BytesIO()
-    pdf.output(pdf_output)
-    pdf_output.seek(0)
+    # Temporäre Datei erstellen
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".png") as temp_file:
+        temp_file.write(img_bytes.getvalue())  # Schreibe das Bild in die temporäre Datei
+        temp_file_path = temp_file.name  # Speichere den Pfad der temporären Datei
 
-    st.download_button(
-        label="📄 PDF herunterladen",
-        data=pdf_output,
-        file_name="zellzaehlung_ergebnisse.pdf",
-        mime="application/pdf",
-    )
-else:
-    st.info("Keine Daten vorhanden. Bitte kehren Sie zurück und geben Sie Ihre Werte ein.")
+    # Füge das Bild aus der temporären Datei in die PDF ein
+    pdf.image(temp_file_path, x=10, y=pdf.get_y(), w=180)
+
+    # Lösche die temporäre Datei nach der Verwendung
+    os.remove(temp_file_path)
+
+# PDF als Download anbieten
+pdf_output = io.BytesIO()
+pdf.output(pdf_output)
+pdf_output.seek(0)
+
+st.download_button(
+    label="📄 PDF herunterladen",
+    data=pdf_output,
+    file_name="zellzaehlung_ergebnisse.pdf",
+    mime="application/pdf",
+)
