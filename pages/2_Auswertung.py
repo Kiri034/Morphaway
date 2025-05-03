@@ -3,9 +3,7 @@ import pandas as pd
 import plotly.express as px
 from fpdf import FPDF
 import io
-import json
 import os
-import tempfile
 
 st.title("Auswertung")
 
@@ -75,3 +73,29 @@ if any(f"button_{i}_count" in st.session_state for i in range(1, 19)):
 # Überprüfen, ob 'data_df' in st.session_state existiert
 if 'data_df' in st.session_state and not st.session_state['data_df'].empty:
     data_df = st.session_state['data_df']
+
+
+# PDF-Erstellung
+pdf = FPDF()
+pdf.add_page()
+pdf.set_font("Arial", size=12)
+
+# Titel
+pdf.cell(200, 10, txt="Auswertung der Ergebnisse", ln=True, align="C")
+pdf.ln(10)
+
+# Beispiel-Inhalt
+pdf.cell(200, 10, txt="Dies ist ein Beispieltext für die PDF-Datei.", ln=True)
+
+# PDF in eine Datei speichern
+pdf_file_path = "auswertung.pdf"
+pdf.output(pdf_file_path)
+
+# PDF-Download-Button
+with open(pdf_file_path, "rb") as pdf_file:
+    st.download_button(
+        label="📄 PDF herunterladen",
+        data=pdf_file,
+        file_name="auswertung.pdf",
+        mime="application/pdf",
+    )
