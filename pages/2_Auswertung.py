@@ -14,28 +14,6 @@ history_directory = "history_exports"
 if not os.path.exists(history_directory):
     os.makedirs(history_directory)
 
-# Initialisiere die Daten und den Zähler
-data = []
-total_count = 0
-
-# Speichere die Auswertung in einer JSON-Datei
-history_data = {
-    "praep_name": praep_name,
-    "data": data,  # Die Tabelle der Ergebnisse
-    "total_count": total_count,
-}
-
-# Dateiname basierend auf dem Präparatnamen
-history_file = os.path.join(history_directory, f"{praep_name}.json")
-with open(history_file, "w", encoding="utf-8") as f:
-    json.dump(history_data, f, ensure_ascii=False, indent=4)
-
-st.success(f"Die Auswertung für {praep_name} wurde gespeichert.")
-
-# Titel der Seite
-praep_name = st.session_state.get("praep_name", "Präparat")
-st.title(f"Auswertung für {praep_name}")
-
 # Überprüfen, ob Zählerdaten aus 1_Morphaway.py vorhanden sind
 if any(f"button_{i}_count" in st.session_state for i in range(1, 19)):
     # Liste der Zellen und Beschriftungen
@@ -84,7 +62,7 @@ if any(f"button_{i}_count" in st.session_state for i in range(1, 19)):
 
         # Diagramm als Bild in Bytes speichern
         img_bytes = io.BytesIO()
-        fig.write_image(img_bytes, format="png")
+        fig.write_image(img_bytes, format="png")  # Erfordert kaleido
         img_bytes.seek(0)
     else:
         st.warning("Keine Daten für das Kreisdiagramm verfügbar. Alle Zellen haben 0 Klicks.")
