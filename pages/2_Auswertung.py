@@ -88,8 +88,11 @@ pdf.ln(10)
 pdf.set_font("Arial", size=12)
 pdf.cell(200, 10, txt="Tabelle der Ergebnisse:", ln=True)
 pdf.ln(5)
-for index, row in df.iterrows():
-    pdf.cell(200, 10, txt=f"{row['Zelle']}: {row['Anzahl']} Klicks ({row['Relativer Anteil (%)']}%)", ln=True)
+if 'df' in locals() or 'df' in globals():
+    for index, row in df.iterrows():
+        pdf.cell(200, 10, txt=f"{row['Zelle']}: {row['Anzahl']} Klicks ({row['Relativer Anteil (%)']}%)", ln=True)
+else:
+    st.warning("Die Tabelle der Ergebnisse (df) ist nicht verfügbar.")
 
 # Diagramm in die PDF einfügen
 if img_bytes:
