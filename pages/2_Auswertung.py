@@ -97,6 +97,14 @@ if img_bytes:
     pdf.cell(200, 10, txt="Kreisdiagramm der Ergebnisse:", ln=True)
     pdf.ln(5)
 
+if not filtered_df.empty:
+    img_bytes = io.BytesIO()
+    fig.write_image(img_bytes, format="png")  # Erfordert kaleido
+    img_bytes.seek(0)
+else:
+    st.warning("Keine Daten für das Kreisdiagramm verfügbar. Alle Zellen haben 0 Klicks.")
+    img_bytes = None
+    
     # Temporäre Datei erstellen
     with tempfile.NamedTemporaryFile(delete=False, suffix=".png") as temp_file:
         temp_file.write(img_bytes.getvalue())  # Schreibe das Bild in die temporäre Datei
