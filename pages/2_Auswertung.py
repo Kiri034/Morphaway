@@ -74,14 +74,6 @@ if any(f"button_{i}_count" in st.session_state for i in range(1, 19)):
 if 'data_df' in st.session_state and not st.session_state['data_df'].empty:
     data_df = st.session_state['data_df']
     
-    # Option zum Herunterladen der Tabelle als CSV
-    csv = data_df.to_csv(index=False).encode('utf-8')
-    st.download_button(
-        label="Daten als CSV herunterladen",
-        data=csv,
-        file_name="zellzaehlung_daten.csv",
-        mime="text/csv",
-    )
 # PDF-Erstellung
 pdf = FPDF()
 pdf.add_page()
@@ -110,11 +102,21 @@ if img_bytes:
         temp_file.write(img_bytes.getvalue())  # Schreibe das Bild in die temporäre Datei
         temp_file_path = temp_file.name  # Speichere den Pfad der temporären Datei
 
+    # Verfügbare Höhe auf der Seite berechnen
+    current_y = pdf.get_y()  # Aktuelle Y-Position
+    page_height = 297  # Höhe einer A4-Seite in mm
+    margin_bottom = 10  # Unterer Rand in mm
+    available_height = page_height - current_y - margin_bottom
+
     # Füge das Bild aus der temporären Datei in die PDF ein
-    pdf.image(temp_file_path, x=10, y=pdf.get_y(), w=180)
+    pdf.image(temp_file_path, x=10, y=current_y, w=180, h=available_height)
 
     # Lösche die temporäre Datei nach der Verwendung
     os.remove(temp_file_path)
+
+if current_y + available_height > page_height - margin_bottom:
+    pdf.add_page()
+    pdf.image(temp_file_path, x=10, y=10, w=180)
 
 # PDF direkt in eine Datei schreiben
 output_file_path = "zellzaehlung_ergebnisse.pdf"  # Pfad zur Ausgabedatei
