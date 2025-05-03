@@ -90,23 +90,12 @@ else:
         <div class="button-container">
             <a href="https://morphaway.streamlit.app/Auswertung" class="link-button">
                 Auswertung starten
-
             </a>
         </div>
     </div>
     """,
     unsafe_allow_html=True
 )
-
-    # Buttons im Vollbildmodus
-    col1, col2 = st.columns(2)
-    with col1:
-        if st.button("Auswertung starten"):
-            st.session_state["current_page"] = "Auswertung"
-
-    with col2:
-        if st.button("🔄 Seite neu laden"):
-            st.experimental_rerun()
 
     # Liste der Bildnamen und Beschriftungen
     images = [
