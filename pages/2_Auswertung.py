@@ -75,21 +75,24 @@ if 'data_df' in st.session_state and not st.session_state['data_df'].empty:
     data_df = st.session_state['data_df']
     
 # PDF-Erstellung
-pdf = FPDF()
-pdf.add_page()
-pdf.set_font("Arial", size=12)
+if 'df' in locals() or 'df' in globals():
+    pdf = FPDF()
+    pdf.add_page()
+    pdf.set_font("Arial", size=12)
 
-# Titel
-pdf.set_font("Arial", style="B", size=16)
-pdf.cell(200, 10, txt="Zellzählungsergebnisse", ln=True, align="C")
-pdf.ln(10)
+    # Titel
+    pdf.set_font("Arial", style="B", size=16)
+    pdf.cell(200, 10, txt="Zellzählungsergebnisse", ln=True, align="C")
+    pdf.ln(10)
 
-# Tabelle in die PDF einfügen
-pdf.set_font("Arial", size=12)
-pdf.cell(200, 10, txt="Tabelle der Ergebnisse:", ln=True)
-pdf.ln(5)
-for index, row in df.iterrows():
-    pdf.cell(200, 10, txt=f"{row['Zelle']}: {row['Anzahl']} Klicks ({row['Relativer Anteil (%)']}%)", ln=True)
+    # Tabelle in die PDF einfügen
+    pdf.set_font("Arial", size=12)
+    pdf.cell(200, 10, txt="Tabelle der Ergebnisse:", ln=True)
+    pdf.ln(5)
+    for index, row in df.iterrows():
+        pdf.cell(200, 10, txt=f"{row['Zelle']}: {row['Anzahl']} Klicks ({row['Relativer Anteil (%)']}%)", ln=True)
+else:
+    st.error("Die Tabelle der Ergebnisse (df) ist nicht definiert. Bitte überprüfen Sie die vorherigen Schritte.")
 
 # Diagramm in die PDF einfügen
 if img_bytes:
