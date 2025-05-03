@@ -7,10 +7,6 @@ st.title("Cell Counter")
 if "praep_name" not in st.session_state:
     st.session_state["praep_name"] = ""
 
-# Initialisiere den Zustand des Vollbildmodus
-if "show_fullscreen" not in st.session_state:
-    st.session_state["show_fullscreen"] = True
-
 # Zeige das Eingabefeld nur, wenn der Präparatname noch nicht eingegeben wurde
 if not st.session_state["praep_name"]:
     praep_name = st.text_input("Gib einen Namen für das Präparat ein:")
@@ -48,61 +44,48 @@ else:
         f"<h2 style='text-align: center; color: white; padding: 10px;'>Total Klicks: {total_count}</h2>",
         unsafe_allow_html=True
     )
+        
+if (st.session_state["selected_option"] == "50 Zellen differenzieren" and total_count >= 50) or \
+   (st.session_state["selected_option"] == "100 Zellen differenzieren" and total_count >= 100) or \
+   (st.session_state["selected_option"] == "200 Zellen differenzieren" and total_count >= 200):
+    st.markdown(
+        """
+        <style>
+        .fullscreen-message {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            z-index: 9999;
+        }
+        .button-container {
+            margin-top: 20px;
+        }
+        </style>
+        <div class="fullscreen-message">
+            🎉 Du hast die gewünschte Anzahl an Zellen erreicht! 🎉
+            <div class="button-container">
+        """,
+        unsafe_allow_html=True
+    )
 
-    # Überprüfen, ob die gewünschte Anzahl an Klicks erreicht wurde
-    if (st.session_state["selected_option"] == "50 Zellen differenzieren" and total_count >= 50) or \
-       (st.session_state["selected_option"] == "100 Zellen differenzieren" and total_count >= 100) or \
-       (st.session_state["selected_option"] == "200 Zellen differenzieren" and total_count >= 200):
-        # Zeige den Vollbildmodus nur, wenn er aktiv ist
-        if st.session_state["show_fullscreen"]:
-            st.markdown(
-                """
-                <style>
-                .fullscreen-message {
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    background-color: rgba(0, 0, 0, 0.8);
-                    color: white;
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    align-items: center;
-                    font-size: 2rem;
-                    z-index: 9999;
-                }
-                .button-container {
-                    margin-top: 20px;
-                }
-                .link-button {
-                    padding: 10px 20px;
-                    font-size: 1.5rem;
-                    color: white;
-                    background-color: #007bff;
-                    border: none;
-                    border-radius: 5px;
-                    text-decoration: none;
-                    cursor: pointer;
-                }
-                .link-button:hover {
-                    background-color: #0056b3;
-                }
-                </style>
-                <div class="fullscreen-message">
-                    🎉 Du hast die gewünschte Anzahl an Zellen erreicht! 🎉
-                    <div class="button-container">
-                """,
-                unsafe_allow_html=True
-            )
+    # Auswertungsbutton
+    if st.button("Auswertung starten"):
+        st.session_state["current_page"] = "Auswertung"
 
-            # Streamlit-Button für die Navigation
-            if st.button("Auswertung starten"):
-                st.session_state["show_fullscreen"] = False  # Vollbildmodus deaktivieren
-                st.session_state["current_page"] = "Auswertung"
+    # Refresh-Button
+    if st.button("🔄 Seite neu laden"):
+        st.experimental_rerun()
 
-            st.markdown("</div></div>", unsafe_allow_html=True)
+    st.markdown("</div></div>", unsafe_allow_html=True)
 
     # Liste der Bildnamen und Beschriftungen
     images = [
