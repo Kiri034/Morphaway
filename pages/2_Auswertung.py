@@ -94,6 +94,23 @@ if 'df' in locals() or 'df' in globals():
 else:
     st.warning("Die Tabelle der Ergebnisse (df) ist nicht verfügbar.")
 
+if img_bytes:
+    # Diagramm in die PDF einfügen
+    pdf.ln(10)
+    pdf.cell(200, 10, txt="Kreisdiagramm der Ergebnisse:", ln=True)
+    pdf.ln(5)
+
+    # Temporäre Datei erstellen
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".png") as temp_file:
+        temp_file.write(img_bytes.getvalue())  # Schreibe das Bild in die temporäre Datei
+        temp_file_path = temp_file.name  # Speichere den Pfad der temporären Datei
+
+    # Füge das Bild aus der temporären Datei in die PDF ein
+    pdf.image(temp_file_path, x=10, y=pdf.get_y(), w=180)
+
+    # Lösche die temporäre Datei nach der Verwendung
+    os.remove(temp_file_path)
+    
 # Diagramm in die PDF einfügen
 if img_bytes:
     pdf.ln(10)
