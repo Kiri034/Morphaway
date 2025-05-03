@@ -118,7 +118,7 @@ if img_bytes:
 
 # PDF als Download anbieten
 pdf_output = io.BytesIO()
-pdf.output(pdf_output)
+pdf.output(pdf_output, dest='F')  # Use 'F' to write to the BytesIO object
 pdf_output.seek(0)
 
 st.download_button(
