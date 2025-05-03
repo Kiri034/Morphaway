@@ -95,6 +95,9 @@ else:
         </div>
     </div>
     """,
+    unsafe_allow_html=True
+)
+
     # Buttons im Vollbildmodus
     col1, col2 = st.columns(2)
     with col1:
@@ -104,17 +107,6 @@ else:
     with col2:
         if st.button("🔄 Seite neu laden"):
             st.experimental_rerun()
-    col1, col2 = st.columns(2)
-    with col1:
-        if st.button("Auswertung starten"):
-            st.session_state["current_page"] = "Auswertung"
-
-    with col2:
-        if st.button("🔄 Seite neu laden"):
-            st.experimental_rerun()
-
-    unsafe_allow_html=True
-)
 
     # Liste der Bildnamen und Beschriftungen
     images = [
