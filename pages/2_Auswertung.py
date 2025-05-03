@@ -81,8 +81,9 @@ pdf.set_font("Arial", style="B", size=16)
 pdf.cell(200, 10, txt="Auswertung der Ergebnisse", ln=True, align="C")
 pdf.ln(10)
 
-# Tabelle in die PDF einfügen
-if not df.empty:
+# Tabelle in die PDF einfügen¨
+
+if 'df' in locals() and not df.empty:
     pdf.set_font("Arial", size=12)
     pdf.cell(0, 5, txt="Tabelle der Ergebnisse:", ln=True)
     pdf.ln(5)
