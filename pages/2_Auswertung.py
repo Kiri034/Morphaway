@@ -95,7 +95,7 @@ else:
 if img_bytes:
     pdf.ln(10)
     pdf.set_font("Arial", size=10)
-    pdf.cell(0, 5, txt="Kreisdiagramm der Ergebnisse:", ln=True)
+    pdf.cell(0, 10, txt="Kreisdiagramm der Ergebnisse:", ln=True)
     pdf.ln(5)
 
     # Temporäre Datei erstellen
