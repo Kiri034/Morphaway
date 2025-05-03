@@ -96,6 +96,24 @@ else:
     """,
     unsafe_allow_html=True
 )
+        
+        # Erstelle einen leeren Container für den Total Counter
+counter_placeholder = st.empty()
+
+# Zeige den initialen Total Counter
+counter_placeholder.markdown(
+    f"<h2 style='text-align: center; color: white; padding: 10px;'>Total Klicks: {total_count}</h2>",
+    unsafe_allow_html=True
+)
+
+# Aktualisiere den Total Counter, wenn ein Button geklickt wird
+if st.button("Klick mich!"):
+    st.session_state["button_1_count"] += 1
+    total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 19))
+    counter_placeholder.markdown(
+        f"<h2 style='text-align: center; color: white; padding: 10px;'>Total Klicks: {total_count}</h2>",
+        unsafe_allow_html=True
+    )
 
     # Liste der Bildnamen und Beschriftungen
     images = [
