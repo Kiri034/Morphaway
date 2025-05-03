@@ -4,13 +4,21 @@ import plotly.express as px
 from fpdf import FPDF
 import io
 
+# Überprüfen, ob die aktuelle Seite "Auswertung" ist
+if st.session_state.get("current_page") != "Auswertung":
+    st.warning("Bitte kehre zur Hauptseite zurück und starte die Auswertung erneut.")
+    st.stop()
+
 # Titel der Seite
 praep_name = st.session_state.get("praep_name", "Präparat")
 st.title(f"Auswertung für {praep_name}")
 
 # Überprüfen, ob Zählerdaten aus 1_Morphaway.py vorhanden sind
 if any(f"button_{i}_count" in st.session_state for i in range(1, 19)):
-    # Liste der Zellen und Beschriftungen
+    # Restlicher Code für die Auswertung...
+else:
+    st.warning("Keine Daten verfügbar. Bitte kehre zurück und zähle Zellen in Morphaway.")
+    
     images = [
         {"label": "Lymphozyt"},
         {"label": "Monozyt"},
