@@ -49,40 +49,34 @@ else:
     if (st.session_state["selected_option"] == "50 Zellen differenzieren" and total_count >= 50) or \
        (st.session_state["selected_option"] == "100 Zellen differenzieren" and total_count >= 100) or \
        (st.session_state["selected_option"] == "200 Zellen differenzieren" and total_count >= 200):
-        # button switchen
-        if st.button("Auswertung starten"):
-            # Bildschirmsperre mit Button
-            st.markdown(
-                """
-                <style>
-                .fullscreen-lock {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(0, 0, 0, 0.9);
-                color: white;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                font-size: 2rem;
-                z-index: 9999;
-                }
-                </style>
-                <div class="fullscreen-lock">
-                🎉 Du hast die gewünschte Anzahl an Zellen erreicht! 🎉
-                <br><br>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
-            if st.button("Auswertung starten"):
-                st.switch_page("pages/2_Auswertung.py")
-
-
-
+        # Blockiere die gesamte Benutzeroberfläche und zeige eine Vollbild-Meldung mit Button
+        st.markdown(
+            """
+            <style>
+            .fullscreen-message {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            z-index: 9999;
+            }
+            </style>
+            <div class="fullscreen-message">
+            🎉 Du hast die gewünschte Anzahl an Zellen erreicht! 🎉
+                    st.button("Auswertung starten"):
+            st.switch_page("pages/2_Auswertung.py")
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
 
     # Liste der Bildnamen und Beschriftungen
     images = [
