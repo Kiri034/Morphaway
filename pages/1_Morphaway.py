@@ -49,17 +49,19 @@ else:
     if (st.session_state["selected_option"] == "50 Zellen differenzieren" and total_count >= 50) or \
        (st.session_state["selected_option"] == "100 Zellen differenzieren" and total_count >= 100) or \
        (st.session_state["selected_option"] == "200 Zellen differenzieren" and total_count >= 200):
-        # Blockiere die gesamte Benutzeroberfläche und zeige eine Vollbild-Meldung mit Button
-        st.markdown(
-            """
-            <style>
-            .fullscreen-message {
+        # button switchen
+        if st.button("Auswertung starten"):
+            # Bildschirmsperre mit Button
+            st.markdown(
+                """
+                <style>
+                .fullscreen-lock {
                 position: fixed;
                 top: 0;
                 left: 0;
                 width: 100%;
                 height: 100%;
-                background-color: rgba(0, 0, 0, 0.8);
+                background-color: rgba(0, 0, 0, 0.9);
                 color: white;
                 display: flex;
                 flex-direction: column;
@@ -67,38 +69,17 @@ else:
                 align-items: center;
                 font-size: 2rem;
                 z-index: 9999;
-            }
-            .button-container {
-                margin-top: 20px;
-            }
-            .link-button {
-                padding: 10px 20px;
-                font-size: 1.5rem;
-                color: white;
-                background-color: #007bff;
-                border: none;
-                border-radius: 5px;
-                text-decoration: none;
-                cursor: pointer;
-            }
-            .link-button:hover {
-                background-color: #0056b3;
-            }
-            </style>
-            <div class="fullscreen-message">
+                }
+                </style>
+                <div class="fullscreen-lock">
                 🎉 Du hast die gewünschte Anzahl an Zellen erreicht! 🎉
-                <div class="button-container">
-                    <a href="https://morphaway.streamlit.app/Auswertung" class="link-button">
-                        Auswertung starten
-                    </a>
+                <br><br>
                 </div>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
-    # button switchen
-    if st.button("Auswertung starten"):
-        st.switch_page("pages/2_Auswertung.py")
+                """,
+                unsafe_allow_html=True
+            )
+            if st.button("Auswertung starten"):
+                st.switch_page("pages/2_Auswertung.py")
 
 
 
