@@ -45,15 +45,15 @@ else:
         unsafe_allow_html=True
     )
 
-    # Überprüfen, ob die gewünschte Anzahl an Klicks erreicht wurde
-    if (st.session_state["selected_option"] == "50 Zellen differenzieren" and total_count >= 50) or \
-       (st.session_state["selected_option"] == "100 Zellen differenzieren" and total_count >= 100) or \
-       (st.session_state["selected_option"] == "200 Zellen differenzieren" and total_count >= 200):
-        # Blockiere die gesamte Benutzeroberfläche und zeige eine Vollbild-Meldung mit Button
-        st.markdown(
-            """
-            <style>
-            .fullscreen-message {
+# Überprüfen, ob die gewünschte Anzahl an Klicks erreicht wurde
+if (st.session_state["selected_option"] == "50 Zellen differenzieren" and total_count >= 50) or \
+   (st.session_state["selected_option"] == "100 Zellen differenzieren" and total_count >= 100) or \
+   (st.session_state["selected_option"] == "200 Zellen differenzieren" and total_count >= 200):
+    # Blockiere die gesamte Benutzeroberfläche und zeige eine Vollbild-Meldung mit Button
+    st.markdown(
+        """
+        <style>
+        .fullscreen-message {
             position: fixed;
             top: 0;
             left: 0;
@@ -67,16 +67,39 @@ else:
             align-items: center;
             font-size: 2rem;
             z-index: 9999;
-            }
-            </style>
-            <div class="fullscreen-message">
+        }
+        .button-container {
+            margin-top: 20px;
+        }
+        .switch-page-button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 12px;
+        }
+        .switch-page-button:hover {
+            background-color: #45a049; /* Darker green */
+        }
+        </style>
+        <div class="fullscreen-message">
             🎉 Du hast die gewünschte Anzahl an Zellen erreicht! 🎉
-                    st.button("Auswertung starten"):
-            st.switch_page("pages/2_Auswertung.py")
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
+            <div class="button-container">
+                <button class="switch-page-button" onclick="window.location.href='/pages/2_Auswertung.py'">Zur Auswertung</button>
+            </div>        
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    if st.button("Auswertung starten"):
+        st.switch_page("pages/2_Auswertung.py")
 
     # Liste der Bildnamen und Beschriftungen
     images = [
