@@ -99,7 +99,7 @@ else:
 
 # button switchen
   if st.button ("Auswertung starten"):
-        st.switch_page("2_Auswertung")
+        st.switch_page("pages/2_Auswertung.py")
 
 
     # Liste der Bildnamen und Beschriftungen
