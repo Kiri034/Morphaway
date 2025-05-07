@@ -9,4 +9,4 @@ st.write("Drücke auf den unteren Knopf, um mit der Differenzierung zu starten o
 
 # Button zur Navigation zu Morphaway.py
 if st.button("Jetzt differenzieren"):
-    st.switch_page("Morphaway.py")
+    st.switch_page("1_Morphaway.py")
