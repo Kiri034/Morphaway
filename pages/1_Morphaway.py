@@ -98,9 +98,6 @@ if (st.session_state["selected_option"] == "50 Zellen differenzieren" and total_
         unsafe_allow_html=True
     )
 
-    if st.button("Auswertung starten"):
-        st.switch_page("pages/2_Auswertung.py")
-
     # Liste der Bildnamen und Beschriftungen
     images = [
         {"path": "https://via.placeholder.com/150?text=Button+1", "label": "Lymphozyt"},
