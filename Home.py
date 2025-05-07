@@ -8,4 +8,5 @@ st.write('Die Werte der ausgezählten Zellen findest du prozentual sowie grafisc
 st.write("Drücke auf den unteren Knopf, um mit der Differenzierung zu starten oder nutze die Seitenleiste für andere Funktionen!")
 
 # Button zur Navigation zu Morphaway.py
-st.link_button("Jetzt differenzieren", "https://morphaway.streamlit.app/~/+/Morphaway")
+if st.button("Jetzt differenzieren"):
+    st.switch_page("Morphaway.py")

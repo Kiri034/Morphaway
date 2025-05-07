@@ -97,6 +97,11 @@ else:
     unsafe_allow_html=True
 )
 
+# button switchen
+  if st.button ("Auswertung starten"):
+        st.switch_page("2_Auswertung.py")
+
+
     # Liste der Bildnamen und Beschriftungen
     images = [
         {"path": "https://via.placeholder.com/150?text=Button+1", "label": "Lymphozyt"},
