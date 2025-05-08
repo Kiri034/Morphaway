@@ -3,9 +3,17 @@ import streamlit as st
 # Titel der Seite
 st.title("Cell Counter")
 
-# Refresh-Button hinzufügen
-if st.button("Seite neu laden"):
-    st.rerun()  # Seite neu laden, ohne session_state zu löschen
+# Funktion zum Zurücksetzen des Total Count und der Session-Variablen
+def reset_all():
+    for i in range(1, 19):  # 18 Buttons
+        st.session_state[f"button_{i}_count"] = 0
+    st.session_state["total_count"] = 0  # Zurücksetzen des Gesamtzählers
+    st.session_state["praep_name"] = ""  # Zurücksetzen des Präparatnamens
+    st.session_state["selected_option"] = None  # Zurücksetzen der Auswahloption
+
+# Button zum Zurücksetzen von Total Count, Präparatname und Auswahloptionen
+if st.button("Total Count zurücksetzen"):
+    reset_all()
 
 # Überprüfen, ob ein Präparatname bereits in st.session_state gespeichert ist
 if "praep_name" not in st.session_state:
