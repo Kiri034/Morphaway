@@ -57,14 +57,11 @@ else:
     # Überprüfen, ob die gewünschte Anzahl an Klicks erreicht wurde
     if total_count >= max_count:
         # Blockiere das Zählen von Zellen und zeige eine Nachricht
-        st.warning(f"Du hast die maximale Anzahl von {max_count} Zellen erreicht. Keine weiteren Zellen können mehr gezählt werden.")
+        st.warning(f"Du hast die gewünschte Anzahl von {max_count} Zellen erreicht. Du kannst jetzt die Auswertung starten.")
         
         # Button für Auswertung anzeigen
         if st.button("Jetzt Auswerten"):
             st.switch_page("pages/2_Auswertung.py")
-    else:
-        # Wenn nicht das Maximum erreicht ist, lasse den Benutzer weitermachen
-        st.info(f"Du kannst noch {max_count - total_count} Zellen zählen.")
 
     # Liste der Bildnamen und Beschriftungen
     images = [
