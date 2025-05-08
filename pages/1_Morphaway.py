@@ -49,52 +49,117 @@ else:
     if (st.session_state["selected_option"] == "50 Zellen differenzieren" and total_count >= 50) or \
        (st.session_state["selected_option"] == "100 Zellen differenzieren" and total_count >= 100) or \
        (st.session_state["selected_option"] == "200 Zellen differenzieren" and total_count >= 200):
-        
-        # Blockiere die gesamte Benutzeroberfläche und zeige eine Vollbild-Meldung mit Button
-
-                # Zielwert extrahieren
         zielwert = int(st.session_state["selected_option"].split()[0])
+total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 19))
 
-        # Wenn die gewünschte Anzahl an Klicks erreicht wurde
-        if total_count >= zielwert:
-            # Overlay anzeigen
-            st.markdown(
-                """
-                <style>
-                .fullscreen-message {
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    background-color: rgba(0, 0, 0, 0.85);
-                    color: white;
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    align-items: center;
-                    font-size: 2rem;
-                    z-index: 9999;
-                }
-                </style>
-                <div class="fullscreen-message">
-                    🎉 Du hast die gewünschte Anzahl an Zellen erreicht! 🎉
-                    <br><br>
-                    <span style="font-size:1rem;">Klicke unten auf den Button, um zur Auswertung zu wechseln.</span>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
+if total_count >= zielwert:
+    # Overlay mit getrenntem Button-Container
+    st.markdown(
+        """
+        <style>
+        .fullscreen-message {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            z-index: 9998;
+            pointer-events: none;
+        }
 
-            # Abstand für sichtbaren Button
-            st.markdown("<br><br><br><br><br><br><br><br><br><br>", unsafe_allow_html=True)
-            
-            # Echter Button für Navigation
-            if st.button("➡️ Zur Auswertung"):
-                st.switch_page("2_Auswertung.py")
-            
-            # Stoppe die App, um keine weiteren UI-Elemente mehr zu zeigen
-            st.stop()
+        .button-layer {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            pointer-events: auto;
+        }
+
+        .real-button {
+            font-size: 1.5rem;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .real-button:hover {
+            background-color: #0056b3;
+        }
+        </style>
+
+        <div class="fullscreen-message">
+            🎉 Du hast die gewünschte Anzahl an Zellen erreicht! 🎉
+            <br><br>
+            <span style="font-size:1rem;">Klicke auf den Button unten, um zur Auswertung zu wechseln.</span>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # Jetzt platzieren wir den Streamlit-Button sichtbar und klickbar in einer "freien" Schicht
+    st.markdown('<div class="button-layer">', unsafe_allow_html=True)
+    if st.button("➡️ Zur Auswertung", key="go_to_eval"):
+        st.switch_page("2_Auswertung.py")
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    # Stop, um restlichen Inhalt zu unterdrücken
+    st.stop()
+# Blockiere die gesamte Benutzeroberfläche und zeige eine Vollbild-Meldung mit Button
+
+        # Zielwert extrahieren
+zielwert = int(st.session_state["selected_option"].split()[0])
+
+# Wenn die gewünschte Anzahl an Klicks erreicht wurde
+if total_count >= zielwert:
+    # Overlay anzeigen
+    st.markdown(
+        """
+        <style>
+        .fullscreen-message {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            z-index: 9999;
+        }
+        </style>
+        <div class="fullscreen-message">
+            🎉 Du hast die gewünschte Anzahl an Zellen erreicht! 🎉
+            <br><br>
+            <span style="font-size:1rem;">Klicke unten auf den Button, um zur Auswertung zu wechseln.</span>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # Abstand für sichtbaren Button
+    st.markdown("<br><br><br><br><br><br><br><br><br><br>", unsafe_allow_html=True)
+    
+    # Echter Button für Navigation
+    if st.button("➡️ Zur Auswertung"):
+        st.switch_page("2_Auswertung.py")
+    
+    # Stoppe die App, um keine weiteren UI-Elemente mehr zu zeigen
+    st.stop()
 
 
     # Liste der Bildnamen und Beschriftungen
