@@ -3,6 +3,14 @@ import streamlit as st
 # Titel der Seite
 st.title("Cell Counter")
 
+# Funktion zum Zurücksetzen des Total Count und der Session-Variablen
+def reset_all():
+    for i in range(1, 19):  # 18 Buttons
+        st.session_state[f"button_{i}_count"] = 0
+    st.session_state["total_count"] = 0  # Zurücksetzen des Gesamtzählers
+    st.session_state["praep_name"] = ""  # Zurücksetzen des Präparatnamens
+    st.session_state["selected_option"] = None  # Zurücksetzen der Auswahloption
+
 # Überprüfen, ob ein Präparatname bereits in st.session_state gespeichert ist
 if "praep_name" not in st.session_state:
     st.session_state["praep_name"] = ""
@@ -98,14 +106,6 @@ else:
             # Beschriftung unter dem Bild
             st.write(f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}")
 
-             # Funktion zum Zurücksetzen des Total Count und der Session-Variablen
-        def reset_all():
-            for i in range(1, 19):  # 18 Buttons
-                st.session_state[f"button_{i}_count"] = 0
-            st.session_state["total_count"] = 0  # Zurücksetzen des Gesamtzählers
-            st.session_state["praep_name"] = ""  # Zurücksetzen des Präparatnamens
-            st.session_state["selected_option"] = None  # Zurücksetzen der Auswahloption
-
-        # Button zum Zurücksetzen von Total Count, Präparatname und Auswahloptionen
-        if st.button("Refresh"):
-            reset_all()
+    # Reset-Button nach den Bild-Buttons
+    if st.button("Refresh"):
+        reset_all()
