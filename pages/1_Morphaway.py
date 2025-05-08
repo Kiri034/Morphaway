@@ -49,36 +49,12 @@ else:
     if (st.session_state["selected_option"] == "50 Zellen differenzieren" and total_count >= 50) or \
        (st.session_state["selected_option"] == "100 Zellen differenzieren" and total_count >= 100) or \
        (st.session_state["selected_option"] == "200 Zellen differenzieren" and total_count >= 200):
-        # Blockiere die gesamte Benutzeroberfläche und zeige eine Vollbild-Meldung mit Button
-        st.markdown(
-            """
-            <style>
-                .fullscreen-message {
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    background-color: rgba(0, 0, 0, 0.8);
-                    color: white;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    font-size: 24px;
-                    z-index: 9999;
-                }
-            </style>
-            <div class="fullscreen-message">
-                <div>
-                    <h2>Die gewünschte Anzahl an Zellen wurde erreicht!</h2>
-                    <button onclick="window.location.reload();">Zurücksetzen</button>
-                </div>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
-        st.stop()  # Stoppe die Ausführung der App, um die Benutzeroberfläche zu blockieren
         
+        if st.button("Auswertung"):
+            st.switch_page("2_Auswertung")
+        else:
+            st.warning("Bitte klicke auf 'Auswertung', um fortzufahren.")
+   
 
     # Liste der Bildnamen und Beschriftungen
     images = [
