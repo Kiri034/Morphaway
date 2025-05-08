@@ -49,22 +49,15 @@ else:
     if (st.session_state["selected_option"] == "50 Zellen differenzieren" and total_count >= 50) or \
        (st.session_state["selected_option"] == "100 Zellen differenzieren" and total_count >= 100) or \
        (st.session_state["selected_option"] == "200 Zellen differenzieren" and total_count >= 200):
+        
         # Blockiere die gesamte Benutzeroberfläche und zeige eine Vollbild-Meldung mit Button
 
-        # Initialisieren des Sperrstatus im session_state
-        if 'locked' not in st.session_state:
-            st.session_state['locked'] = False
+                # Zielwert extrahieren
+        zielwert = int(st.session_state["selected_option"].split()[0])
 
-        # Funktion zum Umschalten des Sperrstatus
-        def toggle_lock():
-            st.session_state['locked'] = not st.session_state['locked']
-
-        # Button zum Sperren/Entsperren
-        if st.button('Sperre Bildschirm'):
-            toggle_lock()
-
-        # Wenn der Bildschirm gesperrt ist, Vollbild-Overlay anzeigen
-        if st.session_state['locked']:
+        # Wenn die gewünschte Anzahl an Klicks erreicht wurde
+        if total_count >= zielwert:
+            # Overlay anzeigen
             st.markdown(
                 """
                 <style>
@@ -74,7 +67,7 @@ else:
                     left: 0;
                     width: 100%;
                     height: 100%;
-                    background-color: rgba(0, 0, 0, 0.8);
+                    background-color: rgba(0, 0, 0, 0.85);
                     color: white;
                     display: flex;
                     flex-direction: column;
@@ -82,42 +75,26 @@ else:
                     align-items: center;
                     font-size: 2rem;
                     z-index: 9999;
-                    text-align: center;
-                    padding: 20px;
-                    box-sizing: border-box;
-                }
-                .button-container {
-                    margin-top: 20px;
-                }
-                .switch-button {
-                    display: inline-block;
-                    padding: 10px 20px;
-                    font-size: 1.5rem;
-                    color: white;
-                    background-color: #007bff;
-                    border: none;
-                    border-radius: 5px;
-                    text-decoration: none;
-                    cursor: pointer;
-                }
-                .switch-button:hover {
-                    background-color: #0056b3;
                 }
                 </style>
                 <div class="fullscreen-message">
-                    🎉 Der Bildschirm ist gesperrt! 🎉
-                    <div class="button-container">
-                        <a href="#" class="switch-button" onclick="window.location.reload();">
-                            🔓 Entsperren
-                        </a>
-                    </div>
+                    🎉 Du hast die gewünschte Anzahl an Zellen erreicht! 🎉
+                    <br><br>
+                    <span style="font-size:1rem;">Klicke unten auf den Button, um zur Auswertung zu wechseln.</span>
                 </div>
                 """,
                 unsafe_allow_html=True
             )
-        else:
-            st.write("Der Bildschirm ist entsperrt.")
+
+            # Abstand für sichtbaren Button
+            st.markdown("<br><br><br><br><br><br><br><br><br><br>", unsafe_allow_html=True)
             
+            # Echter Button für Navigation
+            if st.button("➡️ Zur Auswertung"):
+                st.switch_page("2_Auswertung.py")
+            
+            # Stoppe die App, um keine weiteren UI-Elemente mehr zu zeigen
+            st.stop()
 
 
     # Liste der Bildnamen und Beschriftungen
