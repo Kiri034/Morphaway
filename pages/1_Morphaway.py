@@ -3,6 +3,10 @@ import streamlit as st
 # Titel der Seite
 st.title("Cell Counter")
 
+# Refresh-Button hinzufügen
+if st.button("Seite neu laden"):
+    st.experimental_rerun()  # Seite neu laden, ohne session_state zu löschen
+
 # Überprüfen, ob ein Präparatname bereits in st.session_state gespeichert ist
 if "praep_name" not in st.session_state:
     st.session_state["praep_name"] = ""
