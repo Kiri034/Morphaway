@@ -3,41 +3,6 @@ import streamlit as st
 # Titel der Seite
 st.title("Cell Counter")
 
-# CSS Styling für eine schönere Darstellung
-st.markdown(
-    """
-    <style>
-    .header {
-        text-align: center;
-        color: #4CAF50;
-        font-size: 36px;
-        font-weight: bold;
-    }
-    .counter {
-        text-align: center;
-        color: white;
-        font-size: 24px;
-        padding: 20px;
-        background-color: #333;
-        border-radius: 10px;
-    }
-    .image-container {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-    .image-button {
-        margin: 10px;
-        border-radius: 10px;
-        transition: transform 0.2s;
-    }
-    .image-button:hover {
-        transform: scale(1.1);
-    }
-    </style>
-    """, unsafe_allow_html=True
-)
-
 # Funktion zum Zurücksetzen des Total Count und der Session-Variablen
 def reset_all():
     for i in range(1, 19):  # 18 Buttons
@@ -61,7 +26,7 @@ if not st.session_state["praep_name"]:
         st.session_state["praep_name"] = praep_name
 else:
     # Zeige den gespeicherten Präparatnamen an
-    st.markdown(f"### Präparat: **{st.session_state['praep_name']}**", unsafe_allow_html=True)
+    st.markdown(f"### Präparat: **{st.session_state['praep_name']}**")
 
 # Überprüfen, ob ein Präparatname eingegeben wurde
 if not st.session_state["praep_name"]:
@@ -88,7 +53,7 @@ else:
 
     # Zeige den Total Counter oben an (größer dargestellt und in Weiß)
     st.markdown(
-        f"<div class='counter'>Total Klicks: {total_count}</div>",
+        f"<h2 style='text-align: center; color: white; padding: 10px;'>Total Klicks: {total_count}</h2>",
         unsafe_allow_html=True
     )
 
@@ -133,9 +98,10 @@ else:
     ]
 
     # Anordnung der Buttons in mehreren Reihen
-    st.markdown("<div class='image-container'>", unsafe_allow_html=True)
+    cols = st.columns(4)  # 4 Spalten pro Reihe
+
     for idx, image in enumerate(images):
-        col = st.columns(4)[idx % 4]  # 4 Spalten pro Reihe
+        col = cols[idx % 4]  # Wähle die Spalte basierend auf dem Index
         with col:
             # Klickbares Bild als Button
             if st.button("", key=f"button_{idx + 1}") and total_count < max_count:
@@ -143,4 +109,3 @@ else:
             st.image(image["path"], use_column_width=True)
             # Beschriftung unter dem Bild
             st.write(f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}")
-    st.markdown("</div>", unsafe_allow_html=True)
