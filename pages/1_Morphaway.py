@@ -5,7 +5,7 @@ st.title("Cell Counter")
 
 # Refresh-Button hinzufügen
 if st.button("Seite neu laden"):
-    st.experimental_rerun()  # Seite neu laden, ohne session_state zu löschen
+    st.rerun()  # Seite neu laden, ohne session_state zu löschen
 
 # Überprüfen, ob ein Präparatname bereits in st.session_state gespeichert ist
 if "praep_name" not in st.session_state:
