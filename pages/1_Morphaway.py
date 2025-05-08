@@ -12,7 +12,7 @@ def reset_all():
     st.session_state["selected_option"] = None  # Zurücksetzen der Auswahloption
 
 # Button zum Zurücksetzen von Total Count, Präparatname und Auswahloptionen
-if st.button("Total Count zurücksetzen"):
+if st.button("Refresh"):
     reset_all()
 
 # Überprüfen, ob ein Präparatname bereits in st.session_state gespeichert ist
