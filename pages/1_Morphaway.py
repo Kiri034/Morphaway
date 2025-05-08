@@ -31,18 +31,18 @@ else:
             ["50 Zellen differenzieren", "100 Zellen differenzieren", "200 Zellen differenzieren"]
         )
 
-# Funktion zum Zurücksetzen des Total Count und der Session-Variablen
-def reset_all():
-    for i in range(1, 19):  # 18 Buttons
-        st.session_state[f"button_{i}_count"] = 0
-    st.session_state["total_count"] = 0  # Zurücksetzen des Gesamtzählers
-    st.session_state["praep_name"] = ""  # Zurücksetzen des Präparatnamens
-    st.session_state["selected_option"] = None  # Zurücksetzen der Auswahloption
+        # Funktion zum Zurücksetzen des Total Count und der Session-Variablen
+        def reset_all():
+            for i in range(1, 19):  # 18 Buttons
+                st.session_state[f"button_{i}_count"] = 0
+            st.session_state["total_count"] = 0  # Zurücksetzen des Gesamtzählers
+            st.session_state["praep_name"] = ""  # Zurücksetzen des Präparatnamens
+            st.session_state["selected_option"] = None  # Zurücksetzen der Auswahloption
 
-# Button zum Zurücksetzen von Total Count, Präparatname und Auswahloptionen
-if st.button("Refresh"):
-    reset_all()
-    
+        # Button zum Zurücksetzen von Total Count, Präparatname und Auswahloptionen
+        if st.button("Refresh"):
+            reset_all()
+
     # Initialisiere Zähler für jeden Button im Session State
     for i in range(1, 19):  # 18 Bilder
         if f"button_{i}_count" not in st.session_state:
