@@ -65,7 +65,6 @@ else:
                 align-items: center;
                 font-size: 2rem;
                 z-index: 9998;
-                pointer-events: none;
             }
             .button-layer {
                 position: fixed;
@@ -102,9 +101,6 @@ else:
         if st.button("➡️ Zur Auswertung", key="go_to_eval"):
             st.switch_page("2_Auswertung.py")
         st.markdown('</div>', unsafe_allow_html=True)
-
-        # App stoppen, um restlichen Inhalt auszublenden
-        st.stop()
 
     # Bilddaten
     images = [
