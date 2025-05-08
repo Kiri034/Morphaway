@@ -45,16 +45,26 @@ else:
         unsafe_allow_html=True
     )
 
+    # Maximale Anzahl an Zellen basierend auf der Auswahl
+    max_count = 0
+    if st.session_state["selected_option"] == "50 Zellen differenzieren":
+        max_count = 50
+    elif st.session_state["selected_option"] == "100 Zellen differenzieren":
+        max_count = 100
+    elif st.session_state["selected_option"] == "200 Zellen differenzieren":
+        max_count = 200
+
     # Überprüfen, ob die gewünschte Anzahl an Klicks erreicht wurde
-    if (st.session_state["selected_option"] == "50 Zellen differenzieren" and total_count >= 50) or \
-       (st.session_state["selected_option"] == "100 Zellen differenzieren" and total_count >= 100) or \
-       (st.session_state["selected_option"] == "200 Zellen differenzieren" and total_count >= 200):
+    if total_count >= max_count:
+        # Blockiere das Zählen von Zellen und zeige eine Nachricht
+        st.warning(f"Du hast die maximale Anzahl von {max_count} Zellen erreicht. Keine weiteren Zellen können mehr gezählt werden.")
         
-        if st.button("Jetzt differenzieren"):
+        # Button für Auswertung anzeigen
+        if st.button("Jetzt Auswerten"):
             st.switch_page("pages/2_Auswertung.py")
-        else:
-            st.warning("Bitte klicke auf 'Auswertung', um fortzufahren.")
-   
+    else:
+        # Wenn nicht das Maximum erreicht ist, lasse den Benutzer weitermachen
+        st.info(f"Du kannst noch {max_count - total_count} Zellen zählen.")
 
     # Liste der Bildnamen und Beschriftungen
     images = [
@@ -85,7 +95,7 @@ else:
         col = cols[idx % 4]  # Wähle die Spalte basierend auf dem Index
         with col:
             # Klickbares Bild als Button
-            if st.button("", key=f"button_{idx + 1}"):
+            if st.button("", key=f"button_{idx + 1}") and total_count < max_count:
                 st.session_state[f"button_{idx + 1}_count"] += 1
             st.image(image["path"], use_column_width=True)
             # Beschriftung unter dem Bild
