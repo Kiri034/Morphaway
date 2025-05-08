@@ -3,18 +3,6 @@ import streamlit as st
 # Titel der Seite
 st.title("Cell Counter")
 
-# Funktion zum Zurücksetzen des Total Count und der Session-Variablen
-def reset_all():
-    for i in range(1, 19):  # 18 Buttons
-        st.session_state[f"button_{i}_count"] = 0
-    st.session_state["total_count"] = 0  # Zurücksetzen des Gesamtzählers
-    st.session_state["praep_name"] = ""  # Zurücksetzen des Präparatnamens
-    st.session_state["selected_option"] = None  # Zurücksetzen der Auswahloption
-
-# Button zum Zurücksetzen von Total Count, Präparatname und Auswahloptionen
-if st.button("Refresh"):
-    reset_all()
-
 # Überprüfen, ob ein Präparatname bereits in st.session_state gespeichert ist
 if "praep_name" not in st.session_state:
     st.session_state["praep_name"] = ""
@@ -43,6 +31,18 @@ else:
             ["50 Zellen differenzieren", "100 Zellen differenzieren", "200 Zellen differenzieren"]
         )
 
+# Funktion zum Zurücksetzen des Total Count und der Session-Variablen
+def reset_all():
+    for i in range(1, 19):  # 18 Buttons
+        st.session_state[f"button_{i}_count"] = 0
+    st.session_state["total_count"] = 0  # Zurücksetzen des Gesamtzählers
+    st.session_state["praep_name"] = ""  # Zurücksetzen des Präparatnamens
+    st.session_state["selected_option"] = None  # Zurücksetzen der Auswahloption
+
+# Button zum Zurücksetzen von Total Count, Präparatname und Auswahloptionen
+if st.button("Refresh"):
+    reset_all()
+    
     # Initialisiere Zähler für jeden Button im Session State
     for i in range(1, 19):  # 18 Bilder
         if f"button_{i}_count" not in st.session_state:
@@ -53,7 +53,7 @@ else:
 
     # Zeige den Total Counter oben an (größer dargestellt und in Weiß)
     st.markdown(
-        f"<h2 style='text-align: center; color: white; padding: 10px; background-color: #333; border-radius: 10px;'>Total Klicks: {total_count}</h2>",
+        f"<h2 style='text-align: center; color: white; padding: 10px;'>Total Klicks: {total_count}</h2>",
         unsafe_allow_html=True
     )
 
