@@ -50,9 +50,11 @@ else:
        (st.session_state["selected_option"] == "100 Zellen differenzieren" and total_count >= 100) or \
        (st.session_state["selected_option"] == "200 Zellen differenzieren" and total_count >= 200):
         # Blockiere die gesamte Benutzeroberfläche und zeige eine Vollbild-Meldung mit Button
-           st.markdown(
-    """
-    <style>
+           import streamlit as st
+
+    st.markdown(
+        """
+        <style>
     .fullscreen-message {
         position: fixed;
         top: 0;
@@ -67,6 +69,9 @@ else:
         align-items: center;
         font-size: 2rem;
         z-index: 9999;
+        text-align: center;
+        padding: 20px;
+        box-sizing: border-box;
     }
     .button-container {
         margin-top: 20px;
@@ -89,9 +94,8 @@ else:
     <div class="fullscreen-message">
         🎉 Du hast die gewünschte Anzahl an Zellen erreicht! 🎉
         <div class="button-container">
-            <a href="https://morphaway.streamlit.app/Auswertung" class="switch-button">
-                🧪
-                Auswertung starten
+            <a href="2_Auswertung.py" class="switch-button">
+                🧪 Auswertung starten
             </a>
         </div>
     </div>
