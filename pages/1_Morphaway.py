@@ -117,8 +117,7 @@ else:
             )
         else:
             st.write("Der Bildschirm ist entsperrt.")
-            # Hier kannst du deine Hauptinhalte einfügen
-            st.write("Hier ist dein normaler Inhalt.")
+            
 
 
     # Liste der Bildnamen und Beschriftungen
