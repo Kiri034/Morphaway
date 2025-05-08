@@ -50,8 +50,8 @@ else:
        (st.session_state["selected_option"] == "100 Zellen differenzieren" and total_count >= 100) or \
        (st.session_state["selected_option"] == "200 Zellen differenzieren" and total_count >= 200):
         
-        if st.button("Auswertung"):
-            st.switch_page("2_Auswertung")
+        if st.button("Jetzt differenzieren"):
+            st.switch_page("pages/2_Auswertung.py")
         else:
             st.warning("Bitte klicke auf 'Auswertung', um fortzufahren.")
    
