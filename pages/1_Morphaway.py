@@ -53,7 +53,7 @@ else:
 
     # Zeige den Total Counter oben an (größer dargestellt und in Weiß)
     st.markdown(
-        f"<h2 style='text-align: center; color: white; padding: 10px;'>Total Klicks: {total_count}</h2>",
+        f"<h2 style='text-align: center; color: white; padding: 10px; background-color: #333; border-radius: 10px;'>Total Klicks: {total_count}</h2>",
         unsafe_allow_html=True
     )
 
