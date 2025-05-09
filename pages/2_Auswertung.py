@@ -120,3 +120,8 @@ if os.path.exists(pdf_file_path):
         )
 else:
     st.error("Die PDF-Datei konnte nicht erstellt werden.")
+
+# Button für History anzeigen
+if st.button("History"):
+    st.switch_page("pages/3_History.py")
+    
