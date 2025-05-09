@@ -100,7 +100,7 @@ else:
         col = cols[idx % 4]  # Wähle die Spalte basierend auf dem Index
         with col:
             # Klickbares Bild als Button
-            if st.button("", key=f"button_{idx + 1}") and total_count < max_count:
+            if total_count < max_count and st.button("", key=f"button_{idx + 1}"):
                 st.session_state[f"button_{idx + 1}_count"] += 1
             st.image(image["path"], use_column_width=True)
             # Beschriftung unter dem Bild
