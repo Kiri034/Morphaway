@@ -59,15 +59,15 @@ else:
     else:
         max_count = 0
 
-    # Hinweise / Sperre
+    # Hinweise zum Zählziel
     if total_count == max_count:
         st.warning(f"Du hast die gewünschte Anzahl von {max_count} Zellen erreicht. Du kannst jetzt die Auswertung starten.")
         if st.button("Jetzt Auswerten"):
             st.switch_page("pages/2_Auswertung.py")
     elif total_count > max_count:
-        st.error(f"Achtung: Du hast das Limit von {max_count} Zellen überschritten.")
+        st.info(f"Achtung: Du hast das Limit von {max_count} Zellen überschritten. Weitere Klicks sind trotzdem möglich.")
 
-    # Bilder mit Buttons
+    # Bilder mit Plus/Minus Buttons
     images = [
         {"path": "https://via.placeholder.com/150?text=Button+1", "label": "Lymphozyt"},
         {"path": "https://via.placeholder.com/150?text=Button+2", "label": "Monozyt"},
@@ -89,16 +89,25 @@ else:
         {"path": "https://via.placeholder.com/150?text=Button+18", "label": "smudged cells"},
     ]
 
-    # Anordnung der Buttons
+    # Anordnung in 4 Spalten
     cols = st.columns(4)
     for idx, image in enumerate(images):
         col = cols[idx % 4]
         with col:
-            if st.button("", key=f"button_{idx + 1}") and total_count < max_count:
-                st.session_state[f"button_{idx + 1}_count"] += 1
             st.image(image["path"], use_column_width=True)
             st.write(f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}")
 
+            # Plus- und Minus-Buttons
+            plus, minus = st.columns(2)
+            with plus:
+                if st.button("+", key=f"plus_{idx + 1}"):
+                    st.session_state[f"button_{idx + 1}_count"] += 1
+            with minus:
+                if st.button("-", key=f"minus_{idx + 1}"):
+                    if st.session_state[f"button_{idx + 1}_count"] > 0:
+                        st.session_state[f"button_{idx + 1}_count"] -= 1
+
     # Reset-Button
+    st.markdown("---")
     if st.button("Refresh"):
         reset_all()
