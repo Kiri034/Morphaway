@@ -62,14 +62,16 @@ else:
     elif st.session_state["selected_option"] == "200 Zellen differenzieren":
         max_count = 200
 
-    # Überprüfen, ob die gewünschte Anzahl an Klicks erreicht wurde
+    # Blockiere das Zählen, wenn die gewünschte Anzahl erreicht ist
     if total_count >= max_count:
-        # Blockiere das Zählen von Zellen und zeige eine Nachricht
         st.warning(f"Du hast die gewünschte Anzahl von {max_count} Zellen erreicht. Du kannst jetzt die Auswertung starten.")
         
         # Button für Auswertung anzeigen
         if st.button("Jetzt Auswerten"):
             st.switch_page("pages/2_Auswertung.py")
+    else:
+        # Anzeigen, wie viele Zellen noch gezählt werden können
+        st.write(f"Du kannst noch {max_count - total_count} Zellen zählen.")
 
     # Liste der Bildnamen und Beschriftungen
     images = [
@@ -99,9 +101,10 @@ else:
     for idx, image in enumerate(images):
         col = cols[idx % 4]  # Wähle die Spalte basierend auf dem Index
         with col:
-            # Klickbares Bild als Button
+            # Klickbares Bild als Button nur, wenn total_count < max_count
             if total_count < max_count and st.button("", key=f"button_{idx + 1}"):
                 st.session_state[f"button_{idx + 1}_count"] += 1
+            # Zeige das Bild
             st.image(image["path"], use_column_width=True)
             # Beschriftung unter dem Bild
             st.write(f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}")
