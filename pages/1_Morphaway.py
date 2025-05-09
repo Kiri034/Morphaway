@@ -48,6 +48,12 @@ else:
         unsafe_allow_html=True
     )
 
+     # Überprüfen, ob die gewünschte Anzahl an Klicks erreicht wurde
+    if (st.session_state["selected_option"] == "50 Zellen differenzieren" and total_count >= 50) or \
+       (st.session_state["selected_option"] == "100 Zellen differenzieren" and total_count >= 100) or \
+       (st.session_state["selected_option"] == "200 Zellen differenzieren" and total_count >= 200):
+        st.success("Die gewünschte Anzahl an Zellen wurde erreicht!")
+
     # Bilder mit Buttons
     images = [
         {"path": "https://via.placeholder.com/150?text=Button+1", "label": "Lymphozyt"},
@@ -70,14 +76,17 @@ else:
         {"path": "https://via.placeholder.com/150?text=Button+18", "label": "smudged cells"},
     ]
 
-    # Anordnung der Buttons
-    cols = st.columns(4)
+    # Anordnung der Buttons in mehreren Reihen
+    cols = st.columns(4)  # 4 Spalten pro Reihe
+
     for idx, image in enumerate(images):
-        col = cols[idx % 4]
+        col = cols[idx % 4]  # Wähle die Spalte basierend auf dem Index
         with col:
-            if st.button("", key=f"button_{idx + 1}") and total_count < max_count:
+            # Klickbares Bild als Button
+            if st.button("", key=f"button_{idx + 1}"):
                 st.session_state[f"button_{idx + 1}_count"] += 1
             st.image(image["path"], use_column_width=True)
+            # Beschriftung unter dem Bild
             st.write(f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}")
 
     # Reset-Button
