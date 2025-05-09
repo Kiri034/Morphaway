@@ -39,16 +39,6 @@ else:
             ["50 Zellen differenzieren", "100 Zellen differenzieren", "200 Zellen differenzieren"]
         )
 
-    # Maximale Anzahl an Zellen basierend auf der Auswahl
-    if st.session_state["selected_option"] == "50 Zellen differenzieren":
-        max_count = 50
-    elif st.session_state["selected_option"] == "100 Zellen differenzieren":
-        max_count = 100
-    elif st.session_state["selected_option"] == "200 Zellen differenzieren":
-        max_count = 200
-    else:
-        max_count = 0
-
     # Initialisiere Zähler für jeden Button im Session State
     for i in range(1, 19):  # 18 Bilder
         if f"button_{i}_count" not in st.session_state:
@@ -62,6 +52,15 @@ else:
         f"<h2 style='text-align: center; color: white; padding: 10px;'>Total Klicks: {total_count}</h2>",
         unsafe_allow_html=True
     )
+
+    # Maximale Anzahl an Zellen basierend auf der Auswahl
+    max_count = 0
+    if st.session_state["selected_option"] == "50 Zellen differenzieren":
+        max_count = 50
+    elif st.session_state["selected_option"] == "100 Zellen differenzieren":
+        max_count = 100
+    elif st.session_state["selected_option"] == "200 Zellen differenzieren":
+        max_count = 200
 
     # Überprüfen, ob die gewünschte Anzahl an Klicks erreicht wurde
     if total_count >= max_count:
@@ -101,7 +100,7 @@ else:
         col = cols[idx % 4]  # Wähle die Spalte basierend auf dem Index
         with col:
             # Klickbares Bild als Button
-            if st.button("", key=f"button_{idx + 1}") and total_count < max_count:
+            if st.button("", key=f"button_{idx + 1}") and total_count >= max_count:
                 st.session_state[f"button_{idx + 1}_count"] += 1
             st.image(image["path"], use_column_width=True)
             # Beschriftung unter dem Bild
