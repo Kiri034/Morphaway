@@ -67,8 +67,6 @@ if 'df' in locals() and not df.empty:
     with open(filepath, "w", encoding="utf-8") as f:
         json.dump(export_data, f, ensure_ascii=False, indent=2)
 
-
-
     # Tabelle anzeigen
     st.subheader("Tabelle der Ergebnisse")
     st.dataframe(df)
@@ -82,8 +80,12 @@ if 'df' in locals() and not df.empty:
 
         # Diagramm als Bild in Bytes speichern
         img_bytes = io.BytesIO()
-        fig.write_image(img_bytes, format="png")  # Erfordert kaleido
-        img_bytes.seek(0)
+        try:
+            fig.write_image(img_bytes, format="png")  # Erfordert kaleido
+            img_bytes.seek(0)  # Setzt den Pointer zurück
+        except Exception as e:
+            st.error(f"Fehler beim Erstellen des Diagramms als Bild: {e}")
+            img_bytes = io.BytesIO()  # Initialize img_bytes to avoid undefined variable error
     else:
         st.warning("Keine Daten für das Kreisdiagramm verfügbar. Alle Zellen haben 0 Klicks.")
         img_bytes = io.BytesIO()  # Initialize img_bytes to avoid undefined variable error
@@ -100,8 +102,7 @@ pdf.set_font("Arial", style="B", size=16)
 pdf.cell(200, 10, txt="Auswertung der Ergebnisse", ln=True, align="C")
 pdf.ln(10)
 
-# Tabelle in die PDF einfügen¨
-
+# Tabelle in die PDF einfügen
 if 'df' in locals() and not df.empty:
     pdf.set_font("Arial", size=12)
     pdf.cell(0, 5, txt="Tabelle der Ergebnisse:", ln=True)
@@ -122,7 +123,10 @@ if img_bytes:
     with open("diagram.png", "wb") as f:
         f.write(img_bytes.getvalue())
 
-    pdf.image("diagram.png", x=10, y=pdf.get_y(), w=180)
+    try:
+        pdf.image("diagram.png", x=10, y=pdf.get_y(), w=180)
+    except Exception as e:
+        st.error(f"Fehler beim Einfügen des Diagramms in die PDF: {e}")
 
 # PDF in eine Datei speichern
 pdf_file_path = "auswertung.pdf"
@@ -143,4 +147,3 @@ else:
 # Button für History anzeigen
 if st.button("History"):
     st.switch_page("pages/3_History.py")
-    
