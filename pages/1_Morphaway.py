@@ -54,13 +54,14 @@ else:
     )
 
     # Maximale Anzahl an Zellen basierend auf der Auswahl
-    max_count = 0
     if st.session_state["selected_option"] == "50 Zellen differenzieren":
         max_count = 50
     elif st.session_state["selected_option"] == "100 Zellen differenzieren":
         max_count = 100
     elif st.session_state["selected_option"] == "200 Zellen differenzieren":
         max_count = 200
+    else:
+        max_count = 0
 
     # Blockiere das Zählen, wenn die gewünschte Anzahl erreicht ist
     if total_count >= max_count:
