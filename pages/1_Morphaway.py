@@ -64,12 +64,12 @@ else:
 
     # Überprüfen, ob die gewünschte Anzahl an Klicks erreicht wurde
     if total_count >= max_count:
-        # Blockiere das Zählen von Zellen und zeige eine Nachricht
         st.warning(f"Du hast die gewünschte Anzahl von {max_count} Zellen erreicht. Du kannst jetzt die Auswertung starten.")
-        
-        # Button für Auswertung anzeigen
         if st.button("Jetzt Auswerten"):
             st.switch_page("pages/2_Auswertung.py")
+    elif total_count > max_count:
+        st.error(f"Achtung: Du hast das Limit von {max_count} Zellen überschritten.")
+
 
     # Liste der Bildnamen und Beschriftungen
     images = [
@@ -95,14 +95,16 @@ else:
 
     # Anordnung der Buttons in mehreren Reihen
     cols = st.columns(4)  # 4 Spalten pro Reihe
+    
 
     for idx, image in enumerate(images):
-        col = cols[idx % 4]  # Wähle die Spalte basierend auf dem Index
+        col = cols[idx % 4]
         with col:
-            # Klickbares Bild als Button
-            if st.button("", key=f"button_{idx + 1}"): 
+            if st.button("", key=f"button_{idx + 1}"):
                 st.session_state[f"button_{idx + 1}_count"] += 1
             st.image(image["path"], use_column_width=True)
+            st.write(f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}")
+
             # Beschriftung unter dem Bild
             st.write(f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}")
 
