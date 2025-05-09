@@ -4,6 +4,9 @@ import plotly.express as px
 from fpdf import FPDF
 import io
 import os
+from pathlib import Path
+import json
+from datetime import datetime
 
 st.title("Auswertung")
 
@@ -11,9 +14,10 @@ st.title("Auswertung")
 praep_name = st.session_state.get("praep_name", "Präparat")
 
 # Verzeichnis für gespeicherte Auswertungen
-history_directory = "history_exports"
-if not os.path.exists(history_directory):
-    os.makedirs(history_directory)
+history_directory = Path("history_exports")
+
+# Erstelle das Verzeichnis, falls es nicht existiert
+history_directory.mkdir(parents=True, exist_ok=True)
 
 # Überprüfen, ob Zählerdaten aus 1_Morphaway.py vorhanden sind
 if any(f"button_{i}_count" in st.session_state for i in range(1, 19)):
@@ -49,6 +53,23 @@ if any(f"button_{i}_count" in st.session_state for i in range(1, 19)):
 
     # Daten in einen DataFrame umwandeln
     df = pd.DataFrame(data)
+
+# Ergebnisse speichern
+if 'df' in locals() and not df.empty:
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    filename = f"{praep_name}_{timestamp}.json"
+    filepath = os.path.join(history_directory, filename)
+
+    export_data = {
+        "praep_name": praep_name,
+        "timestamp": timestamp,
+        "data": df.to_dict(orient="records")
+    }
+
+    with open(filepath, "w", encoding="utf-8") as f:
+        json.dump(export_data, f, ensure_ascii=False, indent=2)
+
+
 
     # Tabelle anzeigen
     st.subheader("Tabelle der Ergebnisse")
