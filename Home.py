@@ -7,7 +7,7 @@ from utils.login_manager import LoginManager
 # This needs to copied on top of the entry point of the app (Start.py)
 
 # initialize the data manager
-data_manager = DataManager(fs_protocol='webdav', fs_root_folder="Morphaway")  # switch drive 
+data_manager = DataManager(fs_protocol='webdav', fs_root_folder="Morphy")  # switch drive 
 
 # initialize the login manager
 login_manager = LoginManager(data_manager)
