@@ -2,9 +2,7 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 from fpdf import FPDF
-import io
 import os
-from pathlib import Path
 import json
 from datetime import datetime
 
@@ -12,10 +10,11 @@ praep_name = st.session_state.get("praep_name", "Unbekanntes Präparat")
 st.title(f"Auswertung für {praep_name}")
 
 # Verzeichnis für gespeicherte Auswertungen
-history_directory = Path("history_exports")
+history_directory = "history_exports"
 
 # Erstelle das Verzeichnis, falls es nicht existiert
-history_directory.mkdir(parents=True, exist_ok=True)
+if not os.path.exists(history_directory):
+    os.makedirs(history_directory)
 
 # Überprüfen, ob Zählerdaten aus 1_Morphaway.py vorhanden sind
 if any(f"button_{i}_count" in st.session_state for i in range(1, 19)):
@@ -78,17 +77,16 @@ if 'df' in locals() and not df.empty:
         fig = px.pie(filtered_df, names="Zelle", values="Anzahl", title="Verteilung der Zelltypen")
         st.plotly_chart(fig)
 
-        # Diagramm als Bild in Bytes speichern
-        img_bytes = io.BytesIO()
+        # Diagramm als Bild in eine temporäre Datei speichern
+        diagram_path = "diagram.png"
         try:
-            fig.write_image(img_bytes, format="png")  # Erfordert kaleido
-            img_bytes.seek(0)  # Setzt den Pointer zurück
+            fig.write_image(diagram_path)  # Speichert das Diagramm als PNG-Datei
         except Exception as e:
-            st.error(f"Fehler beim Erstellen des Diagramms als Bild: {e}")
-            img_bytes = io.BytesIO()  # Initialize img_bytes to avoid undefined variable error
+            st.error(f"Fehler beim Speichern des Diagramms als Bild: {e}")
+            diagram_path = None
     else:
         st.warning("Keine Daten für das Kreisdiagramm verfügbar. Alle Zellen haben 0 Klicks.")
-        img_bytes = io.BytesIO()  # Initialize img_bytes to avoid undefined variable error
+        diagram_path = None
 else:
     st.warning("Keine Zählerdaten vorhanden. Bitte kehren Sie zurück und geben Sie Ihre Werte ein.")
 
@@ -113,20 +111,18 @@ else:
     pdf.cell(0, 5, txt="Keine Daten verfügbar.", ln=True)
 
 # Diagramm in die PDF einfügen
-if img_bytes:
+if diagram_path and os.path.exists(diagram_path):
     pdf.ln(10)
     pdf.set_font("Arial", size=10)
     pdf.cell(0, 10, txt="Kreisdiagramm der Ergebnisse:", ln=True)
     pdf.ln(5)
 
-    # Temporäre Datei erstellen
-    with open("diagram.png", "wb") as f:
-        f.write(img_bytes.getvalue())
-
     try:
-        pdf.image("diagram.png", x=10, y=pdf.get_y(), w=180)
+        pdf.image(diagram_path, x=10, y=pdf.get_y(), w=180)
     except Exception as e:
         st.error(f"Fehler beim Einfügen des Diagramms in die PDF: {e}")
+else:
+    st.error("Das Diagramm konnte nicht gespeichert oder eingefügt werden.")
 
 # PDF in eine Datei speichern
 pdf_file_path = "auswertung.pdf"
