@@ -4,7 +4,7 @@
 # ====== End Login Block ======
 
 # ------------------------------------------------------------
-# Here starts the actual app, which was developed previously
+# Hier beginnt die eigentliche App, die zuvor entwickelt wurde
 
 import streamlit as st
 import pandas as pd
@@ -119,6 +119,7 @@ else:
     pdf.cell(0, 5, txt="Keine Daten verfügbar.", ln=True)
 
 # Diagramm in die PDF einfügen
+diagram_path = None  # Sicherstellen, dass die Variable immer definiert ist
 if diagram_path and os.path.exists(diagram_path):
     pdf.ln(10)
     pdf.set_font("Arial", size=10)
