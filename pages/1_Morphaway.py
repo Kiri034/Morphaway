@@ -7,27 +7,32 @@ st.title("Cell Counter")
 def reset_all():
     for i in range(1, 19):  # 18 Buttons
         st.session_state[f"button_{i}_count"] = 0
-    st.session_state["total_count"] = 0
-    st.session_state["praep_name"] = ""
-    st.session_state["selected_option"] = None
+    st.session_state["total_count"] = 0  # Zurücksetzen des Gesamtzählers
+    st.session_state["praep_name"] = ""  # Zurücksetzen des Präparatnamens
+    st.session_state["selected_option"] = None  # Zurücksetzen der Auswahloption
 
-# Initialisiere Session State
+# Überprüfen, ob ein Präparatname bereits in st.session_state gespeichert ist
 if "praep_name" not in st.session_state:
     st.session_state["praep_name"] = ""
 
+# Zeige das Eingabefeld nur, wenn der Präparatname noch nicht eingegeben wurde
 if not st.session_state["praep_name"]:
     praep_name = st.text_input("Gib einen Namen für das Präparat ein:", key="praep_name_input")
     if praep_name:
         st.session_state["praep_name"] = praep_name
 else:
+    # Zeige den gespeicherten Präparatnamen an
     st.markdown(f"### Präparat: **{st.session_state['praep_name']}**")
 
+# Überprüfen, ob ein Präparatname eingegeben wurde
 if not st.session_state["praep_name"]:
     st.warning("Bitte gib einen Namen für das Präparat ein, bevor du fortfährst.")
 else:
+    # Initialisiere "selected_option", falls es nicht existiert
     if "selected_option" not in st.session_state:
         st.session_state["selected_option"] = None
 
+    # Zeige die Auswahloptionen nur, wenn noch keine Option ausgewählt wurde
     if st.session_state["selected_option"] is None:
         st.session_state["selected_option"] = st.radio(
             "Wähle eine Funktion:",
@@ -35,33 +40,19 @@ else:
             key="function_select"
         )
 
-    # Maximale Anzahl an Zellen basierend auf Auswahl
-    if st.session_state["selected_option"] == "50 Zellen differenzieren":
-        max_count = 50
-    elif st.session_state["selected_option"] == "100 Zellen differenzieren":
-        max_count = 100
-    else:
-        max_count = 200
-
-    # Initialisiere Zähler für jeden Button
-    for i in range(1, 19):
+    # Initialisiere Zähler für jeden Button im Session State
+    for i in range(1, 19):  # 18 Bilder
         if f"button_{i}_count" not in st.session_state:
             st.session_state[f"button_{i}_count"] = 0
 
-    # Gesamtzähler berechnen
+    # Berechne den Total Counter
     total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 19))
-    st.session_state["total_count"] = total_count  # falls für später nötig
 
-    # Anzeige des Zählers
-    st.metric("Gesamtanzahl Klicks", total_count)
+    # Button für Auswertung anzeigen
+    if st.button("Jetzt Auswerten", key="auswertung_button"):
+        st.switch_page("pages/2_Auswertung.py")
 
-    # Hinweis, wenn Ziel erreicht wurde 
-    if total_count >= max_count:
-        st.info(f"Du hast die gewünschte Anzahl von {max_count} Zellen erreicht. Du kannst jetzt die Auswertung starten.")
-        if st.button("Jetzt Auswerten", key="auswertung_button"):
-            st.switch_page("pages/2_Auswertung.py")
-
-    # Bild-/Button-Liste
+    # Liste der Bildnamen und Beschriftungen
     images = [
         {"path": "https://via.placeholder.com/150?text=Button+1", "label": "Lymphozyt"},
         {"path": "https://via.placeholder.com/150?text=Button+2", "label": "Monozyt"},
@@ -83,8 +74,7 @@ else:
         {"path": "https://via.placeholder.com/150?text=Button+18", "label": "smudged cells"},
     ]
 
-    # Layout in 4 Spalten
-    cols = st.columns(4)
+    cols = st.columns(4)  # 4 Spalten pro Reihe
 
     for idx, image in enumerate(images):
         col = cols[idx % 4]
@@ -94,6 +84,6 @@ else:
             st.image(image["path"], use_column_width=True)
             st.write(f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}")
 
-    # Refresh-Button
+    # Reset-Button nach den Bild-Buttons
     if st.button("Refresh", key="refresh_button"):
         reset_all()
