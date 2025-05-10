@@ -7,11 +7,25 @@ st.title("🔍 History")
 
 history_directory = "history_exports"
 
-# Liste aller gespeicherten Auswertungen
+# Liste aller gespeicherten Auswertungen (Dateinamen)
 files = [f for f in os.listdir(history_directory) if f.endswith(".json")]
 
-if files:
-    selected_file = st.selectbox("Wähle eine gespeicherte Auswertung", sorted(files, reverse=True))
+# Erstelle eine Liste von Präparatnamen zusammen mit den zugehörigen Dateinamen
+file_info = []
+for file in files:
+    file_path = os.path.join(history_directory, file)
+    with open(file_path, "r", encoding="utf-8") as f:
+        loaded_data = json.load(f)
+    praep_name = loaded_data['praep_name']
+    file_info.append((praep_name, file))
+
+# Wähle den Präparatnamen zur Anzeige
+if file_info:
+    # Nur die Präparatnamen anzeigen
+    selected_praep_name = st.selectbox("Wähle eine gespeicherte Auswertung", [item[0] for item in file_info])
+
+    # Finde den zugehörigen Dateinamen
+    selected_file = next(file for praep_name, file in file_info if praep_name == selected_praep_name)
 
     if selected_file:
         file_path = os.path.join(history_directory, selected_file)
