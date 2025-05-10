@@ -48,6 +48,9 @@ else:
     # Berechne den Total Counter
     total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 19))
 
+    # Anzeige des Gesamtzählers
+    st.markdown(f"### Gesamtzahl: **{total_count}**")
+
     # Button für Auswertung anzeigen
     if st.button("Jetzt Auswerten", key="auswertung_button"):
         st.switch_page("pages/2_Auswertung.py")
