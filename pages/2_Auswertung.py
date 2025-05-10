@@ -130,8 +130,6 @@ if diagram_path and os.path.exists(diagram_path):
         pdf.image(diagram_path, x=10, y=pdf.get_y(), w=180)
     except Exception as e:
         st.error(f"Fehler beim Einfügen des Diagramms in die PDF: {e}")
-else:
-    st.error("Das Diagramm konnte nicht gespeichert oder eingefügt werden.")
 
 # PDF in eine Datei speichern
 pdf_file_path = "auswertung.pdf"
