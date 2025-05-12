@@ -54,7 +54,7 @@ else:
             st.session_state[f"button_{i}_count"] = 0
 
     # Definiere die maximale Anzahl an Zellen
-    max_cells = int(st.session_state["selected_option"].split()[0])  # Extrahiere die Zahl aus der Auswahloption
+    max_cells = int(st.session_state["selected_option"].split()[0])  # Annahme: "50 Zellen", "100 Zellen", "200 Zellen"
 
     # Berechne den Total Counter
     total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 19))
