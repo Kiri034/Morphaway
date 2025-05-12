@@ -53,11 +53,18 @@ else:
         if f"button_{i}_count" not in st.session_state:
             st.session_state[f"button_{i}_count"] = 0
 
+    # Definiere die maximale Anzahl an Zellen
+    max_cells = int(st.session_state["selected_option"].split()[0])  # Extrahiere die Zahl aus der Auswahloption
+
     # Berechne den Total Counter
     total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 19))
 
     # Anzeige des Gesamtzählers
     st.markdown(f"### Gesamtzahl: **{total_count}**")
+
+    # Überprüfe, ob die maximale Anzahl erreicht wurde
+    if total_count >= max_cells:
+        st.warning(f"Die maximale Anzahl von {max_cells} Zellen wurde erreicht!")
 
     # Button für Auswertung anzeigen
     if st.button("Jetzt Auswerten", key="auswertung_button"):
