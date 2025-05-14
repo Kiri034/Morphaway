@@ -94,13 +94,13 @@ else:
 
     cols = st.columns(4)  # 4 Spalten pro Reihe
 
-    for idx, image in enumerate(images):
-        col = cols[idx % 4]
-        with col:
-            if st.button("", key=f"button_{idx + 1}"):
-                st.session_state[f"button_{idx + 1}_count"] += 1
-            st.image(image["path"], use_column_width=True)
-            st.write(f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}", use_container_width=True)
+for idx, image in enumerate(images):
+    col = cols[idx % 4]
+    with col:
+        if st.button("", key=f"button_{idx + 1}"):
+            st.session_state[f"button_{idx + 1}_count"] += 1
+        st.image(image["path"], use_container_width=True)  # Updated here
+        st.write(f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}", use_container_width=True)
 
     # Reset-Button nach den Bild-Buttons
     if st.button("Refresh", key="refresh_button"):
