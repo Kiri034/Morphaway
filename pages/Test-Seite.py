@@ -1,3 +1,11 @@
+# ====== Start Login Block ======
+#from utils.login_manager import LoginManager
+#LoginManager().go_to_login('Start.py') 
+# ====== End Login Block ======
+
+# ------------------------------------------------------------
+# Here starts the actual app, which was developed previously
+
 import streamlit as st
 
 # Titel der Seite
@@ -7,28 +15,69 @@ st.title("Cell Counter")
 def reset_all():
     for i in range(1, 19):  # 18 Buttons
         st.session_state[f"button_{i}_count"] = 0
-    st.session_state["total_count"] = 0
-    st.session_state["praep_name"] = ""
-    st.session_state["selected_option"] = None
+    st.session_state["total_count"] = 0  # Zurücksetzen des Gesamtzählers
+    st.session_state["praep_name"] = ""  # Zurücksetzen des Präparatnamens
+    st.session_state["selected_option"] = None  # Zurücksetzen der Auswahloption
 
-# Initialisiere Session State Variablen
+# Überprüfen, ob ein Präparatname bereits in st.session_state gespeichert ist
 if "praep_name" not in st.session_state:
     st.session_state["praep_name"] = ""
-if "selected_option" not in st.session_state:
-    st.session_state["selected_option"] = None
-for i in range(1, 19):
-    if f"button_{i}_count" not in st.session_state:
-        st.session_state[f"button_{i}_count"] = 0
 
-# 1. Präparat Name eingeben
+# Zeige das Eingabefeld nur, wenn der Präparatname noch nicht eingegeben wurde
 if not st.session_state["praep_name"]:
     praep_name = st.text_input("Gib einen Namen für das Präparat ein:", key="praep_name_input")
     if praep_name:
         st.session_state["praep_name"] = praep_name
 else:
+    # Zeige den gespeicherten Präparatnamen an
     st.markdown(f"### Präparat: **{st.session_state['praep_name']}**")
 
-    # 2. Funktion wählen
+    # Define the images list
+    images = [
+        {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/Lymphozyten.jpg", "label": "Lymphozyt"},
+        {"path": "https://cdn.cellwiki.net/db/cells/page-32/gallery-63/002.jpg", "label": "Monozyt"},
+        {"path": "https://via.placeholder.com/150?text=Button+3", "label": "Eosinophil"},
+        {"path": "https://via.placeholder.com/150?text=Button+4", "label": "Basophil"},
+        {"path": "https://via.placeholder.com/150?text=Button+5", "label": "Segmentkernige Granulozyten"},
+        {"path": "https://via.placeholder.com/150?text=Button+6", "label": "Stabkernige Granulozyten"},
+        {"path": "https://via.placeholder.com/150?text=Button+7", "label": "Erythroblast"},
+        {"path": "https://via.placeholder.com/150?text=Button+8", "label": "Blasten"},
+        {"path": "https://via.placeholder.com/150?text=Button+9", "label": "Promyelozyt"},
+        {"path": "https://via.placeholder.com/150?text=Button+10", "label": "Myelozyt"},
+        {"path": "https://via.placeholder.com/150?text=Button+11", "label": "Metamyelozyt"},
+        {"path": "https://via.placeholder.com/150?text=Button+12", "label": "reactive Lymphozyt"},
+        {"path": "https://via.placeholder.com/150?text=Button+13", "label": "Abnormale Lymphozyten"},
+        {"path": "https://via.placeholder.com/150?text=Button+14", "label": "Large granular lymphocyte"},
+        {"path": "https://via.placeholder.com/150?text=Button+15", "label": "NRBC"},
+        {"path": "https://via.placeholder.com/150?text=Button+16", "label": "Mastzelle"},
+        {"path": "https://via.placeholder.com/150?text=Button+17", "label": "Plasmazelle"},
+        {"path": "https://via.placeholder.com/150?text=Button+18", "label": "smudged cells"},
+    ]
+
+    cols = st.columns(4)  # 4 Spalten pro Reihe
+
+    # Iterate over images
+    for idx, image in enumerate(images):
+        col = cols[idx % 4]
+        with col:
+            if st.button("", key=f"button_{idx + 1}"):
+                st.session_state[f"button_{idx + 1}_count"] += 1
+            st.image(image["path"], use_container_width=True)
+            st.write(f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}", use_container_width=True)
+
+    # Reset-Button nach den Bild-Buttons
+    if st.button("Refresh", key="refresh_button"):
+        reset_all()
+
+# Überprüfen, ob ein Präparatname eingegeben wurde
+if not st.session_state["praep_name"]:
+    st.warning("Bitte gib einen Namen für das Präparat ein, bevor du fortfährst.")
+else:
+    # Initialisiere "selected_option", falls es nicht existiert
+    if "selected_option" not in st.session_state:
+        st.session_state["selected_option"] = None
+
+    # Zeige die Auswahloptionen nur, wenn noch keine Option ausgewählt wurde
     if st.session_state["selected_option"] is None:
         st.session_state["selected_option"] = st.radio(
             "Wähle eine Funktion:",
@@ -36,57 +85,28 @@ else:
             key="function_select"
         )
 
-    if st.session_state["selected_option"]:
-        # Definiere die maximale Anzahl an Zellen
-        max_cells = int(st.session_state["selected_option"].split()[0])  # Assumes "50 Zellen", "100 Zellen", "200 Zellen"
+    # Initialisiere Zähler für jeden Button im Session State
+    for i in range(1, 19):  # 18 Bilder
+        if f"button_{i}_count" not in st.session_state:
+            st.session_state[f"button_{i}_count"] = 0
 
-        # 3. Counter mit Bildern
-        images = [
-            {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/Lymphozyten.jpg", "label": "Lymphozyt"},
-            {"path": "https://cdn.cellwiki.net/db/cells/page-32/gallery-63/002.jpg", "label": "Monozyt"},
-            {"path": "https://via.placeholder.com/150?text=Button+3", "label": "Eosinophil"},
-            {"path": "https://via.placeholder.com/150?text=Button+4", "label": "Basophil"},
-            {"path": "https://via.placeholder.com/150?text=Button+5", "label": "Segmentkernige Granulozyten"},
-            {"path": "https://via.placeholder.com/150?text=Button+6", "label": "Stabkernige Granulozyten"},
-            {"path": "https://via.placeholder.com/150?text=Button+7", "label": "Erythroblast"},
-            {"path": "https://via.placeholder.com/150?text=Button+8", "label": "Blasten"},
-            {"path": "https://via.placeholder.com/150?text=Button+9", "label": "Promyelozyt"},
-            {"path": "https://via.placeholder.com/150?text=Button+10", "label": "Myelozyt"},
-            {"path": "https://via.placeholder.com/150?text=Button+11", "label": "Metamyelozyt"},
-            {"path": "https://via.placeholder.com/150?text=Button+12", "label": "reactive Lymphozyt"},
-            {"path": "https://via.placeholder.com/150?text=Button+13", "label": "Abnormale Lymphozyten"},
-            {"path": "https://via.placeholder.com/150?text=Button+14", "label": "Large granular lymphocyte"},
-            {"path": "https://via.placeholder.com/150?text=Button+15", "label": "NRBC"},
-            {"path": "https://via.placeholder.com/150?text=Button+16", "label": "Mastzelle"},
-            {"path": "https://via.placeholder.com/150?text=Button+17", "label": "Plasmazelle"},
-            {"path": "https://via.placeholder.com/150?text=Button+18", "label": "smudged cells"},
-        ]
+    # Definiere die maximale Anzahl an Zellen
+    max_cells = int(st.session_state["selected_option"].split()[0])  # Annahme: "50 Zellen", "100 Zellen", "200 Zellen"
 
-        # Berechne den Total Counter
-        total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 19))
+    # Berechne den Total Counter
+    total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 19))
 
-        # Anzeige des Gesamtzählers
-        st.markdown(f"### Gesamtzahl: **{total_count}**")
+    # Anzeige des Gesamtzählers
+    st.markdown(f"### Gesamtzahl: **{total_count}**")
 
-        cols = st.columns(4)  # 4 Spalten pro Reihe
-        for idx, image in enumerate(images):
-            col = cols[idx % 4]
-            with col:
-                if st.button("", key=f"button_{idx + 1}"):
-                    st.session_state[f"button_{idx + 1}_count"] += 1
-                st.image(image["path"], use_container_width=True)
-                st.write(f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}")
+    # Überprüfe, ob die maximale Anzahl erreicht wurde
+    if total_count >= max_cells:
+        st.warning(f"Die maximale Anzahl von {max_cells} Zellen wurde erreicht!")
 
-        # 4. Refresh Button und "Jetzt Auswerten" Button
-        if st.button("Refresh", key="refresh_button"):
-            reset_all()
+    # Button für Auswertung anzeigen
+    if st.button("Jetzt Auswerten", key="auswertung_button"):
+        st.switch_page("pages/2_Auswertung.py")
 
-        if total_count >= max_cells:
-            st.warning(f"Die maximale Anzahl von {max_cells} Zellen wurde erreicht!")
-
-        if st.button("Jetzt Auswerten", key="auswertung_button"):
-            st.switch_page("pages/2_Auswertung.py")
-
-        # Daten speichern
-        from utils.data_manager import DataManager
-        DataManager().append_record(session_state_key='data_df', record_dict=total_count)
+   # --- Save Cellcount data ---
+    from utils.data_manager import DataManager
+    DataManager().append_record(session_state_key='data_df', record_dict=total_count)  # update data in session state and storage
