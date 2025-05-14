@@ -72,7 +72,7 @@ else:
 
     # Liste der Bildnamen und Beschriftungen
     images = [
-        {"path": "https://vscode.dev/github/Kiri034/Morphaway/blob/main/Bilder/Lymphozyten.jpg", "label": "Lymphozyt"},
+        {"path": "https://github.com/Kiri034/Morphaway/blob/f54d375408afb6f65869a03278f08b61f5a4b008/Bilder/Lymphozyten.jpg", "label": "Lymphozyt"},
         {"path": "https://via.placeholder.com/150?text=Button+2", "label": "Monozyt"},
         {"path": "https://via.placeholder.com/150?text=Button+3", "label": "Eosinophil"},
         {"path": "https://via.placeholder.com/150?text=Button+4", "label": "Basophil"},
