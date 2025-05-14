@@ -32,7 +32,7 @@ else:
     # Zeige den gespeicherten Präparatnamen an
     st.markdown(f"### Präparat: **{st.session_state['praep_name']}**")
 
-    # Liste der Bildnamen und Beschriftungen
+    # Define the images list
     images = [
         {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/Lymphozyten.jpg", "label": "Lymphozyt"},
         {"path": "https://cdn.cellwiki.net/db/cells/page-32/gallery-63/002.jpg", "label": "Monozyt"},
@@ -53,6 +53,21 @@ else:
         {"path": "https://via.placeholder.com/150?text=Button+17", "label": "Plasmazelle"},
         {"path": "https://via.placeholder.com/150?text=Button+18", "label": "smudged cells"},
     ]
+
+    cols = st.columns(4)  # 4 Spalten pro Reihe
+
+    # Iterate over images
+    for idx, image in enumerate(images):
+        col = cols[idx % 4]
+        with col:
+            if st.button("", key=f"button_{idx + 1}"):
+                st.session_state[f"button_{idx + 1}_count"] += 1
+            st.image(image["path"], use_container_width=True)
+            st.write(f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}", use_container_width=True)
+
+    # Reset-Button nach den Bild-Buttons
+    if st.button("Refresh", key="refresh_button"):
+        reset_all()
 
 # Überprüfen, ob ein Präparatname eingegeben wurde
 if not st.session_state["praep_name"]:
@@ -91,22 +106,6 @@ else:
     # Button für Auswertung anzeigen
     if st.button("Jetzt Auswerten", key="auswertung_button"):
         st.switch_page("pages/2_Auswertung.py")
-
-
-
-    cols = st.columns(4)  # 4 Spalten pro Reihe
-
-for idx, image in enumerate(images):
-    col = cols[idx % 4]
-    with col:
-        if st.button("", key=f"button_{idx + 1}"):
-            st.session_state[f"button_{idx + 1}_count"] += 1
-        st.image(image["path"], use_container_width=True)  # Updated here
-        st.write(f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}", use_container_width=True)
-
-    # Reset-Button nach den Bild-Buttons
-    if st.button("Refresh", key="refresh_button"):
-        reset_all()
 
    # --- Save Cellcount data ---
     from utils.data_manager import DataManager
