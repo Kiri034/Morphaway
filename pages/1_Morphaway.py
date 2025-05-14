@@ -19,6 +19,38 @@ def reset_all():
     st.session_state["praep_name"] = ""  # Zurücksetzen des Präparatnamens
     st.session_state["selected_option"] = None  # Zurücksetzen der Auswahloption
 
+# Überprüfen, ob ein Präparatname eingegeben wurde
+if not st.session_state["praep_name"]:
+    st.warning("Bitte gib einen Namen für das Präparat ein, bevor du fortfährst.")
+else:
+    # Initialisiere "selected_option", falls es nicht existiert
+    if "selected_option" not in st.session_state:
+        st.session_state["selected_option"] = None
+
+    # Zeige die Auswahloptionen nur, wenn noch keine Option ausgewählt wurde
+    if st.session_state["selected_option"] is None:
+        st.session_state["selected_option"] = st.radio(
+            "Wähle eine Funktion:",
+            ["50 Zellen differenzieren", "100 Zellen differenzieren", "200 Zellen differenzieren"],
+            key="function_select"
+        )
+
+    # Initialisiere Zähler für jeden Button im Session State
+    for i in range(1, 19):  # 18 Bilder
+        if f"button_{i}_count" not in st.session_state:
+            st.session_state[f"button_{i}_count"] = 0
+
+    
+
+    # Definiere die maximale Anzahl an Zellen
+    max_cells = int(st.session_state["selected_option"].split()[0])  # Annahme: "50 Zellen", "100 Zellen", "200 Zellen"
+
+    # Berechne den Total Counter
+    total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 19))
+
+    # Anzeige des Gesamtzählers
+    st.markdown(f"### Gesamtzahl: **{total_count}**")
+
 # Überprüfen, ob ein Präparatname bereits in st.session_state gespeichert ist
 if "praep_name" not in st.session_state:
     st.session_state["praep_name"] = ""
@@ -68,36 +100,6 @@ else:
     # Reset-Button nach den Bild-Buttons
     if st.button("Refresh", key="refresh_button"):
         reset_all()
-
-# Überprüfen, ob ein Präparatname eingegeben wurde
-if not st.session_state["praep_name"]:
-    st.warning("Bitte gib einen Namen für das Präparat ein, bevor du fortfährst.")
-else:
-    # Initialisiere "selected_option", falls es nicht existiert
-    if "selected_option" not in st.session_state:
-        st.session_state["selected_option"] = None
-
-    # Zeige die Auswahloptionen nur, wenn noch keine Option ausgewählt wurde
-    if st.session_state["selected_option"] is None:
-        st.session_state["selected_option"] = st.radio(
-            "Wähle eine Funktion:",
-            ["50 Zellen differenzieren", "100 Zellen differenzieren", "200 Zellen differenzieren"],
-            key="function_select"
-        )
-
-    # Initialisiere Zähler für jeden Button im Session State
-    for i in range(1, 19):  # 18 Bilder
-        if f"button_{i}_count" not in st.session_state:
-            st.session_state[f"button_{i}_count"] = 0
-
-    # Definiere die maximale Anzahl an Zellen
-    max_cells = int(st.session_state["selected_option"].split()[0])  # Annahme: "50 Zellen", "100 Zellen", "200 Zellen"
-
-    # Berechne den Total Counter
-    total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 19))
-
-    # Anzeige des Gesamtzählers
-    st.markdown(f"### Gesamtzahl: **{total_count}**")
 
     # Überprüfe, ob die maximale Anzahl erreicht wurde
     if total_count >= max_cells:
