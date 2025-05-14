@@ -70,16 +70,6 @@ else:
     if st.button("Jetzt Auswerten", key="auswertung_button"):
         st.switch_page("pages/2_Auswertung.py")
 
-    # Add a button with the title "Lymphozyt" and an icon
-        if st.button("Lymphozyt", key="lymphozyt_button"):
-            if "lymphozyt_count" not in st.session_state:
-                st.session_state["lymphozyt_count"] = 0
-            st.session_state["lymphozyt_count"] += 1
-
-        # Display the icon and the count
-        st.image("https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/Lymphozyten.jpg", use_column_width=True)
-        st.write(f"Lymphozyt Count: {st.session_state.get('lymphozyt_count', 0)}")
-
     # Liste der Bildnamen und Beschriftungen
     images = [
         {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/Lymphozyten.jpg", "label": "Lymphozyt"},
@@ -110,7 +100,7 @@ else:
             if st.button("", key=f"button_{idx + 1}"):
                 st.session_state[f"button_{idx + 1}_count"] += 1
             st.image(image["path"], use_column_width=True)
-            st.write(f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}")
+            st.write(f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}", use_container_width=True)
 
     # Reset-Button nach den Bild-Buttons
     if st.button("Refresh", key="refresh_button"):
