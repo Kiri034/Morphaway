@@ -32,6 +32,28 @@ else:
     # Zeige den gespeicherten Präparatnamen an
     st.markdown(f"### Präparat: **{st.session_state['praep_name']}**")
 
+    # Liste der Bildnamen und Beschriftungen
+    images = [
+        {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/Lymphozyten.jpg", "label": "Lymphozyt"},
+        {"path": "https://cdn.cellwiki.net/db/cells/page-32/gallery-63/002.jpg", "label": "Monozyt"},
+        {"path": "https://via.placeholder.com/150?text=Button+3", "label": "Eosinophil"},
+        {"path": "https://via.placeholder.com/150?text=Button+4", "label": "Basophil"},
+        {"path": "https://via.placeholder.com/150?text=Button+5", "label": "Segmentkernige Granulozyten"},
+        {"path": "https://via.placeholder.com/150?text=Button+6", "label": "Stabkernige Granulozyten"},
+        {"path": "https://via.placeholder.com/150?text=Button+7", "label": "Erythroblast"},
+        {"path": "https://via.placeholder.com/150?text=Button+8", "label": "Blasten"},
+        {"path": "https://via.placeholder.com/150?text=Button+9", "label": "Promyelozyt"},
+        {"path": "https://via.placeholder.com/150?text=Button+10", "label": "Myelozyt"},
+        {"path": "https://via.placeholder.com/150?text=Button+11", "label": "Metamyelozyt"},
+        {"path": "https://via.placeholder.com/150?text=Button+12", "label": "reactive Lymphozyt"},
+        {"path": "https://via.placeholder.com/150?text=Button+13", "label": "Abnormale Lymphozyten"},
+        {"path": "https://via.placeholder.com/150?text=Button+14", "label": "Large granular lymphocyte"},
+        {"path": "https://via.placeholder.com/150?text=Button+15", "label": "NRBC"},
+        {"path": "https://via.placeholder.com/150?text=Button+16", "label": "Mastzelle"},
+        {"path": "https://via.placeholder.com/150?text=Button+17", "label": "Plasmazelle"},
+        {"path": "https://via.placeholder.com/150?text=Button+18", "label": "smudged cells"},
+    ]
+
 # Überprüfen, ob ein Präparatname eingegeben wurde
 if not st.session_state["praep_name"]:
     st.warning("Bitte gib einen Namen für das Präparat ein, bevor du fortfährst.")
@@ -70,27 +92,7 @@ else:
     if st.button("Jetzt Auswerten", key="auswertung_button"):
         st.switch_page("pages/2_Auswertung.py")
 
-    # Liste der Bildnamen und Beschriftungen
-    images = [
-        {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/Lymphozyten.jpg", "label": "Lymphozyt"},
-        {"path": "https://cdn.cellwiki.net/db/cells/page-32/gallery-63/002.jpg", "label": "Monozyt"},
-        {"path": "https://via.placeholder.com/150?text=Button+3", "label": "Eosinophil"},
-        {"path": "https://via.placeholder.com/150?text=Button+4", "label": "Basophil"},
-        {"path": "https://via.placeholder.com/150?text=Button+5", "label": "Segmentkernige Granulozyten"},
-        {"path": "https://via.placeholder.com/150?text=Button+6", "label": "Stabkernige Granulozyten"},
-        {"path": "https://via.placeholder.com/150?text=Button+7", "label": "Erythroblast"},
-        {"path": "https://via.placeholder.com/150?text=Button+8", "label": "Blasten"},
-        {"path": "https://via.placeholder.com/150?text=Button+9", "label": "Promyelozyt"},
-        {"path": "https://via.placeholder.com/150?text=Button+10", "label": "Myelozyt"},
-        {"path": "https://via.placeholder.com/150?text=Button+11", "label": "Metamyelozyt"},
-        {"path": "https://via.placeholder.com/150?text=Button+12", "label": "reactive Lymphozyt"},
-        {"path": "https://via.placeholder.com/150?text=Button+13", "label": "Abnormale Lymphozyten"},
-        {"path": "https://via.placeholder.com/150?text=Button+14", "label": "Large granular lymphocyte"},
-        {"path": "https://via.placeholder.com/150?text=Button+15", "label": "NRBC"},
-        {"path": "https://via.placeholder.com/150?text=Button+16", "label": "Mastzelle"},
-        {"path": "https://via.placeholder.com/150?text=Button+17", "label": "Plasmazelle"},
-        {"path": "https://via.placeholder.com/150?text=Button+18", "label": "smudged cells"},
-    ]
+
 
     cols = st.columns(4)  # 4 Spalten pro Reihe
 
