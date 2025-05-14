@@ -70,6 +70,16 @@ else:
     if st.button("Jetzt Auswerten", key="auswertung_button"):
         st.switch_page("pages/2_Auswertung.py")
 
+    # Add a button with the title "Lymphozyt" and an icon
+        if st.button("Lymphozyt", key="lymphozyt_button"):
+            if "lymphozyt_count" not in st.session_state:
+                st.session_state["lymphozyt_count"] = 0
+            st.session_state["lymphozyt_count"] += 1
+
+        # Display the icon and the count
+        st.image("https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/Lymphozyten.jpg", use_column_width=True)
+        st.write(f"Lymphozyt Count: {st.session_state.get('lymphozyt_count', 0)}")
+
     # Liste der Bildnamen und Beschriftungen
     images = [
         {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/Lymphozyten.jpg", "label": "Lymphozyt"},
