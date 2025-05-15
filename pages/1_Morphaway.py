@@ -69,7 +69,7 @@ else:
     # Berechne den Total Counter
     total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 19))
 
-    if st.button("🔙 Rückgängig", key="undo_button"):
+    if st.button("🔙", key="undo_button"):
         total_count = (total_count -1)   # Setze alle Zähler zurück  
 
 
