@@ -117,7 +117,8 @@ else:
                 record_dict={
                     'selected_option': st.session_state["selected_option"],
                     'praep_name': st.session_state["praep_name"],
-                    'total_count': total_count
+                    'total_count': total_count,
+                    'timestamp': datetime.datetime.now() 
                 }
             )
 
