@@ -1,11 +1,12 @@
 import streamlit as st
-import pandas as pd  # Wir benötigen pandas, um mit DataFrames zu arbeiten
+import pandas as pd
+import datetime  # Für den Timestamp
 
 # Beispiel einer angepassten DataManager Klasse
 class DataManager:
     def __init__(self):
         if "data_df" not in st.session_state:
-            st.session_state["data_df"] = pd.DataFrame(columns=["selected_option", "praep_name", "total_count"])
+            st.session_state["data_df"] = pd.DataFrame(columns=["selected_option", "praep_name", "total_count", "timestamp"])
 
     def append_record(self, session_state_key: str, record_dict: dict):
         df = st.session_state.get(session_state_key)
@@ -30,7 +31,7 @@ def reset_all():
 
 # Initialisierung von 'data_df' falls nicht vorhanden (z.B. als leeres DataFrame)
 if "data_df" not in st.session_state:
-    st.session_state["data_df"] = pd.DataFrame(columns=["selected_option", "praep_name", "total_count"])
+    st.session_state["data_df"] = pd.DataFrame(columns=["selected_option", "praep_name", "total_count", "timestamp"])
 
 # Überprüfen, ob ein Präparatname bereits in st.session_state gespeichert ist
 if "praep_name" not in st.session_state:
@@ -69,13 +70,14 @@ else:
     # Berechne den Total Counter
     total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 19))
 
+    # Rückgängig Button
     if st.button("🔙 Rückgängig", key="undo_button"):
-        total_count = (total_count -1)   # Setze alle Zähler zurück  
-    
-    if "total_count" in st.session_state:
-        st.session_state["total_count"] -= 1
-    else:
-        st.session_state["total_count"] = 0  # Falls total_count nicht existiert, initialisiere es mit 0
+        # Reduziere total_count und setze die Zähler zurück
+        st.session_state["total_count"] = st.session_state.get("total_count", 0) - 1
+        for i in range(1, 19):
+            if st.session_state[f"button_{i}_count"] > 0:
+                st.session_state[f"button_{i}_count"] -= 1
+                break  # Wir machen nur einen Rückgängig-Schritt
 
     # Anzeige des Gesamtzählers
     st.markdown(f"### Gesamtzahl: *{total_count}*")
