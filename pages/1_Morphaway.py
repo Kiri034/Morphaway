@@ -7,6 +7,7 @@
 # Here starts the actual app, which was developed previously
 
 import streamlit as st
+from utils.data_manager import DataManager
 
 # Titel der Seite
 st.title("Cell Counter")
@@ -97,8 +98,6 @@ else:
 
 
         # --- Save Cellcount data ---
-        from utils.data_manager import DataManager
-
     if st.button("Jetzt Auswerten", key="auswertung_button"):
         # Zuerst: Daten speichern
         DataManager().append_record(session_state_key='data_df', record_dict={
