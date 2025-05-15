@@ -59,10 +59,6 @@ else:
     # Anzeige des Gesamtzählers
     st.markdown(f"### Gesamtzahl: *{total_count}*")
 
-    # Button für Auswertung anzeigen
-    if st.button("Jetzt Auswerten", key="auswertung_button"):
-        st.switch_page("pages/2_Auswertung.py")
-
     # Liste der Bildnamen und Beschriftungen
     images = [
         {"path": "https://via.placeholder.com/150?text=Button+1", "label": "Lymphozyt"},
@@ -99,6 +95,20 @@ else:
     if st.button("Refresh", key="refresh_button"):
         reset_all()
 
-   # --- Save Cellcount data ---
+
+    # --- Save Cellcount data ---
     from utils.data_manager import DataManager
-    DataManager().append_record(session_state_key='data_df', record_dict=result)  # update data in session state and storage
+
+if st.button("Jetzt Auswerten", key="auswertung_button"):
+    # Zuerst: Daten speichern
+    DataManager().append_record(
+        session_state_key='data_df',
+        record_dict={
+            'selected_option': st.session_state["selected_option"],
+            'praep_name': praep_name,
+            'total_count': total_count
+        }
+    )
+
+    # Dann: Seite wechseln
+    st.switch_page("pages/2_Auswertung.py")
