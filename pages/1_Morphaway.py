@@ -8,6 +8,7 @@
 
 import streamlit as st
 from utils.data_manager import DataManager
+import pandas as pd  # Wir benötigen pandas, um mit DataFrames zu arbeiten
 
 # Titel der Seite
 st.title("Cell Counter")
@@ -19,6 +20,10 @@ def reset_all():
     st.session_state["total_count"] = 0  # Zurücksetzen des Gesamtzählers
     st.session_state["praep_name"] = ""  # Zurücksetzen des Präparatnamens
     st.session_state["selected_option"] = None  # Zurücksetzen der Auswahloption
+
+# Initialisierung von 'data_df' falls nicht vorhanden (z.B. als leeres DataFrame)
+if "data_df" not in st.session_state:
+    st.session_state["data_df"] = pd.DataFrame(columns=["selected_option", "praep_name", "total_count"])
 
 # Überprüfen, ob ein Präparatname bereits in st.session_state gespeichert ist
 if "praep_name" not in st.session_state:
