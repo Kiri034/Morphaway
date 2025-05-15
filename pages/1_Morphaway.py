@@ -69,6 +69,12 @@ else:
     # Berechne den Total Counter
     total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 19))
 
+    # Button zum Rückgängig machen des letzten Klicks
+    if st.button("Letzten Klick zurücknehmen", key="undo_button"):
+        last = st.session_state.get("last_clicked_button")
+        if last and st.session_state[last] > 0:
+            st.session_state[last] -= 1
+
     # Anzeige des Gesamtzählers
     st.markdown(f"### Gesamtzahl: *{total_count}*")
 
