@@ -4,7 +4,7 @@
 # ====== End Login Block ======
 
 # ------------------------------------------------------------
-# Here starts the actual app, which was developed previously
+# Hier beginnt die eigentliche App, die zuvor entwickelt wurde
 
 import streamlit as st
 from utils.data_manager import DataManager
@@ -96,16 +96,20 @@ else:
     if st.button("Refresh", key="refresh_button"):
         reset_all()
 
-
-        # --- Save Cellcount data ---
+    # --- Save Cellcount data ---
     if st.button("Jetzt Auswerten", key="auswertung_button"):
-        # Zuerst: Daten speichern
-        DataManager().append_record(session_state_key='data_df', record_dict={
-                'selected_option': st.session_state["selected_option"],
-                'praep_name': praep_name,
-                'total_count': total_count
-            }
-        )
+        try:
+            # Speichere die Daten
+            DataManager().append_record(
+                session_state_key='data_df',
+                record_dict={
+                    'selected_option': st.session_state["selected_option"],
+                    'praep_name': st.session_state["praep_name"],
+                    'total_count': total_count
+                }
+            )
 
-        # Dann: Seite wechseln
-        st.switch_page("pages/2_Auswertung.py")
+            # Wechsel zur Auswertungsseite
+            st.switch_page("Auswertung")  # Achte darauf, dass der Seitenname stimmt
+        except Exception as e:
+            st.error(f"Fehler beim Speichern der Daten: {e}")
