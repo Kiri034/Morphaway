@@ -71,7 +71,11 @@ else:
 
     if st.button("🔙 Rückgängig", key="undo_button"):
         total_count = (total_count -1)   # Setze alle Zähler zurück  
-
+    
+    if "total_count" in st.session_state:
+        st.session_state["total_count"] -= 1
+    else:
+        st.session_state["total_count"] = 0  # Falls total_count nicht existiert, initialisiere es mit 0
 
     # Anzeige des Gesamtzählers
     st.markdown(f"### Gesamtzahl: *{total_count}*")
