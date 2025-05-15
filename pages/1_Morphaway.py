@@ -122,6 +122,6 @@ else:
             )
 
             # Wechsel zur Auswertungsseite
-            st.switch_page("2_Auswertung.py")  # Achte darauf, dass der Seitenname stimmt
+            st.switch_page("pages/2_Auswertung.py")  # Achte darauf, dass der Seitenname stimmt
         except Exception as e:
             st.error(f"Fehler beim Speichern der Daten: {e}")
