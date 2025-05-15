@@ -96,19 +96,19 @@ else:
         reset_all()
 
 
-    # --- Save Cellcount data ---
-    from utils.data_manager import DataManager
+        # --- Save Cellcount data ---
+        from utils.data_manager import DataManager
 
-if st.button("Jetzt Auswerten", key="auswertung_button"):
-    # Zuerst: Daten speichern
-    DataManager().append_record(
-        session_state_key='data_df',
-        record_dict={
-            'selected_option': st.session_state["selected_option"],
-            'praep_name': praep_name,
-            'total_count': total_count
-        }
-    )
+    if st.button("Jetzt Auswerten", key="auswertung_button"):
+        # Zuerst: Daten speichern
+        DataManager().append_record(
+            session_state_key='data_df',
+            record_dict={
+                'selected_option': st.session_state["selected_option"],
+                'praep_name': praep_name,
+                'total_count': total_count
+            }
+        )
 
-    # Dann: Seite wechseln
-    st.switch_page("pages/2_Auswertung.py")
+        # Dann: Seite wechseln
+        st.switch_page("pages/2_Auswertung.py")
