@@ -1,14 +1,21 @@
-# ====== Start Login Block ======
-#from utils.login_manager import LoginManager
-#LoginManager().go_to_login('Start.py') 
-# ====== End Login Block ======
-
-# ------------------------------------------------------------
-# Hier beginnt die eigentliche App, die zuvor entwickelt wurde
-
 import streamlit as st
-from utils.data_manager import DataManager
 import pandas as pd  # Wir benötigen pandas, um mit DataFrames zu arbeiten
+
+# Beispiel einer angepassten DataManager Klasse
+class DataManager:
+    def __init__(self):
+        if "data_df" not in st.session_state:
+            st.session_state["data_df"] = pd.DataFrame(columns=["selected_option", "praep_name", "total_count"])
+
+    def append_record(self, session_state_key: str, record_dict: dict):
+        df = st.session_state.get(session_state_key)
+        if df is not None:
+            new_entry = pd.DataFrame([record_dict])
+            updated_df = pd.concat([df, new_entry], ignore_index=True)
+            st.session_state[session_state_key] = updated_df
+        else:
+            raise ValueError(f"Kein DataFrame gefunden für den Schlüssel: {session_state_key}")
+
 
 # Titel der Seite
 st.title("Cell Counter")
