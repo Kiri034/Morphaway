@@ -100,6 +100,7 @@ else:
         {"path": "https://cdn.cellwiki.net/db/pathology/page-372/gallery-1739/030.jpg", "label": "smudged cells"},
     ]
 
+    # Zeige die Bilder in einem Raster an
     cols = st.columns(4)  # 4 Spalten pro Reihe
 
     for idx, image in enumerate(images):
@@ -109,6 +110,9 @@ else:
                 st.session_state[f"button_{idx + 1}_count"] += 1
             st.image(image["path"], use_container_width=True)
             st.write(f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}", use_container_width=True)
+
+    # Gc* = Granulozyten
+    st.markdown("Gc* = Granulozyten")
 
     # Reset-Button nach den Bild-Buttons
     if st.button("Refresh", key="refresh_button"):
