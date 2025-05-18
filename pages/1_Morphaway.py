@@ -82,52 +82,34 @@ else:
     # Anzeige des Gesamtzählers
     st.markdown(f"### Gesamtzahl: *{total_count}*")
 
-# Initialisiere Zähler in der Session
-for i in range(1, 15):
-    if f"button_{i}_count" not in st.session_state:
-        st.session_state[f"button_{i}_count"] = 0
+    # Liste der Bildnamen und Beschriftungen
+    images = [
+        {"path": "https://cdn.cellwiki.net/db/cells/page-28/gallery-55/003.jpg", "label": "Lymphozyt"},
+        {"path": "https://cdn.cellwiki.net/db/aberrations/page-73/gallery-181/008.jpg", "label": "reaktiver Lymphozyt"},
+        {"path": "https://cdn.cellwiki.net/db/cells/page-32/gallery-63/002.jpg", "label": "Monozyt"},
+        {"path": "https://cdn.cellwiki.net/db/cells/page-21/gallery-30/011.jpg", "label": "Eosinophile Gc*"},
+        {"path": "https://cdn.cellwiki.net/db/cells/page-17/gallery-17/006.jpg", "label": "Basophile Gc*"},
+        {"path": "https://cdn.cellwiki.net/db/cells/page-26/gallery-45/003.jpg", "label": "Segmentkernige Gc*"},
+        {"path": "https://cdn.cellwiki.net/db/cells/page-25/gallery-44/003.jpg", "label": "Stabkernige Gc*"},
+        {"path": "https://cdn.cellwiki.net/db/cells/page-340/gallery-1537/004.jpg", "label": "Blasten"},
+        {"path": "https://cdn.cellwiki.net/db/cells/page-22/gallery-41/002.jpg", "label": "Promyelozyt"},
+        {"path": "https://cdn.cellwiki.net/db/cells/page-23/gallery-42/001.jpg", "label": "Myelozyt"},
+        {"path": "https://cdn.cellwiki.net/db/cells/page-24/gallery-43/002.jpg", "label": "Metamyelozyt"},
+        {"path": "https://cdn.cellwiki.net/db/cells/page-30/gallery-57/001.jpg", "label": "Plasmazelle"},
+        {"path": "https://cdn.cellwiki.net/db/cells/page-36/gallery-75/004.jpg", "label": "Erythroblast"},
+        {"path": "https://cdn.cellwiki.net/db/pathology/page-372/gallery-1739/030.jpg", "label": "smudged cells"},
+    ]
 
-# Bilddaten
-images = [
-    {"path": "https://cdn.cellwiki.net/db/cells/page-28/gallery-55/003.jpg", "label": "Lymphozyt"},
-    {"path": "https://cdn.cellwiki.net/db/aberrations/page-73/gallery-181/008.jpg", "label": "reaktiver Lymphozyt"},
-    {"path": "https://cdn.cellwiki.net/db/cells/page-32/gallery-63/002.jpg", "label": "Monozyt"},
-    {"path": "https://cdn.cellwiki.net/db/cells/page-21/gallery-30/011.jpg", "label": "Eosinophile Gc*"},
-    {"path": "https://cdn.cellwiki.net/db/cells/page-17/gallery-17/006.jpg", "label": "Basophile Gc*"},
-    {"path": "https://cdn.cellwiki.net/db/cells/page-26/gallery-45/003.jpg", "label": "Segmentkernige Gc*"},
-    {"path": "https://cdn.cellwiki.net/db/cells/page-25/gallery-44/003.jpg", "label": "Stabkernige Gc*"},
-    {"path": "https://cdn.cellwiki.net/db/cells/page-340/gallery-1537/004.jpg", "label": "Blasten"},
-    {"path": "https://cdn.cellwiki.net/db/cells/page-22/gallery-41/002.jpg", "label": "Promyelozyt"},
-    {"path": "https://cdn.cellwiki.net/db/cells/page-23/gallery-42/001.jpg", "label": "Myelozyt"},
-    {"path": "https://cdn.cellwiki.net/db/cells/page-24/gallery-43/002.jpg", "label": "Metamyelozyt"},
-    {"path": "https://cdn.cellwiki.net/db/cells/page-30/gallery-57/001.jpg", "label": "Plasmazelle"},
-    {"path": "https://cdn.cellwiki.net/db/cells/page-36/gallery-75/004.jpg", "label": "Erythroblast"},
-    {"path": "https://cdn.cellwiki.net/db/pathology/page-372/gallery-1739/030.jpg", "label": "smudged cells"},
-]
+    # Zeige die Bilder in einem Raster an
+    cols = st.columns(4)  # 4 Spalten pro Reihe
 
-cols = st.columns(4)
-
-for idx, image in enumerate(images):
-    col = cols[idx % 4]
-    with col:
-        button_key = f"button_{idx + 1}"
-        # Bild als HTML-Button darstellen
-        clicked = st.markdown(
-            f"""
-            <form action="" method="post">
-                <button type="submit" name="{button_key}" style="border:none; background:none;">
-                    <img src="{image['path']}" alt="{image['label']}" style="width: 100%; border-radius: 8px;"/>
-                </button>
-            </form>
-            """,
-            unsafe_allow_html=True
-        )
-        # Prüfe, ob Button gedrückt wurde
-        if st.session_state.get(f"clicked_{button_key}", False):
-            st.session_state[f"{button_key}_count"] += 1
-        # Zeige Label und Zähler
-        st.write(f"{image['label']} - {st.session_state[f'{button_key}_count']}")
-
+    for idx, image in enumerate(images):
+        col = cols[idx % 4]
+        with col:
+            if st.button("", key=f"button_{idx + 1}"):
+                st.session_state[f"button_{idx + 1}_count"] += 1
+            st.image(image["path"], use_container_width=True)
+            st.write(f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}", use_container_width=True)
 
     # Gc* = Granulozyten
     st.markdown("Gc = Granulozyten")
