@@ -107,9 +107,6 @@ else:
         with col:
             if st.button("", key=f"button_{idx + 1}"):
                 st.session_state[f"button_{idx + 1}_count"] += 1
-                # Nach Klick sofort Seite neu laden, damit total_count stimmt
-                st.experimental_rerun()
-                return # Beende die Schleife, um den Button-Click zu verarbeiten
             st.image(image["path"], use_container_width=True)
             st.write(f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}", use_container_width=True)
 
