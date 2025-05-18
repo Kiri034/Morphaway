@@ -87,7 +87,7 @@ else:
         {"path": "https://cdn.cellwiki.net/db/cells/page-28/gallery-55/003.jpg", "label": "Lymphozyt"},
         {"path": "https://cdn.cellwiki.net/db/aberrations/page-73/gallery-181/008.jpg", "label": "reaktiver Lymphozyt"},
         {"path": "https://cdn.cellwiki.net/db/cells/page-32/gallery-63/002.jpg", "label": "Monozyt"},
-        {"path": "https://cdn.cellwiki.net/db/cells/page-21/gallery-30/011.jpg", "label": "Eosinophile Granulozyten"},
+        {"path": "https://cdn.cellwiki.net/db/cells/page-21/gallery-30/011.jpg", "label": "Eosinophile Gc*"},
         {"path": "https://cdn.cellwiki.net/db/cells/page-17/gallery-17/006.jpg", "label": "Basophile Gc*"},
         {"path": "https://cdn.cellwiki.net/db/cells/page-26/gallery-45/003.jpg", "label": "Segmentkernige Gc*"},
         {"path": "https://cdn.cellwiki.net/db/cells/page-25/gallery-44/003.jpg", "label": "Stabkernige Gc*"},
@@ -108,11 +108,14 @@ else:
         with col:
             if st.button("", key=f"button_{idx + 1}"):
                 st.session_state[f"button_{idx + 1}_count"] += 1
-            st.image(image["path"], use_container_width=True)
+            st.markdown(
+                f'<img src="{image["path"]}" width="50" style="display:block;margin:auto;">',
+                unsafe_allow_html=True
+            )
             st.write(f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}", use_container_width=True)
 
     # Gc* = Granulozyten
-    st.markdown("Gc* = Granulozyten")
+    st.markdown("Gc = Granulozyten")
 
     # Reset-Button nach den Bild-Buttons
     if st.button("Refresh", key="refresh_button"):
