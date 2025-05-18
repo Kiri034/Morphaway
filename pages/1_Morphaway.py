@@ -109,7 +109,7 @@ else:
             if st.button("", key=f"button_{idx + 1}"):
                 st.session_state[f"button_{idx + 1}_count"] += 1
             st.markdown(
-                f'<img src="{image["path"]}" width="50" style="display:block;margin:auto;">',
+                f'<img src="{image["path"]}" width="100" style="display:block;margin:auto;">',
                 unsafe_allow_html=True
             )
             st.write(f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}", use_container_width=True)
