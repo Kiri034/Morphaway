@@ -63,7 +63,7 @@ else:
         )
 
     # Initialisiere Zähler für jeden Button im Session State
-    for i in range(1, 14):  # 14 Bilder
+    for i in range(1, 19):  # 18 Bilder
         if f"button_{i}_count" not in st.session_state:
             st.session_state[f"button_{i}_count"] = 0
 
