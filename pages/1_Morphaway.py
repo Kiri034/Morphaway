@@ -23,7 +23,7 @@ st.title("Cell Counter")
 
 # Funktion zum Zurücksetzen des Total Count und der Session-Variablen
 def reset_all():
-    for i in range(1, 19):  # 18 Buttons
+    for i in range(1, 15):  # 14 Buttons
         st.session_state[f"button_{i}_count"] = 0
     st.session_state["total_count"] = 0  # Zurücksetzen des Gesamtzählers
     st.session_state["praep_name"] = ""  # Zurücksetzen des Präparatnamens
@@ -63,18 +63,19 @@ else:
         )
 
     # Initialisiere Zähler für jeden Button im Session State
-    for i in range(1, 19):  # 18 Bilder
+    for i in range(1, 15):  # 14 Bilder
         if f"button_{i}_count" not in st.session_state:
             st.session_state[f"button_{i}_count"] = 0
 
     # Berechne den Total Counter
-    total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 14))
+    erythro_count = st.session_state["button_13_count"]
+    total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 15) if i != 13)
 
     # Rückgängig Button
     if st.button("🔙 Rückgängig", key="undo_button"):
         # Reduziere total_count und setze die Zähler zurück
         st.session_state["total_count"] = st.session_state.get("total_count", 0) - 1
-        for i in range(1, 19):
+        for i in range(1, 15):
             if st.session_state[f"button_{i}_count"] > 0:
                 st.session_state[f"button_{i}_count"] -= 1
                 break  # Wir machen nur einen Rückgängig-Schritt
