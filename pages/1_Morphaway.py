@@ -100,24 +100,16 @@ else:
         {"path": "https://cdn.cellwiki.net/db/pathology/page-372/gallery-1739/030.jpg", "label": "smudged cells"},
     ]
 
-# Anzeige der Bilder auf dem Handyscreen
-# Responsive columns: 2 columns for mobile, 4 for desktop
-if st.session_state.get("is_mobile", False) or st.experimental_get_query_params().get("mobile", [""])[0] == "1":
-    num_cols = 2
-    image_width = 100
-else:
-    num_cols = 4
-    image_width = None  # Use container width
+    # Zeige die Bilder in einem Raster an
+    cols = st.columns(4)  # 4 Spalten pro Reihe
 
-cols = st.columns(num_cols)
-
-for idx, image in enumerate(images):
-    col = cols[idx % num_cols]
-    with col:
-        if st.button("", key=f"button_{idx + 1}"):
-            st.session_state[f"button_{idx + 1}_count"] += 1
-        st.image(image["path"], width=image_width, use_container_width=image_width is None)
-        st.write(f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}", use_container_width=True)
+    for idx, image in enumerate(images):
+        col = cols[idx % 4]
+        with col:
+            if st.button("", key=f"button_{idx + 1}"):
+                st.session_state[f"button_{idx + 1}_count"] += 1
+            st.image(image["path"], use_container_width=True)
+            st.write(f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}", use_container_width=True)
 
     # Gc* = Granulozyten
     st.markdown("Gc = Granulozyten")
