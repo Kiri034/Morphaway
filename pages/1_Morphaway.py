@@ -56,7 +56,7 @@ else:
     # Initialisiere Zähler für jeden Button im Session State
     for i in range(1, 15):  # 14 Bilder
         if f"button_{i}_count" not in st.session_state:
-            st.session_state[f"button_{i}_count"] = 1
+            st.session_state[f"button_{i}_count"] = 0
 
     # Berechne den Total Counter
     erythro_count = st.session_state["button_13_count"]
