@@ -83,6 +83,14 @@ if 'df' in locals() and not df.empty:
 
         # Diagramm als Bild in eine temporäre Datei speichern
         diagram_path = "diagram.png"
+        try:
+            fig.write_image(diagram_path)  # Speichert das Diagramm als PNG-Datei
+        except Exception as e:
+            st.error(f"Fehler beim Speichern des Diagramms als Bild: {e}")
+            diagram_path = None
+    else:
+        st.warning("Keine Daten für das Kreisdiagramm verfügbar. Alle Zellen haben 0 Klicks.")
+        diagram_path = None
 else:
     st.warning("Keine Zählerdaten vorhanden. Bitte kehren Sie zurück und geben Sie Ihre Werte ein.")
 
@@ -107,11 +115,13 @@ else:
     pdf.cell(0, 5, txt="Keine Daten verfügbar.", ln=True)
 
 # Diagramm in die PDF einfügen
-if 'diagram_path' in locals() and diagram_path and os.path.exists(diagram_path):
+diagram_path = None  # Sicherstellen, dass die Variable immer definiert ist
+if diagram_path and os.path.exists(diagram_path):
     pdf.ln(10)
     pdf.set_font("Arial", size=10)
     pdf.cell(0, 10, txt="Kreisdiagramm der Ergebnisse:", ln=True)
     pdf.ln(5)
+
     try:
         pdf.image(diagram_path, x=10, y=pdf.get_y(), w=180)
     except Exception as e:
