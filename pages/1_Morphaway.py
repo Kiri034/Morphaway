@@ -68,10 +68,8 @@ else:
             st.session_state[f"button_{i}_count"] = 0
 
     # Berechne den Total Counter
-    total_count = sum(
-        st.session_state[f"button_{i}_count"] for i in range(1, 14) if i != 13
-    )
-    
+    total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 14))
+
     # Rückgängig Button
     if st.button("🔙 Rückgängig", key="undo_button"):
         # Reduziere total_count und setze die Zähler zurück
@@ -135,6 +133,6 @@ else:
             )
 
             # Wechsel zur Auswertungsseite
-            st.switch_page("pages/2_Auswertung.py")
+            st.switch_page("pages/2_Auswertung.py")  # Achte darauf, dass der Seitenname stimmt
         except Exception as e:
             st.error(f"Fehler beim Speichern der Daten: {e}")
