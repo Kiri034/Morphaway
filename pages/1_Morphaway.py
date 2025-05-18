@@ -46,21 +46,12 @@ else:
     # Zeige den gespeicherten Präparatnamen an
     st.markdown(f"### Präparat: *{st.session_state['praep_name']}*")
 
-# Überprüfen, ob ein Präparatname eingegeben wurde
-if not st.session_state["praep_name"]:
-    st.warning("Bitte gib einen Namen für das Präparat ein, bevor du fortfährst.")
-else:
-    # Initialisiere "selected_option", falls es nicht existiert
-    if "selected_option" not in st.session_state:
-        st.session_state["selected_option"] = None
-
-    # Zeige die Auswahloptionen nur, wenn noch keine Option ausgewählt wurde
-    if st.session_state["selected_option"] is None:
-        st.session_state["selected_option"] = st.radio(
-            "Wähle eine Funktion:",
-            ["50 Zellen differenzieren", "100 Zellen differenzieren", "200 Zellen differenzieren"],
-            key="function_select"
-        )
+    # Auswahloption IMMER anzeigen, damit sie aktualisiert wird
+    st.session_state["selected_option"] = st.radio(
+        "Wähle eine Funktion:",
+        ["50 Zellen differenzieren", "100 Zellen differenzieren", "200 Zellen differenzieren"],
+        key="function_select"
+    )
 
     # Initialisiere Zähler für jeden Button im Session State
     for i in range(1, 15):  # 14 Bilder
@@ -73,8 +64,6 @@ else:
 
     # Rückgängig Button
     if st.button("🔙 Rückgängig", key="undo_button"):
-        # Reduziere total_count und setze die Zähler zurück
-        st.session_state["total_count"] = st.session_state.get("total_count", 0) - 1
         for i in range(1, 15):
             if st.session_state[f"button_{i}_count"] > 0:
                 st.session_state[f"button_{i}_count"] -= 1
@@ -82,6 +71,15 @@ else:
 
     # Anzeige des Gesamtzählers
     st.markdown(f"### Gesamtzahl: *{total_count}*")
+
+    # Maximale Zellzahl aus der Auswahl extrahieren
+    max_cells = int(st.session_state["selected_option"].split()[0])
+
+    # Warnmeldungen bei bestimmten Schwellenwerten
+    if total_count == max_cells:
+        st.warning(f"⚠️ Maximale Anzahl ausgezählter Zellen ({max_cells}) erreicht.")
+    elif total_count > max_cells:
+        st.error(f"❌ Grenze von {max_cells} Zellen überschritten! Bitte zurücksetzen.")
 
     # Liste der Bildnamen und Beschriftungen
     images = [
