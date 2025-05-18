@@ -84,24 +84,20 @@ else:
 
     # Liste der Bildnamen und Beschriftungen
     images = [
-        {"path": "https://via.placeholder.com/150?text=Button+1", "label": "Lymphozyt"},
+        {"path": "https://cdn.cellwiki.net/db/cells/page-28/gallery-55/003.jpg", "label": "Lymphozyt"},
+        {"path": "https://cdn.cellwiki.net/db/aberrations/page-73/gallery-181/008.jpg", "label": "reaktiver Lymphozyt"},
         {"path": "https://cdn.cellwiki.net/db/cells/page-32/gallery-63/002.jpg", "label": "Monozyt"},
-        {"path": "https://via.placeholder.com/150?text=Button+3", "label": "Eosinophil"},
-        {"path": "https://via.placeholder.com/150?text=Button+4", "label": "Basophil"},
-        {"path": "https://via.placeholder.com/150?text=Button+5", "label": "Segmentkernige Granulozyten"},
-        {"path": "https://via.placeholder.com/150?text=Button+6", "label": "Stabkernige Granulozyten"},
-        {"path": "https://via.placeholder.com/150?text=Button+7", "label": "Erythroblast"},
-        {"path": "https://via.placeholder.com/150?text=Button+8", "label": "Blasten"},
-        {"path": "https://via.placeholder.com/150?text=Button+9", "label": "Promyelozyt"},
-        {"path": "https://via.placeholder.com/150?text=Button+10", "label": "Myelozyt"},
-        {"path": "https://via.placeholder.com/150?text=Button+11", "label": "Metamyelozyt"},
-        {"path": "https://via.placeholder.com/150?text=Button+12", "label": "reactive Lymphozyt"},
-        {"path": "https://via.placeholder.com/150?text=Button+13", "label": "Abnormale Lymphozyten"},
-        {"path": "https://via.placeholder.com/150?text=Button+14", "label": "Large granular lymphocyte"},
-        {"path": "https://via.placeholder.com/150?text=Button+15", "label": "NRBC"},
-        {"path": "https://via.placeholder.com/150?text=Button+16", "label": "Mastzelle"},
-        {"path": "https://via.placeholder.com/150?text=Button+17", "label": "Plasmazelle"},
-        {"path": "https://via.placeholder.com/150?text=Button+18", "label": "smudged cells"},
+        {"path": "https://cdn.cellwiki.net/db/cells/page-21/gallery-30/011.jpg", "label": "Eosinophiler Granulozyt"},
+        {"path": "https://cdn.cellwiki.net/db/cells/page-17/gallery-17/006.jpg", "label": "Basophiler Granulozyt"},
+        {"path": "https://cdn.cellwiki.net/db/cells/page-26/gallery-45/003.jpg", "label": "Segmentkernige Granulozyten"},
+        {"path": "https://cdn.cellwiki.net/db/cells/page-25/gallery-44/003.jpg", "label": "Stabkernige Granulozyten"},
+        {"path": "https://cdn.cellwiki.net/db/cells/page-340/gallery-1537/004.jpg", "label": "Blasten"},
+        {"path": "https://cdn.cellwiki.net/db/cells/page-22/gallery-41/002.jpg", "label": "Promyelozyt"},
+        {"path": "https://cdn.cellwiki.net/db/cells/page-23/gallery-42/001.jpg", "label": "Myelozyt"},
+        {"path": "https://cdn.cellwiki.net/db/cells/page-24/gallery-43/002.jpg", "label": "Metamyelozyt"},
+        {"path": "https://cdn.cellwiki.net/db/cells/page-30/gallery-57/001.jpg", "label": "Plasmazelle"},
+        {"path": "https://cdn.cellwiki.net/db/cells/page-36/gallery-75/004.jpg", "label": "Erythroblast"},
+        {"path": "https://cdn.cellwiki.net/db/pathology/page-372/gallery-1739/030.jpg", "label": "smudged cells"},
     ]
 
     cols = st.columns(4)  # 4 Spalten pro Reihe
