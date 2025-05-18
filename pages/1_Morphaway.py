@@ -62,29 +62,16 @@ else:
             key="function_select"
         )
 
- # Initialisiere Zähler für jeden Button im Session State
-for i in range(1, 15):  # 14 Bilder
-    if f"button_{i}_count" not in st.session_state:
-        st.session_state[f"button_{i}_count"] = 0
+    # Initialisiere Zähler für jeden Button im Session State
+    for i in range(1, 14):  # 14 Bilder
+        if f"button_{i}_count" not in st.session_state:
+            st.session_state[f"button_{i}_count"] = 0
 
-# Erythroblasten (Index 13, also button_13_count)
-erythro_count = st.session_state["button_13_count"]
-
-# Gesamtzahl OHNE Erythroblasten (alle außer Index 13)
-total_count = sum(
-    st.session_state[f"button_{i}_count"] for i in range(1, 14) if i != 13
-)
-
-# Anzeige des Gesamtzählers
-st.markdown(f"### Gesamtzahl (ohne Erythroblasten): *{total_count}*")
-
-# Erythroblasten pro 100 Leukozyten
-if total_count > 0:
-    erythro_per_100 = erythro_count / total_count * 100
-    st.markdown(f"**Erythroblasten pro 100 Leukozyten:** {erythro_per_100:.2f}")
-else:
-    st.markdown("**Erythroblasten pro 100 Leukozyten:** -")
-
+    # Berechne den Total Counter
+    total_count = sum(
+        st.session_state[f"button_{i}_count"] for i in range(1, 14) if i != 13
+    )
+    
     # Rückgängig Button
     if st.button("🔙 Rückgängig", key="undo_button"):
         # Reduziere total_count und setze die Zähler zurück
