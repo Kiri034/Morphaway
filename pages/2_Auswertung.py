@@ -132,7 +132,7 @@ if diagram_path and os.path.exists(diagram_path):
         st.error(f"Fehler beim Einfügen des Diagramms in die PDF: {e}")
 
 # PDF in eine Datei speichern
-pdf_file_path = "auswertung.pdf"
+pdf_file_path = f"{praep_name}_Auswertung.pdf"
 pdf.output(pdf_file_path)
 
 # PDF-Download-Button
@@ -141,7 +141,7 @@ if os.path.exists(pdf_file_path):
         st.download_button(
             label="📄 PDF herunterladen",
             data=pdf_file,
-            file_name="auswertung.pdf",
+            file_name=f"{praep_name}_Auswertung.pdf",
             mime="application/pdf",
         )
 else:
