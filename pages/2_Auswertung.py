@@ -25,32 +25,28 @@ if not os.path.exists(history_directory):
     os.makedirs(history_directory)
 
 # Überprüfen, ob Zählerdaten aus 1_Morphaway.py vorhanden sind
-if any(f"button_{i}_count" in st.session_state for i in range(1, 19)):
+if any(f"button_{i}_count" in st.session_state for i in range(1, 14)):
     # Liste der Zellen und Beschriftungen
     images = [
         {"label": "Lymphozyt"},
+        {"label": "reaktiver Lymphozyt"},
         {"label": "Monozyt"},
-        {"label": "Eosinophil"},
-        {"label": "Basophil"},
-        {"label": "Segmentkernige Granulozyten"},
-        {"label": "Stabkernige Granulozyten"},
-        {"label": "Erythroblast"},
+        {"label": "Eosinophile Gc*"},
+        {"label": "Basophile Gc*"},
+        {"label": "Segmentkernige Gc*"},
+        {"label": "Stabkernige Gc*"},
         {"label": "Blasten"},
         {"label": "Promyelozyt"},
         {"label": "Myelozyt"},
         {"label": "Metamyelozyt"},
-        {"label": "reactive Lymphozyt"},
-        {"label": "Abnormale Lymphozyten"},
-        {"label": "Large granular lymphocyte"},
-        {"label": "NRBC"},
-        {"label": "Mastzelle"},
         {"label": "Plasmazelle"},
+        {"label": "Erythroblast"},
         {"label": "smudged cells"},
     ]
 
     # Daten für die Tabelle und das Diagramm vorbereiten
     data = []
-    total_count = sum(st.session_state.get(f"button_{i}_count", 0) for i in range(1, 19))
+    total_count = sum(st.session_state.get(f"button_{i}_count", 0) for i in range(1, 14))
     for idx, cell in enumerate(images, start=1):
         count = st.session_state.get(f"button_{idx}_count", 0)
         relative_count = (count / total_count * 100) if total_count > 0 else 0
@@ -119,13 +115,11 @@ else:
     pdf.cell(0, 5, txt="Keine Daten verfügbar.", ln=True)
 
 # Diagramm in die PDF einfügen
-diagram_path = None  # Sicherstellen, dass die Variable immer definiert ist
-if diagram_path and os.path.exists(diagram_path):
+if 'diagram_path' in locals() and diagram_path and os.path.exists(diagram_path):
     pdf.ln(10)
     pdf.set_font("Arial", size=10)
     pdf.cell(0, 10, txt="Kreisdiagramm der Ergebnisse:", ln=True)
     pdf.ln(5)
-
     try:
         pdf.image(diagram_path, x=10, y=pdf.get_y(), w=180)
     except Exception as e:
