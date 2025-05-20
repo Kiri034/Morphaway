@@ -99,15 +99,16 @@ else:
                 st.session_state[f"button_{idx + 1}_count"] += 1
 
     # Nach allen Button-Events: Einzelwerte unter den Bildern anzeigen
-    cols = st.columns(4)
-    for idx, image in enumerate(images):
-        col = cols[idx % 4]
-        with col:
-            if st.button("", key=f"button_{idx + 1}"):
-                st.session_state[f"button_{idx + 1}_count"] += 1
-            st.image(image["path"], use_container_width=True)
-            st.write(f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}", use_container_width=True)
-            
+cols = st.columns(4)  # 4 Spalten pro Reihe
+for idx, image in enumerate(images):
+    col = cols[idx % 4]
+    with col:
+        if st.button("", key=f"button_{idx + 1}"):
+            st.session_state[f"button_{idx + 1}_count"] += 1
+        st.image(image["path"], use_container_width=True)
+        st.write(f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}", use_container_width=True)
+
+
     # Erythroblast separat zählen (Button 13)
     erythroblast_count = st.session_state["button_13_count"]
     # Gesamtzähler OHNE Erythroblast (alle außer Button 13)
