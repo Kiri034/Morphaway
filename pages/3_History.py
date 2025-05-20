@@ -1,6 +1,6 @@
 # ====== Start Login Block ======
 from utils.login_manager import LoginManager
-LoginManager().go_to_login('Home.py') 
+LoginManager().go_to_login('Home.py')  # KORREKTUR: Start.py → Home.py
 # ====== End Login Block ======
 
 # ------------------------------------------------------------

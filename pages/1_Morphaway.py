@@ -47,10 +47,18 @@ if "data_df" not in st.session_state:
 if "praep_name" not in st.session_state:
     st.session_state["praep_name"] = ""
 
-# Präparatname-Eingabe mit Bestätigungsbutton
+# Präparatname-Eingabe mit Bestätigungsbutton und Hinweis
 if not st.session_state["praep_name"]:
+    st.info("Der Präparatname darf nur einmal verwendet werden. "
+            "Wenn du denselben Namen nochmal brauchst, hänge eine Nummer an, z.B. 'Blutbild 2'.")
     praep_name = st.text_input("Gib einen Namen für das Präparat ein:", key="praep_name_input")
-    if st.button("Diffrenzieren", key="confirm_praep_name") and praep_name:
+
+    # Prüfen, ob der Name schon existiert
+    existing_names = set(st.session_state["data_df"]["praep_name"])
+    if praep_name and praep_name in existing_names:
+        st.warning("Es existiert bereits ein Präparat mit diesem Namen. Bitte wähle einen anderen Namen oder hänge eine Nummer an.")
+
+    if st.button("Diffrenzieren", key="confirm_praep_name") and praep_name and praep_name not in existing_names:
         st.session_state["praep_name"] = praep_name
 # Counter-Logik
 else:
