@@ -94,7 +94,8 @@ if any(f"button_{i}_count" in st.session_state for i in range(1, 15)):
         pdf = FPDF()
         pdf.add_page()
         pdf.set_font("Arial", "B", 14)
-        pdf.cell(0, 10, f"Auswertung der Ergebnisse – Präparat: {praep_name}", ln=True, align="C")
+        # ACHTUNG: Kein Sonderzeichen "–", sondern normaler Bindestrich "-"
+        pdf.cell(0, 10, f"Auswertung der Ergebnisse - Präparat: {praep_name}", ln=True, align="C")
         pdf.ln(10)
 
         # Tabelle
