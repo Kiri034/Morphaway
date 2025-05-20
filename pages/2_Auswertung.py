@@ -94,34 +94,35 @@ if st.button("📄Export"):
     pdf = FPDF()
     pdf.add_page()
     pdf.set_font("Arial", "B", 14)
-    pdf.cell(0, 10, "Auswertung der Ergebnisse", ln=True, align="C")
+    # Titel und Präparatname in einer Zeile:
+    pdf.cell(0, 10, f"Auswertung der Ergebnisse – Präparat: {praep_name}", ln=True, align="C")
     pdf.ln(10)
 
     # Schöne Tabelle mit Rahmen und Überschriften
     pdf.set_font("Arial", "B", 10)
-    pdf.cell(40, 10, "Zelle", 1, 0, "C")
-    pdf.cell(25, 10, "Anzahl", 1, 0, "C")
-    pdf.cell(40, 10, "Relativer Anteil (%)", 1, 1, "C")
+    pdf.cell(32, 8, "Zelle", 1, 0, "C")
+    pdf.cell(18, 8, "Anzahl", 1, 0, "C")
+    pdf.cell(28, 8, "Rel. Anteil (%)", 1, 1, "C")
     pdf.set_font("Arial", "", 10)
     if not df.empty:
         for index, row in df.iterrows():
-            pdf.cell(40, 10, str(row['Zelle']), 1, 0, "C")
-            pdf.cell(25, 10, str(row['Anzahl']), 1, 0, "C")
-            pdf.cell(40, 10, str(row['Relativer Anteil (%)']), 1, 1, "C")
+            pdf.cell(32, 8, str(row['Zelle']), 1, 0, "C")
+            pdf.cell(18, 8, str(row['Anzahl']), 1, 0, "C")
+            pdf.cell(28, 8, str(row['Relativer Anteil (%)']), 1, 1, "C")
     else:
-        pdf.cell(105, 10, "Keine Daten verfügbar.", 1, 1, "C")
+        pdf.cell(78, 8, "Keine Daten verfügbar.", 1, 1, "C")
 
-    # Kreisdiagramm ins PDF einfügen, falls vorhanden
-    if img_bytes:
-        img_path = "temp_chart.png"
-        with open(img_path, "wb") as f:
-            f.write(img_bytes)
-        pdf.ln(10)
-        pdf.set_font("Arial", "B", 10)
-        pdf.cell(0, 10, txt="Kreisdiagramm:", ln=True)
-        pdf.ln(5)
-        pdf.image(img_path, x=10, w=140)  # groß und farbig
-        os.remove(img_path)
+# Kreisdiagramm kleiner einfügen
+if img_bytes:
+    img_path = "temp_chart.png"
+    with open(img_path, "wb") as f:
+        f.write(img_bytes)
+    pdf.ln(5)
+    pdf.set_font("Arial", "B", 10)
+    pdf.cell(0, 8, txt="Kreisdiagramm:", ln=True)
+    pdf.ln(3)
+    pdf.image(img_path, x=35, w=90)
+    os.remove(img_path)
 
     # PDF als Bytes speichern und Download anbieten (nur EIN Button!)
     pdf_bytes = pdf.output(dest="S").encode("latin1")
