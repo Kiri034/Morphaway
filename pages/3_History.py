@@ -5,7 +5,15 @@ import pandas as pd
 
 st.title("🔍 History")
 
-history_directory = "history_exports"
+# Optional: Nutzername aus Session holen (falls vorhanden)
+user = st.session_state.get("user")
+if user:
+    history_directory = os.path.join("history_exports", user)
+else:
+    history_directory = "history_exports"
+
+if not os.path.exists(history_directory):
+    os.makedirs(history_directory)
 
 # Liste aller gespeicherten Auswertungen (Dateinamen)
 files = [f for f in os.listdir(history_directory) if f.endswith(".json")]
