@@ -95,51 +95,51 @@ else:
     st.warning("Keine Zählerdaten vorhanden. Bitte kehren Sie zurück und geben Sie Ihre Werte ein.")
     df = pd.DataFrame()  # Leerer DataFrame, damit der PDF-Teil nicht crasht
     diagram_path = None
+# --- PDF-Export ---   
+if st.button("PDF Export"):
+    if not df.empty:
+        pdf = FPDF()
+        pdf.set_auto_page_break(auto=True, margin=15)
+        pdf.add_page()
 
-# PDF-Erstellung
-pdf = FPDF()
-pdf.add_page()
-pdf.set_font("Arial", size=12)
+        # Titel
+        pdf.set_font("Arial", 'B', 16)
+        pdf.cell(0, 10, f"Auswertung für {praep_name}", ln=True, align="C")
 
-# Titel
-pdf.set_font("Arial", style="B", size=16)
-pdf.cell(200, 10, txt="Auswertung der Ergebnisse", ln=True, align="C")
-pdf.ln(10)
+        # Tabelle
+        pdf.set_font("Arial", 'B', 12)
+        pdf.cell(60, 10, "Zelle", 1)
+        pdf.cell(60, 10, "Anzahl", 1)
+        pdf.cell(70, 10, "Relativer Anteil (%)", 1)
+        pdf.ln()
 
-# Tabelle in die PDF einfügen
-if not df.empty:
-    pdf.set_font("Arial", size=12)
-    pdf.cell(0, 5, txt="Tabelle der Ergebnisse:", ln=True)
-    pdf.ln(5)
-    for index, row in df.iterrows():
-        pdf.cell(0, 5, txt=f"{row['Zelle']}: {row['Anzahl']} Klicks ({row['Relativer Anteil (%)']}%)", ln=True)
-else:
-    pdf.cell(0, 5, txt="Keine Daten verfügbar.", ln=True)
+        pdf.set_font("Arial", '', 12)
+        for index, row in df.iterrows():
+            pdf.cell(60, 10, row["Zelle"], 1)
+            pdf.cell(60, 10, str(row["Anzahl"]), 1)
+            pdf.cell(70, 10, str(row["Relativer Anteil (%)"]), 1)
+            pdf.ln()
 
-# Kreisdiagramm ins PDF einfügen, falls vorhanden
-if diagram_path and os.path.exists(diagram_path):
-    pdf.ln(10)
-    pdf.set_font("Arial", style="B", size=12)
-    pdf.cell(0, 10, txt="Kreisdiagramm:", ln=True)
-    pdf.ln(5)
-    pdf.image(diagram_path, x=40, w=120)  # x und w ggf. anpassen
+        # Diagramm hinzufügen
+        if diagram_path:
+            pdf.image(diagram_path, x=10, y=pdf.get_y(), w=180)
 
-# PDF speichern
-pdf_file_path = f"{praep_name}_Auswertung.pdf"
-pdf.output(pdf_file_path)
-
-# PDF-Download-Button
-if os.path.exists(pdf_file_path):
-    with open(pdf_file_path, "rb") as pdf_file:
+        # Speichern des PDFs
+        pdf_output_path = os.path.join(history_directory, f"{praep_name}_{timestamp}.pdf")
+        try:
+            pdf.output(pdf_output_path)
+            st.success(f"PDF erfolgreich erstellt: {pdf_output_path}")
+        except Exception as e:
+            st.error(f"Fehler beim Erstellen des PDFs: {e}")
+    else:
+        st.warning("Keine Daten verfügbar. PDF-Export nicht möglich.")
+        
+# --- Download-Link für PDF-Datei ---
+if os.path.exists(pdf_output_path):
+    with open(pdf_output_path, "rb") as f:
         st.download_button(
-            label="📄 PDF herunterladen",
-            data=pdf_file,
-            file_name=f"{praep_name}_Auswertung.pdf",
-            mime="application/pdf",
+            label="Download PDF",
+            data=f,
+            file_name=f"{praep_name}_{timestamp}.pdf",
+            mime="application/pdf"
         )
-else:
-    st.error("Die PDF-Datei konnte nicht erstellt werden.")
-
-# Button für History anzeigen
-if st.button("History"):
-    st.switch_page("pages/3_History.py")
