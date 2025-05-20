@@ -1,3 +1,10 @@
+# ====== Start Login Block ======
+#from utils.login_manager import LoginManager
+#LoginManager().go_to_login('Start.py')  
+# ====== End Login Block ======
+
+# ------------------------------------------------------------
+# Hier beginnt die eigentliche App
 import streamlit as st
 import pandas as pd
 import datetime  # Für den Timestamp
