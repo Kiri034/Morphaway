@@ -4,8 +4,7 @@
 # ====== End Login Block ======
 
 # ------------------------------------------------------------
-# Hier beginnt die eigentliche App, die zuvor entwickelt wurde
-
+# Hier beginnt die eigentliche App
 import streamlit as st
 import pandas as pd
 import plotly.express as px
@@ -19,10 +18,10 @@ st.title(f"Auswertung für {praep_name}")
 
 # Verzeichnis für gespeicherte Auswertungen
 history_directory = "history_exports"
-
-# Erstelle das Verzeichnis, falls es nicht existiert
 if not os.path.exists(history_directory):
     os.makedirs(history_directory)
+
+pdf_output_path = None  # <- Initialisierung
 
 # Überprüfen, ob Zählerdaten aus 1_Morphaway.py vorhanden sind
 if any(f"button_{i}_count" in st.session_state for i in range(1, 14)):
@@ -95,6 +94,7 @@ else:
     st.warning("Keine Zählerdaten vorhanden. Bitte kehren Sie zurück und geben Sie Ihre Werte ein.")
     df = pd.DataFrame()  # Leerer DataFrame, damit der PDF-Teil nicht crasht
     diagram_path = None
+
 # --- PDF-Export ---   
 if st.button("PDF Export"):
     if not df.empty:
@@ -121,7 +121,7 @@ if st.button("PDF Export"):
             pdf.ln()
 
         # Diagramm hinzufügen
-        if diagram_path:
+        if diagram_path and os.path.exists(diagram_path):
             pdf.image(diagram_path, x=10, y=pdf.get_y(), w=180)
 
         # Speichern des PDFs
@@ -133,9 +133,9 @@ if st.button("PDF Export"):
             st.error(f"Fehler beim Erstellen des PDFs: {e}")
     else:
         st.warning("Keine Daten verfügbar. PDF-Export nicht möglich.")
-        
+
 # --- Download-Link für PDF-Datei ---
-if os.path.exists(pdf_output_path):
+if pdf_output_path and os.path.exists(pdf_output_path):
     with open(pdf_output_path, "rb") as f:
         st.download_button(
             label="Download PDF",
