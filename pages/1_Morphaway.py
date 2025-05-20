@@ -118,7 +118,7 @@ else:
     # Maximale Zellzahl aus der Auswahl extrahieren
     max_cells = int(st.session_state["selected_option"].split()[0])
 
-    # Sticky Warnbox CSS einbinden
+      # Sticky Warnbox CSS einbinden
     st.markdown(
         """
         <style>
@@ -129,6 +129,7 @@ else:
             width: 300px;
             z-index: 9999;
             background-color: #fff3cd;
+            color: #b30000; /* ROTER Text */
             padding: 15px;
             border: 1px solid #ffeeba;
             border-radius: 5px;
@@ -137,7 +138,6 @@ else:
         </style>
         """, unsafe_allow_html=True
     )
-
     # Sticky Warnbox anzeigen, wenn Ziel erreicht/überschritten
     if total_count >= max_cells:
         st.markdown(
