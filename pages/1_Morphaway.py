@@ -105,7 +105,7 @@ else:
                 st.session_state[f"button_{idx + 1}_count"] += 1
             st.image(image["path"], use_container_width=True)
             st.write(f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}", use_container_width=True)
-            
+
     # Erythroblast separat zählen (Button 13)
     erythroblast_count = st.session_state["button_13_count"]
     # Gesamtzähler OHNE Erythroblast (alle außer Button 13)
@@ -118,7 +118,37 @@ else:
     # Maximale Zellzahl aus der Auswahl extrahieren
     max_cells = int(st.session_state["selected_option"].split()[0])
 
-    # Warnmeldungen bei bestimmten Schwellenwerten
+    # Sticky Warnbox CSS einbinden
+    st.markdown(
+        """
+        <style>
+        .sticky-alert {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            width: 300px;
+            z-index: 9999;
+            background-color: #fff3cd;
+            padding: 15px;
+            border: 1px solid #ffeeba;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        </style>
+        """, unsafe_allow_html=True
+    )
+
+    # Sticky Warnbox anzeigen, wenn Ziel erreicht/überschritten
+    if total_count >= max_cells:
+        st.markdown(
+            f"""
+            <div class="sticky-alert">
+                ⚠️ <strong>Ziel erreicht!</strong> Sie haben die Zielzahl von {max_cells} Zellen erreicht oder überschritten.
+            </div>
+            """, unsafe_allow_html=True
+        )
+
+    # Warnmeldungen bei bestimmten Schwellenwerten (optional, falls du die alten Meldungen behalten willst)
     if total_count == max_cells:
         st.warning(f"⚠️ Maximale Anzahl ausgezählter Zellen ({max_cells}) erreicht.")
     elif total_count > max_cells:
