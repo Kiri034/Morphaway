@@ -36,7 +36,7 @@ for file in files:
     # Schönes Datumsformat für die Anzeige
     if timestamp:
         try:
-            dt = datetime.datetime.strptime(timestamp, "%Y-%m-%d")
+            dt = datetime.datetime.strptime(timestamp, "%Y-%m-%d %H:%M:%S")
             timestamp_str = dt.strftime("%d.%m.%Y, %H:%M Uhr")
         except Exception:
             timestamp_str = timestamp
@@ -73,7 +73,6 @@ if file_info:
         df_loaded = pd.DataFrame(loaded_data["data"])
         st.dataframe(df_loaded)
 
-
         # Kreisdiagramm mit festen Farben anzeigen
         import plotly.express as px
         filtered_df = df_loaded[df_loaded["Anzahl"] > 0]
@@ -87,11 +86,10 @@ if file_info:
             )
             st.plotly_chart(fig)
 
-        # Löschfunktion mit Sicherheitsabfrage am Schluss
+        # Löschfunktion am Schluss (ohne Bestätigung)
         if st.button("❌ Auswertung löschen"):
-            if st.session_state.get("confirm_delete", False) or st.checkbox("Löschen bestätigen"):
-                os.remove(file_path)
-                st.success("Auswertung wurde gelöscht. Bitte Seite neu laden.")
-                st.stop()
-            else:
-                st.warning("Bitte 'Löschen bestätigen' anhaken und dann erneut auf 'Auswertung löschen' klicken.")
+            os.remove(file_path)
+            st.success("Auswertung wurde gelöscht. Bitte Seite neu laden.")
+            st.stop()
+else:
+    st.info("Es sind noch keine gespeicherten Auswertungen vorhanden.")
