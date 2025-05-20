@@ -69,11 +69,14 @@ if file_info:
         if total_count not in (None, "", " "):
             st.markdown(f"**Differenzierte Zellen gesamt:** {total_count}")
 
-        st.dataframe(df_loaded)
+        # "Total" und "Gesamt" aus der Anzeige entfernen
+        df_display = df_loaded[~df_loaded["Zelle"].isin(["Total", "Gesamt"])] if "Zelle" in df_loaded.columns else df_loaded
 
-        # Kreisdiagramm mit festen Farben anzeigen
+        st.dataframe(df_display)
+
+        # Kreisdiagramm mit festen Farben anzeigen (ohne "Total"/"Gesamt")
         import plotly.express as px
-        filtered_df = df_loaded[df_loaded["Anzahl"] > 0]
+        filtered_df = df_display[df_display["Anzahl"] > 0] if "Anzahl" in df_display.columns else df_display
         if not filtered_df.empty:
             fig = px.pie(
                 filtered_df,
