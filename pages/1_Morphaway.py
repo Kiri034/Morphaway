@@ -39,7 +39,7 @@ def reset_all():
     st.session_state["selected_option"] = None  # Zurücksetzen der Auswahloption
 
 # Initialisierung von 'data_df' falls nicht vorhanden (z.B. als leeres DataFrame)
-if "data_df" not in st.session_state:
+if "data_df" not in st.session_state or st.session_state["data_df"].empty:
     st.session_state["data_df"] = pd.DataFrame(
         columns=["selected_option", "praep_name", "total_count", "erythroblast_count", "timestamp"]
     )
@@ -54,8 +54,11 @@ if not st.session_state["praep_name"]:
     praep_name = st.text_input("Gib einen Namen für das Präparat ein:", key="praep_name_input")
 
     # Prüfen, ob der Name schon existiert
-    existing_names = set(st.session_state["data_df"]["praep_name"])
-    if praep_name and praep_name in existing_names:
+    
+    if "praep_name" in st.session_state["data_df"].columns:
+        existing_names = set(st.session_state["data_df"]["praep_name"])
+    else:
+        existing_names = set()
         st.warning("Es existiert bereits ein Präparat mit diesem Namen. Bitte wähle einen anderen Namen oder hänge eine Nummer an.")
 
     if st.button("Diffrenzieren", key="confirm_praep_name") and praep_name and praep_name not in existing_names:
