@@ -120,20 +120,20 @@ if st.button("PDF Export"):
             pdf.cell(70, 10, str(row["Relativer Anteil (%)"]), 1)
             pdf.ln()
 
-        # Diagramm hinzufügen
-        if diagram_path and os.path.exists(diagram_path):
-            pdf.image(diagram_path, x=10, y=pdf.get_y(), w=180)
+        # Diagramm als Bild in eine temporäre Datei speichern
+diagram_path = "diagram.png"
+try:
+    fig.write_image(diagram_path)  # Speichert das Diagramm als PNG-Datei
+except Exception as e:
+    st.error(f"Fehler beim Speichern des Diagramms als Bild: {e}")
+    diagram_path = None
 
-        # Speichern des PDFs
-        pdf_output_path = os.path.join(history_directory, f"{praep_name}_{timestamp}.pdf")
-        try:
-            pdf.output(pdf_output_path)
-            st.success(f"PDF erfolgreich erstellt: {pdf_output_path}")
-        except Exception as e:
-            st.error(f"Fehler beim Erstellen des PDFs: {e}")
-    else:
-        st.warning("Keine Daten verfügbar. PDF-Export nicht möglich.")
+# ...
 
+# Diagramm hinzufügen
+if diagram_path and os.path.exists(diagram_path):
+    pdf.image(diagram_path, x=10, y=pdf.get_y(), w=180)
+    
 # --- Download-Link für PDF-Datei ---
 if pdf_output_path and os.path.exists(pdf_output_path):
     with open(pdf_output_path, "rb") as f:
