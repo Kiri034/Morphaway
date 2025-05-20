@@ -62,16 +62,17 @@ else:
         if f"button_{i}_count" not in st.session_state:
             st.session_state[f"button_{i}_count"] = 0
 
-    # Berechne den Total Counter
-    erythro_count = st.session_state["button_13_count"]
-    total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 15) if i != 13)
-
     # Rückgängig Button
     if st.button("🔙 Rückgängig", key="undo_button"):
         for i in range(1, 15):
             if st.session_state[f"button_{i}_count"] > 0:
                 st.session_state[f"button_{i}_count"] -= 1
                 break  # Wir machen nur einen Rückgängig-Schritt
+
+            
+# Berechne den Total Counter nach allen Button-Events
+    erythro_count = st.session_state["button_13_count"]
+    total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 15) if i != 13)
 
     # Anzeige des Gesamtzählers
     st.markdown(f"### Gesamtzahl: *{total_count}*")
@@ -114,24 +115,6 @@ else:
             st.image(image["path"], use_container_width=True)
             st.write(f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}", use_container_width=True)
 
-    # Gc* = Granulozyten
-    st.markdown("Gc = Granulozyten")
-
-    # Berechne den Total Counter nach allen Button-Events
-    erythro_count = st.session_state["button_13_count"]
-    total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 15) if i != 13)
-
-    # Anzeige des Gesamtzählers
-    st.markdown(f"### Gesamtzahl: *{total_count}*")
-
-    # Maximale Zellzahl aus der Auswahl extrahieren
-    max_cells = int(st.session_state["selected_option"].split()[0])
-
-    # Warnmeldungen bei bestimmten Schwellenwerten
-    if total_count == max_cells:
-        st.warning(f"⚠️ Maximale Anzahl ausgezählter Zellen ({max_cells}) erreicht.")
-    elif total_count > max_cells:
-        st.error(f"❌ Grenze von {max_cells} Zellen überschritten! Bitte zurücksetzen.")
 
    # Reset-Button nach den Bild-Buttons
     if st.button("Refresh", key="refresh_button"):
