@@ -9,13 +9,6 @@ import streamlit as st
 import pandas as pd
 import datetime  # Für den Timestamp
 
-# Ganz oben im Skript (nach den Imports)
-scroll_to_top = """
-    <script>
-        window.scrollTo(0, 0);
-    </script>
-"""
-
 # Beispiel einer angepassten DataManager Klasse
 class DataManager:
     def __init__(self):
@@ -59,7 +52,6 @@ if not st.session_state["praep_name"]:
     praep_name = st.text_input("Gib einen Namen für das Präparat ein:", key="praep_name_input")
     if st.button("Diffrenzieren", key="confirm_praep_name") and praep_name:
         st.session_state["praep_name"] = praep_name
-        
 # Counter-Logik
 else:
     # Zeige den gespeicherten Präparatnamen an
@@ -75,16 +67,10 @@ else:
         if selected:
             st.session_state["selected_option"] = selected
 
-    # --- HIER: Button-Zähler initialisieren ---
-    for i in range(1, 15):
+    # Initialisiere Zähler für jeden Button im Session State
+    for i in range(1, 15):  # 14 Bilder
         if f"button_{i}_count" not in st.session_state:
             st.session_state[f"button_{i}_count"] = 0
-
-    # Jetzt kannst du auf die Zähler zugreifen:
-    erythroblast_count = st.session_state["button_13_count"]
-    total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 15) if i != 13)
-    max_cells = int(st.session_state["selected_option"].split()[0])
-
 
     # Rückgängig Button
     if st.button("🔙 Rückgängig", key="undo_button"):
@@ -92,20 +78,6 @@ else:
             if st.session_state[f"button_{i}_count"] > 0:
                 st.session_state[f"button_{i}_count"] -= 1
                 break  # Wir machen nur einen Rückgängig-Schritt
-
-
-      # Anzeige des Gesamtzählers
-    st.markdown(f"### Gesamtzahl: *{total_count}*")
-
-    # Maximale Zellzahl aus der Auswahl extrahieren
-    max_cells = int(st.session_state["selected_option"].split()[0])
-
-    # Warnmeldungen bei bestimmten Schwellenwerten
-    if total_count == max_cells:
-        st.warning(f"⚠️ Maximale Anzahl ausgezählter Zellen ({max_cells}) erreicht.")
-    elif total_count > max_cells:
-        st.error(f"❌ Grenze von {max_cells} Zellen überschritten! Bitte zurücksetzen.")
-
             
     images = [
         {"path": "https://cdn.cellwiki.net/db/cells/page-28/gallery-55/003.jpg", "label": "Lymphozyt"},
@@ -123,9 +95,9 @@ else:
         {"path": "https://cdn.cellwiki.net/db/cells/page-36/gallery-75/004.jpg", "label": "Erythroblast"},
         {"path": "https://cdn.cellwiki.net/db/pathology/page-372/gallery-1739/030.jpg", "label": "smudged cells"},
     ]
-    # Zeige die Bilder in einem Raster an
-    cols = st.columns(4)  # 4 Spalten pro Reihe
 
+    # Buttons, Bilder und Labels gemeinsam anzeigen (nur eine Schleife!)
+    cols = st.columns(4)  # 4 Spalten pro Reihe
     for idx, image in enumerate(images):
         col = cols[idx % 4]
         with col:
@@ -133,22 +105,24 @@ else:
                 st.session_state[f"button_{idx + 1}_count"] += 1
             st.image(image["path"], use_container_width=True)
             st.write(f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}", use_container_width=True)
+            
+    # Erythroblast separat zählen (Button 13)
+    erythroblast_count = st.session_state["button_13_count"]
+    # Gesamtzähler OHNE Erythroblast (alle außer Button 13)
+    total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 15) if i != 13)
 
-# Erythroblast separat zählen (Button 13)
-erythroblast_count = st.session_state["button_13_count"]
-# Gesamtzähler OHNE Erythroblast (alle außer Button 13)
-total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 15) if i != 13)
+    # Anzeige des Gesamtzählers
+    st.markdown(f"### Gesamtzahl: *{total_count}*")
+    st.markdown(f"### Erythroblasten: *{erythroblast_count}*")
 
-# Maximale Zellzahl aus der Auswahl extrahieren
-max_cells = int(st.session_state["selected_option"].split()[0])
+    # Maximale Zellzahl aus der Auswahl extrahieren
+    max_cells = int(st.session_state["selected_option"].split()[0])
 
-# Warnmeldungen bei bestimmten Schwellenwerten
-if total_count == max_cells:
-    st.warning(f"⚠️ Maximale Anzahl ausgezählter Zellen ({max_cells}) erreicht.")
-    st.markdown(scroll_to_top, unsafe_allow_html=True)
-elif total_count > max_cells:
-    st.error(f"❌ Grenze von {max_cells} Zellen überschritten! Bitte zurücksetzen.")
-    st.markdown(scroll_to_top, unsafe_allow_html=True)
+    # Warnmeldungen bei bestimmten Schwellenwerten
+    if total_count == max_cells:
+        st.warning(f"⚠️ Maximale Anzahl ausgezählter Zellen ({max_cells}) erreicht.")
+    elif total_count > max_cells:
+        st.error(f"❌ Grenze von {max_cells} Zellen überschritten! Bitte zurücksetzen.")
 
     # Reset-Button nach den Bild-Buttons
     if st.button("Refresh", key="refresh_button"):
