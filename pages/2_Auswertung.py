@@ -89,39 +89,40 @@ if any(f"button_{i}_count" in st.session_state for i in range(1, 15)):
         st.warning("Keine Daten für das Kreisdiagramm verfügbar. Alle Zellen haben 0 Klicks oder nur Erythroblasten.")
         img_bytes = None
 
+    # ...existing code...
+
     # PDF-Export
     if st.button("📄Export"):
         pdf = FPDF()
         pdf.add_page()
-        pdf.set_font("Arial", "B", 14)
-        # ACHTUNG: Kein Sonderzeichen "–", sondern normaler Bindestrich "-"
-        pdf.cell(0, 10, f"Auswertung der Ergebnisse - Präparat: {praep_name}", ln=True, align="C")
-        pdf.ln(10)
+        pdf.set_font("Arial", "B", 15)
+        pdf.cell(0, 12, f"Auswertung der Ergebnisse - Präparat: {praep_name}", ln=True, align="C")
+        pdf.ln(8)
 
-        # Tabelle
-        pdf.set_font("Arial", "B", 10)
-        pdf.cell(32, 8, "Zelle", 1, 0, "C")
-        pdf.cell(18, 8, "Anzahl", 1, 0, "C")
-        pdf.cell(28, 8, "Rel. Anteil (%)", 1, 1, "C")
+        # Tabelle (etwas breiter und höher)
+        pdf.set_font("Arial", "B", 11)
+        pdf.cell(38, 9, "Zelle", 1, 0, "C")
+        pdf.cell(22, 9, "Anzahl", 1, 0, "C")
+        pdf.cell(36, 9, "Rel. Anteil (%)", 1, 1, "C")
         pdf.set_font("Arial", "", 10)
         if not df.empty:
             for index, row in df.iterrows():
-                pdf.cell(32, 8, str(row['Zelle']), 1, 0, "C")
-                pdf.cell(18, 8, str(row['Anzahl']), 1, 0, "C")
-                pdf.cell(28, 8, str(row['Relativer Anteil (%)']), 1, 1, "C")
+                pdf.cell(38, 9, str(row['Zelle']), 1, 0, "C")
+                pdf.cell(22, 9, str(row['Anzahl']), 1, 0, "C")
+                pdf.cell(36, 9, str(row['Relativer Anteil (%)']), 1, 1, "C")
         else:
-            pdf.cell(78, 8, "Keine Daten verfügbar.", 1, 1, "C")
+            pdf.cell(96, 9, "Keine Daten verfügbar.", 1, 1, "C")
 
-        # Kreisdiagramm kleiner einfügen
+        # Kreisdiagramm etwas größer, aber noch passend
         if img_bytes:
             img_path = "temp_chart.png"
             with open(img_path, "wb") as f:
                 f.write(img_bytes)
-            pdf.ln(5)
-            pdf.set_font("Arial", "B", 10)
-            pdf.cell(0, 8, txt="Kreisdiagramm:", ln=True)
-            pdf.ln(3)
-            pdf.image(img_path, x=35, w=90)
+            pdf.ln(7)
+            pdf.set_font("Arial", "B", 11)
+            pdf.cell(0, 9, txt="Kreisdiagramm:", ln=True)
+            pdf.ln(4)
+            pdf.image(img_path, x=30, w=120)  # w=120 ist größer, passt aber noch auf A4 quer
             os.remove(img_path)
 
         # PDF als Bytes speichern und Download anbieten
