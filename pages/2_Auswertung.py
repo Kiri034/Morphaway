@@ -5,7 +5,6 @@
 
 # ------------------------------------------------------------
 # Hier beginnt die eigentliche App, die zuvor entwickelt wurde
-
 import streamlit as st
 import pandas as pd
 import plotly.express as px
@@ -71,7 +70,13 @@ if any(f"button_{i}_count" in st.session_state for i in range(1, 15)):
     img_bytes = None
     if not filtered_df.empty:
         st.subheader("Kreisdiagramm der Ergebnisse")
-        fig = px.pie(filtered_df, names="Zelle", values="Anzahl", title="Verteilung der Zelltypen")
+        fig = px.pie(
+            filtered_df,
+            names="Zelle",
+            values="Anzahl",
+            title="Verteilung der Zelltypen",
+            color_discrete_sequence=px.colors.qualitative.Set3  # Farbiges Diagramm
+        )
         st.plotly_chart(fig)
         try:
             img_bytes = fig.to_image(format="png")
@@ -87,7 +92,7 @@ else:
     img_bytes = None
 
 # --- PDF-Download-Button ---
-if st.button("📄 Import"):
+if st.button("📄 PDF herunterladen"):
     pdf = FPDF()
     pdf.add_page()
     pdf.set_font("Arial", "B", 16)
@@ -117,7 +122,7 @@ if st.button("📄 Import"):
         pdf.set_font("Arial", "B", 12)
         pdf.cell(0, 10, txt="Kreisdiagramm:", ln=True)
         pdf.ln(5)
-        pdf.image(img_path, x=40, w=180)
+        pdf.image(img_path, x=10, w=190)  # groß und farbig
         os.remove(img_path)
 
     # PDF als Bytes speichern und Download anbieten (nur EIN Button!)
