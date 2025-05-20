@@ -9,6 +9,13 @@ import streamlit as st
 import pandas as pd
 import datetime  # Für den Timestamp
 
+# Ganz oben im Skript (nach den Imports)
+scroll_to_top = """
+    <script>
+        window.scrollTo(0, 0);
+    </script>
+"""
+
 # Beispiel einer angepassten DataManager Klasse
 class DataManager:
     def __init__(self):
@@ -78,12 +85,6 @@ else:
             if st.session_state[f"button_{i}_count"] > 0:
                 st.session_state[f"button_{i}_count"] -= 1
                 break  # Wir machen nur einen Rückgängig-Schritt
-
-              # Anzeige des Gesamtzählers
-    st.markdown(f"### Gesamtzahl: *{total_count}*")
-
-    # Maximale Zellzahl aus der Auswahl extrahieren
-    max_cells = int(st.session_state["selected_option"].split()[0])
 
 
              # Warnmeldungen bei bestimmten Schwellenwerten
