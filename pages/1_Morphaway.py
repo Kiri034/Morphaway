@@ -40,11 +40,12 @@ if "data_df" not in st.session_state:
 if "praep_name" not in st.session_state:
     st.session_state["praep_name"] = ""
 
-# Präparatname-Eingabe mit Bestätigungsbutton
+# Präparatname-Eingabe 
 if not st.session_state["praep_name"]:
     praep_name = st.text_input("Gib einen Namen für das Präparat ein:", key="praep_name_input")
-    if st.button("Diffrenzieren", key="confirm_praep_name") and praep_name:
+    if praep_name:
         st.session_state["praep_name"] = praep_name
+        
 # Counter-Logik
 else:
     # Zeige den gespeicherten Präparatnamen an
