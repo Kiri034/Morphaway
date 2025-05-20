@@ -4,7 +4,6 @@ LoginManager().go_to_login('Home.py')
 # ====== End Login Block ======
 
 # ------------------------------------------------------------
-# Here starts the actual app, which was developed previously
 import streamlit as st
 import pandas as pd
 import plotly.express as px
@@ -49,23 +48,6 @@ if any(f"button_{i}_count" in st.session_state for i in range(1, 15)):
         data.append({"Zelle": cell["label"], "Anzahl": count, "Relativer Anteil (%)": round(relative_count, 2)})
 
     df = pd.DataFrame(data)
-
-    # Ergebnisse speichern (optional)
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    filename = f"{praep_name}_{timestamp}.json"
-    filepath = os.path.join(history_directory, filename)
-    export_data = {
-        "praep_name": praep_name,
-        "timestamp": timestamp,
-        "data": df.to_dict(orient="records")
-    }
-    with open(filepath, "w", encoding="utf-8") as f:
-        json.dump(export_data, f, ensure_ascii=False, indent=2)
-
-    # Tabelle anzeigen
-        df = pd.DataFrame(data)
-
-    # Gesamtzeile anhängen
     df.loc["Total"] = ["", total_count, round(df["Relativer Anteil (%)"].sum(), 2)]
 
     st.subheader("Tabelle der Ergebnisse")
@@ -82,7 +64,7 @@ if any(f"button_{i}_count" in st.session_state for i in range(1, 15)):
             names="Zelle",
             values="Anzahl",
             title="Verteilung der Zelltypen",
-            color_discrete_sequence=px.colors.qualitative.Set3  # Farbiges Diagramm
+            color_discrete_sequence=px.colors.qualitative.Set3
         )
         st.plotly_chart(fig)
         try:
@@ -93,8 +75,6 @@ if any(f"button_{i}_count" in st.session_state for i in range(1, 15)):
     else:
         st.warning("Keine Daten für das Kreisdiagramm verfügbar. Alle Zellen haben 0 Klicks oder nur Erythroblasten.")
         img_bytes = None
-
-    # ...existing code...
 
     # PDF-Export
     if st.button("📄Export"):
@@ -127,7 +107,7 @@ if any(f"button_{i}_count" in st.session_state for i in range(1, 15)):
             pdf.set_font("Arial", "B", 11)
             pdf.cell(0, 9, txt="Kreisdiagramm:", ln=True)
             pdf.ln(4)
-            pdf.image(img_path, x=30, w=120)  # w=120 ist größer, passt aber noch auf A4 quer
+            pdf.image(img_path, x=30, w=120)
             os.remove(img_path)
 
         # PDF als Bytes speichern und Download anbieten
@@ -138,5 +118,21 @@ if any(f"button_{i}_count" in st.session_state for i in range(1, 15)):
             file_name=f"{praep_name}_Auswertung.pdf",
             mime="application/pdf"
         )
+
+    # Button zum Speichern und Wechsel zu History
+    if st.button("Zur History (speichern)"):
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        filename = f"{praep_name}_{timestamp}.json"
+        filepath = os.path.join(history_directory, filename)
+        export_data = {
+            "praep_name": praep_name,
+            "timestamp": timestamp,
+            "data": df.reset_index().to_dict(orient="records")
+        }
+        with open(filepath, "w", encoding="utf-8") as f:
+            json.dump(export_data, f, ensure_ascii=False, indent=2)
+        st.success("Auswertung gespeichert!")
+        st.switch_page("pages/3_History.py")
+
 else:
     st.info("Noch keine Zellen gezählt. Es sind keine Auswertungen verfügbar.")

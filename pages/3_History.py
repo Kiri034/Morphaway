@@ -1,6 +1,6 @@
 # ====== Start Login Block ======
 from utils.login_manager import LoginManager
-LoginManager().go_to_login('Home.py')  # KORREKTUR: Start.py → Home.py
+LoginManager().go_to_login('Home.py')
 # ====== End Login Block ======
 
 # ------------------------------------------------------------
@@ -23,7 +23,6 @@ if not os.path.exists(history_directory):
 
 # Liste aller gespeicherten Auswertungen (Dateinamen)
 files = [f for f in os.listdir(history_directory) if f.endswith(".json")]
-
 
 # Erstelle eine Liste von Präparatnamen zusammen mit den zugehörigen Dateinamen
 file_info = []
@@ -49,6 +48,21 @@ if file_info:
         st.subheader(f"Präparat: {loaded_data.get('praep_name', 'Unbekannt')}")
 
         df_loaded = pd.DataFrame(loaded_data["data"])
+        # Falls beim Speichern ein Index mitgespeichert wurde, setze ihn wieder
+        if "index" in df_loaded.columns:
+            df_loaded = df_loaded.set_index("index")
+
+        # Gesamtzahl extrahieren und anzeigen, falls vorhanden
+        total_count = None
+        if "Total" in df_loaded.index or "Gesamt" in df_loaded.index:
+            idx = "Total" if "Total" in df_loaded.index else "Gesamt"
+            total_count = df_loaded.loc[idx, "Anzahl"]
+        elif "Zelle" in df_loaded.columns and any(df_loaded["Zelle"].isin(["Total", "Gesamt"])):
+            row = df_loaded[df_loaded["Zelle"].isin(["Total", "Gesamt"])].iloc[0]
+            total_count = row["Anzahl"]
+        if total_count is not None:
+            st.markdown(f"**Differenzierte Zellen gesamt:** {int(total_count)}")
+
         st.dataframe(df_loaded)
 
         # Kreisdiagramm mit festen Farben anzeigen
