@@ -117,9 +117,10 @@ else:
 
     # Sticky Warnbox nur anzeigen, wenn eine Auswahl getroffen wurde
     if st.session_state.get("selected_option"):
+        # Extrahiere die Zielzahl aus der Auswahl
         max_cells = int(st.session_state["selected_option"].split()[0])
 
-        # Sticky Warnbox CSS einbinden
+         # Sticky Warnbox CSS einbinden
         st.markdown(
             """
             <style>
@@ -139,15 +140,16 @@ else:
             </style>
             """, unsafe_allow_html=True
         )
-        # Sticky Warnbox anzeigen, wenn Ziel erreicht/überschritten
-        if total_count == max_cells:
+
+        # Zeige Warnung nur, wenn die Zielzahl erreicht oder überschritten wird
+        if total_count >= max_cells:
             st.markdown(
                 f"""
                 <div class="sticky-alert">
                     ⚠️ <strong>Ziel erreicht!</strong> Sie haben die Zielzahl von {max_cells} Zellen erreicht oder überschritten.
                 </div>
                 """, unsafe_allow_html=True
-            )
+            )   
 
         # Warnmeldungen bei bestimmten Schwellenwerten (optional)
         if total_count == max_cells:
