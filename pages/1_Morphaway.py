@@ -119,23 +119,24 @@ else:
 
     # Sticky Warnbox CSS einbinden
     st.markdown(
-        """
-        <style>
-        .sticky-alert {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            width: 300px;
-            z-index: 9999;
-            background-color: #fff3cd;
-            padding: 15px;
-            border: 1px solid #ffeeba;
-            border-radius: 5px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        }
-        </style>
-        """, unsafe_allow_html=True
-    )
+            """
+            <style>
+            .sticky-alert {
+                position: fixed;
+                top: 80px;
+                right: 10px;
+                width: 300px;
+                z-index: 9999;
+                background-color: #fff3cd;
+                color: #b30000; /* ROTER Text */
+                padding: 15px;
+                border: 1px solid #ffeeba;
+                border-radius: 5px;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            }
+            </style>
+            """, unsafe_allow_html=True
+        )
 
     # Sticky Warnbox anzeigen, wenn Ziel erreicht/überschritten
     if total_count >= max_cells:
