@@ -10,7 +10,6 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 from fpdf import FPDF
-import io
 import os
 import json
 from datetime import datetime
@@ -94,14 +93,20 @@ if st.button("📄 PDF herunterladen"):
     pdf.set_font("Arial", "B", 16)
     pdf.cell(0, 10, "Auswertung der Ergebnisse", ln=True, align="C")
     pdf.ln(10)
-    pdf.set_font("Arial", size=12)
+
+    # Schöne Tabelle mit Rahmen und Überschriften
+    pdf.set_font("Arial", "B", 12)
+    pdf.cell(60, 10, "Zelle", 1, 0, "C")
+    pdf.cell(40, 10, "Anzahl", 1, 0, "C")
+    pdf.cell(60, 10, "Relativer Anteil (%)", 1, 1, "C")
+    pdf.set_font("Arial", "", 12)
     if not df.empty:
-        pdf.cell(0, 5, txt="Tabelle der Ergebnisse:", ln=True)
-        pdf.ln(5)
         for index, row in df.iterrows():
-            pdf.cell(0, 5, txt=f"{row['Zelle']}: {row['Anzahl']} Klicks ({row['Relativer Anteil (%)']}%)", ln=True)
+            pdf.cell(60, 10, str(row['Zelle']), 1, 0, "C")
+            pdf.cell(40, 10, str(row['Anzahl']), 1, 0, "C")
+            pdf.cell(60, 10, str(row['Relativer Anteil (%)']), 1, 1, "C")
     else:
-        pdf.cell(0, 5, txt="Keine Daten verfügbar.", ln=True)
+        pdf.cell(160, 10, "Keine Daten verfügbar.", 1, 1, "C")
 
     # Kreisdiagramm ins PDF einfügen, falls vorhanden
     if img_bytes:
@@ -109,16 +114,16 @@ if st.button("📄 PDF herunterladen"):
         with open(img_path, "wb") as f:
             f.write(img_bytes)
         pdf.ln(10)
-        pdf.set_font("Arial", style="B", size=12)
+        pdf.set_font("Arial", "B", 12)
         pdf.cell(0, 10, txt="Kreisdiagramm:", ln=True)
         pdf.ln(5)
-        pdf.image(img_path, x=40, w=120)
+        pdf.image(img_path, x=40, w=180)
         os.remove(img_path)
 
-    # PDF als Bytes speichern und Download anbieten
+    # PDF als Bytes speichern und Download anbieten (nur EIN Button!)
     pdf_bytes = pdf.output(dest="S").encode("latin1")
     st.download_button(
-        label="PDF herunterladen",
+        label="📄 PDF herunterladen",
         data=pdf_bytes,
         file_name=f"{praep_name}_Auswertung.pdf",
         mime="application/pdf"
