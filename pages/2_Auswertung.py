@@ -116,25 +116,28 @@ if any(f"button_{i}_count" in st.session_state for i in range(1, 15)):
             pdf.cell(96, 9, "Keine Daten verfügbar.", 1, 1, "C")
 
         # Kreisdiagramm etwas größer, aber noch passend
-        if img_bytes:
-            img_path = "temp_chart.png"
-            with open(img_path, "wb") as f:
-                f.write(img_bytes)
-            pdf.ln(7)
-            pdf.set_font("Arial", "B", 11)
-            pdf.cell(0, 9, txt="Kreisdiagramm:", ln=True)
-            pdf.ln(4)
-            pdf.image(img_path, x=30, w=120)
-            os.remove(img_path)
+        # Kreisdiagramm erstellen (nur Zellen mit Anzahl > 0 und ohne Erythroblast)
+    filtered_df = df[(df["Anzahl"] > 0) & (df["Zelle"] != "Erythroblast")]
 
-        # PDF als Bytes speichern und Download anbieten
-        pdf_bytes = pdf.output(dest="S").encode("latin1")
-        st.download_button(
-            label="📄 PDF herunterladen",
-            data=pdf_bytes,
-            file_name=f"{praep_name}_Auswertung.pdf",
-            mime="application/pdf"
+    img_bytes = None
+    if not filtered_df.empty:
+        st.subheader("Kreisdiagramm der Ergebnisse")
+        fig = px.pie(
+            filtered_df,
+            names="Zelle",
+            values="Anzahl",
+            title="Verteilung der Zelltypen",
+            color_discrete_sequence=px.colors.qualitative.Set3
         )
+        st.plotly_chart(fig)
+        try:
+            img_bytes = fig.to_image(format="png")
+        except Exception as e:
+            st.error(f"Fehler beim Speichern des Diagramms als Bild: {e}")
+            img_bytes = None
+    else:
+        st.warning("Keine Daten für das Kreisdiagramm verfügbar. Alle Zellen haben 0 Klicks oder nur Erythroblasten.")
+        img_bytes = None
 
    # Button zum Speichern und Wechsel zu History
     if st.button("Zur History (speichern)"):
