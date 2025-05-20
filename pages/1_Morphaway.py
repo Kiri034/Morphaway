@@ -136,7 +136,11 @@ else:
     # --- Save Cellcount data ---
     if st.button("Jetzt Auswerten", key="auswertung_button"):
         try:
-            # Speichere die Daten, Erythroblast separat
+            # Erythroblast separat zählen (Button 13)
+            erythroblast_count = st.session_state["button_13_count"]
+            # Gesamtzähler OHNE Erythroblast (nur Buttons 1-12 und 14)
+            total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 15) if i != 13)
+
             DataManager().append_record(
                 session_state_key='data_df',
                 record_dict={
