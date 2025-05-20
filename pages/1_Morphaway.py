@@ -40,7 +40,7 @@ if "praep_name" not in st.session_state:
 # Präparatname-Eingabe mit Bestätigungsbutton
 if not st.session_state["praep_name"]:
     praep_name = st.text_input("Gib einen Namen für das Präparat ein:", key="praep_name_input")
-    if st.button("Bestätigen", key="confirm_praep_name") and praep_name:
+    if st.button("Diffrenzieren", key="confirm_praep_name") and praep_name:
         st.session_state["praep_name"] = praep_name
 # Counter-Logik
 else:
