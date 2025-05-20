@@ -116,16 +116,18 @@ if not df.empty:
 else:
     pdf.cell(0, 5, txt="Keine Daten verfügbar.", ln=True)
 
-# Diagramm in die PDF einfügen
-if diagram_path and os.path.exists(diagram_path):
-    pdf.ln(10)
-    pdf.set_font("Arial", size=10)
-    pdf.cell(0, 10, txt="Kreisdiagramm der Ergebnisse:", ln=True)
-    pdf.ln(5)
-    try:
-        pdf.image(diagram_path, x=10, y=pdf.get_y(), w=180)
-    except Exception as e:
-        st.error(f"Fehler beim Einfügen des Diagramms in die PDF: {e}")
+    # Kreisdiagramm ins PDF einfügen, falls vorhanden
+    if diagram_path and os.path.exists(diagram_path):
+        pdf.ln(10)
+        pdf.set_font("Arial", style="B", size=12)
+        pdf.cell(0, 10, txt="Kreisdiagramm:", ln=True)
+        pdf.ln(5)
+        pdf.image(diagram_path, x=40, w=120)  # x und w ggf. anpassen
+
+    # PDF in eine Datei speichern
+    pdf_file_path = f"{praep_name}_Auswertung.pdf"
+    pdf.output(pdf_file_path)
+
 
 # PDF in eine Datei speichern
 pdf_file_path = f"{praep_name}_Auswertung.pdf"
