@@ -34,7 +34,16 @@ for file in files:
         loaded_data = json.load(f)
     praep_name = loaded_data.get('praep_name', 'Unbekannt')
     timestamp = loaded_data.get('timestamp', '')
-    display_name = f"{praep_name} ({timestamp})" if timestamp else praep_name
+    # Schönes Datumsformat für die Anzeige
+    if timestamp:
+        try:
+            dt = datetime.datetime.strptime(timestamp, "%Y-%m-%d %H:%M:%S")
+            timestamp_str = dt.strftime("%d.%m.%Y, %H:%M Uhr")
+        except Exception:
+            timestamp_str = timestamp
+        display_name = f"{praep_name} ({timestamp_str})"
+    else:
+        display_name = praep_name
     file_info.append((display_name, file))
 
 if file_info:
@@ -50,7 +59,17 @@ if file_info:
             loaded_data = json.load(f)
 
         st.subheader(f"Präparat: {loaded_data.get('praep_name', 'Unbekannt')}")
-        st.caption(f"Zeitpunkt: {loaded_data.get('timestamp', '')}")
+        # Schönes Datumsformat für die Caption
+        timestamp_raw = loaded_data.get('timestamp', '')
+        if timestamp_raw:
+            try:
+                dt = datetime.datetime.strptime(timestamp_raw, "%Y-%m-%d %H:%M:%S")
+                timestamp_str = dt.strftime("%d.%m.%Y, %H:%M Uhr")
+            except Exception:
+                timestamp_str = timestamp_raw
+            st.caption(f"Zeitpunkt: {timestamp_str}")
+        else:
+            st.caption("Zeitpunkt: unbekannt")
 
         df_loaded = pd.DataFrame(loaded_data["data"])
         st.dataframe(df_loaded)
