@@ -38,11 +38,17 @@ if file_info:
         df_loaded = pd.DataFrame(loaded_data["data"])
         st.dataframe(df_loaded)
 
-        # Optional: Kreisdiagramm wieder anzeigen
+        # Kreisdiagramm mit festen Farben anzeigen
         import plotly.express as px
         filtered_df = df_loaded[df_loaded["Anzahl"] > 0]
         if not filtered_df.empty:
-            fig = px.pie(filtered_df, names="Zelle", values="Anzahl", title="Verteilung der Zelltypen")
+            fig = px.pie(
+                filtered_df,
+                names="Zelle",
+                values="Anzahl",
+                title="Verteilung der Zelltypen",
+                color_discrete_sequence=px.colors.qualitative.Set3
+            )
             st.plotly_chart(fig)
 else:
     st.info("Es sind noch keine gespeicherten Auswertungen vorhanden.")
