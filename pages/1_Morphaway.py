@@ -115,45 +115,46 @@ else:
     st.markdown(f"### Gesamtzahl: *{total_count}*")
     st.markdown(f"### Erythroblasten: *{erythroblast_count}*")
 
-    # Maximale Zellzahl aus der Auswahl extrahieren
-    max_cells = int(st.session_state["selected_option"].split()[0])
+    # Sticky Warnbox nur anzeigen, wenn eine Auswahl getroffen wurde
+    if st.session_state.get("selected_option"):
+        max_cells = int(st.session_state["selected_option"].split()[0])
 
-      # Sticky Warnbox CSS einbinden
-    st.markdown(
-        """
-        <style>
-        .sticky-alert {
-            position: fixed;
-            top: 80px;
-            right: 10px;
-            width: 300px;
-            z-index: 9999;
-            background-color: #fff3cd;
-            color: #b30000; /* ROTER Text */
-            padding: 15px;
-            border: 1px solid #ffeeba;
-            border-radius: 5px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        }
-        </style>
-        """, unsafe_allow_html=True
-    )
-    # Sticky Warnbox anzeigen, wenn Ziel erreicht/überschritten
-    if total_count >= max_cells:
+        # Sticky Warnbox CSS einbinden
         st.markdown(
-            f"""
-            <div class="sticky-alert">
-                ⚠️ <strong>Ziel erreicht!</strong> Sie haben die Zielzahl von {max_cells} Zellen erreicht oder überschritten.
-            </div>
+            """
+            <style>
+            .sticky-alert {
+                position: fixed;
+                top: 80px;
+                right: 10px;
+                width: 300px;
+                z-index: 9999;
+                background-color: #fff3cd;
+                color: #b30000; /* ROTER Text */
+                padding: 15px;
+                border: 1px solid #ffeeba;
+                border-radius: 5px;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            }
+            </style>
             """, unsafe_allow_html=True
         )
+        # Sticky Warnbox anzeigen, wenn Ziel erreicht/überschritten
+        if total_count == max_cells:
+            st.markdown(
+                f"""
+                <div class="sticky-alert">
+                    ⚠️ <strong>Ziel erreicht!</strong> Sie haben die Zielzahl von {max_cells} Zellen erreicht oder überschritten.
+                </div>
+                """, unsafe_allow_html=True
+            )
 
-    # Warnmeldungen bei bestimmten Schwellenwerten (optional, falls du die alten Meldungen behalten willst)
-    if total_count == max_cells:
-        st.warning(f"⚠️ Maximale Anzahl ausgezählter Zellen ({max_cells}) erreicht.")
-    elif total_count > max_cells:
-        st.error(f"❌ Grenze von {max_cells} Zellen überschritten! Bitte zurücksetzen.")
-
+        # Warnmeldungen bei bestimmten Schwellenwerten (optional)
+        if total_count == max_cells:
+            st.warning(f"⚠️ Maximale Anzahl ausgezählter Zellen ({max_cells}) erreicht.")
+        elif total_count > max_cells:
+            st.error(f"❌ Grenze von {max_cells} Zellen überschritten! Bitte zurücksetzen.")
+            
     # Reset-Button nach den Bild-Buttons
     if st.button("Refresh", key="refresh_button"):
         reset_all()
