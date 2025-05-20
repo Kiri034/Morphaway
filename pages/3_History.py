@@ -52,16 +52,22 @@ if file_info:
         if "index" in df_loaded.columns:
             df_loaded = df_loaded.set_index("index")
 
-        # Gesamtzahl extrahieren und anzeigen, falls vorhanden
+        # Gesamtzahl extrahieren und anzeigen, robust für verschiedene Formate
         total_count = None
         if "Total" in df_loaded.index or "Gesamt" in df_loaded.index:
             idx = "Total" if "Total" in df_loaded.index else "Gesamt"
-            total_count = df_loaded.loc[idx, "Anzahl"]
+            try:
+                total_count = int(float(df_loaded.loc[idx, "Anzahl"]))
+            except Exception:
+                total_count = df_loaded.loc[idx, "Anzahl"]
         elif "Zelle" in df_loaded.columns and any(df_loaded["Zelle"].isin(["Total", "Gesamt"])):
             row = df_loaded[df_loaded["Zelle"].isin(["Total", "Gesamt"])].iloc[0]
-            total_count = row["Anzahl"]
-        if total_count is not None:
-            st.markdown(f"**Differenzierte Zellen gesamt:** {int(total_count)}")
+            try:
+                total_count = int(float(row["Anzahl"]))
+            except Exception:
+                total_count = row["Anzahl"]
+        if total_count not in (None, "", " "):
+            st.markdown(f"**Differenzierte Zellen gesamt:** {total_count}")
 
         st.dataframe(df_loaded)
 
