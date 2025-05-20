@@ -30,9 +30,9 @@ def reset_all():
     st.session_state["selected_option"] = None  # Zurücksetzen der Auswahloption
 
 # Initialisierung von 'data_df' falls nicht vorhanden (z.B. als leeres DataFrame)
-if "data_df" not in st.session_state:
-    st.session_state["data_df"] = pd.DataFrame(columns=["selected_option", "praep_name", "total_count", "timestamp"])
-
+st.session_state["data_df"] = pd.DataFrame(
+    columns=["selected_option", "praep_name", "total_count", "erythroblast_count", "timestamp"]
+)
 # Überprüfen, ob ein Präparatname bereits in st.session_state gespeichert ist
 if "praep_name" not in st.session_state:
     st.session_state["praep_name"] = ""
@@ -133,20 +133,26 @@ else:
     elif total_count > max_cells:
         st.error(f"❌ Grenze von {max_cells} Zellen überschritten! Bitte zurücksetzen.")
 
-    # Reset-Button nach den Bild-Buttons
+   # Reset-Button nach den Bild-Buttons
     if st.button("Refresh", key="refresh_button"):
         reset_all()
 
     # --- Save Cellcount data ---
     if st.button("Jetzt Auswerten", key="auswertung_button"):
         try:
-            # Speichere die Daten
+            # Erythroblast separat zählen (Button 14, also Index 14)
+            erythroblast_count = st.session_state["button_14_count"]
+            # Gesamtzähler OHNE Erythroblast (nur Buttons 1-13)
+            total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 14))
+
+            # Speichere die Daten, Erythroblast separat
             DataManager().append_record(
                 session_state_key='data_df',
                 record_dict={
                     'selected_option': st.session_state["selected_option"],
                     'praep_name': st.session_state["praep_name"],
                     'total_count': total_count,
+                    'erythroblast_count': erythroblast_count,
                     'timestamp': datetime.datetime.now() 
                 }
             )
