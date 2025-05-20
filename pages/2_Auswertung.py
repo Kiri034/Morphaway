@@ -89,16 +89,14 @@ else:
     st.warning("Keine Daten für das Kreisdiagramm verfügbar. Alle Zellen haben 0 Klicks oder nur Erythroblasten.")
     img_bytes = None
 
-# --- PDF-Download-Button ---
 if st.button("📄Export"):
     pdf = FPDF()
     pdf.add_page()
     pdf.set_font("Arial", "B", 14)
-    # Titel und Präparatname in einer Zeile:
     pdf.cell(0, 10, f"Auswertung der Ergebnisse – Präparat: {praep_name}", ln=True, align="C")
     pdf.ln(10)
 
-    # Schöne Tabelle mit Rahmen und Überschriften
+    # Tabelle ...
     pdf.set_font("Arial", "B", 10)
     pdf.cell(32, 8, "Zelle", 1, 0, "C")
     pdf.cell(18, 8, "Anzahl", 1, 0, "C")
@@ -112,19 +110,19 @@ if st.button("📄Export"):
     else:
         pdf.cell(78, 8, "Keine Daten verfügbar.", 1, 1, "C")
 
-# Kreisdiagramm kleiner einfügen
-if img_bytes:
-    img_path = "temp_chart.png"
-    with open(img_path, "wb") as f:
-        f.write(img_bytes)
-    pdf.ln(5)
-    pdf.set_font("Arial", "B", 10)
-    pdf.cell(0, 8, txt="Kreisdiagramm:", ln=True)
-    pdf.ln(3)
-    pdf.image(img_path, x=35, w=90)
-    os.remove(img_path)
+    # Kreisdiagramm kleiner einfügen
+    if img_bytes:
+        img_path = "temp_chart.png"
+        with open(img_path, "wb") as f:
+            f.write(img_bytes)
+        pdf.ln(5)
+        pdf.set_font("Arial", "B", 10)
+        pdf.cell(0, 8, txt="Kreisdiagramm:", ln=True)
+        pdf.ln(3)
+        pdf.image(img_path, x=35, w=90)
+        os.remove(img_path)
 
-    # PDF als Bytes speichern und Download anbieten (nur EIN Button!)
+    # PDF als Bytes speichern und Download anbieten
     pdf_bytes = pdf.output(dest="S").encode("latin1")
     st.download_button(
         label="📄 PDF herunterladen",
