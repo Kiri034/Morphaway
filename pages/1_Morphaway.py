@@ -7,12 +7,7 @@ import streamlit as st
 import pandas as pd
 import datetime  # Für den Timestamp
 
-scroll_to_top = """
-    <script>
-        window.scrollTo(0, 0);
-    </script>
-"""
-
+# Beispiel einer angepassten DataManager Klasse
 class DataManager:
     def __init__(self):
         if "data_df" not in st.session_state:
@@ -29,10 +24,12 @@ class DataManager:
         else:
             raise ValueError(f"Kein DataFrame gefunden für den Schlüssel: {session_state_key}")
 
+# Titel der Seite
 st.title("Cell Counter")
 
+# Funktion zum Zurücksetzen der Session-Variablen
 def reset_all():
-    for i in range(1, 15):  # 14 Buttons
+    for i in range(1, 15):
         st.session_state[f"button_{i}_count"] = 0
     st.session_state["total_count"] = 0
     st.session_state["praep_name"] = ""
@@ -105,12 +102,21 @@ else:
 
     max_cells = int(st.session_state["selected_option"].split()[0])
 
+    # ANKER für automatische Scroll-Zielposition
+    scroll_target = st.empty()
+
+    # Warnung + automatischer Scroll (mit JS oder anchor)
+    def scroll_to_warning():
+        st.markdown("<script>document.querySelector(\"a[name='warnung']\").scrollIntoView({ behavior: 'smooth' });</script>", unsafe_allow_html=True)
+
     if total_count == max_cells:
+        scroll_target.markdown("<a name='warnung'></a>", unsafe_allow_html=True)
         st.warning(f"⚠️ Maximale Anzahl ausgezählter Zellen ({max_cells}) erreicht.")
-        st.markdown(scroll_to_top, unsafe_allow_html=True)
+        scroll_to_warning()
     elif total_count > max_cells:
+        scroll_target.markdown("<a name='warnung'></a>", unsafe_allow_html=True)
         st.error(f"❌ Grenze von {max_cells} Zellen überschritten! Bitte zurücksetzen.")
-        st.markdown(scroll_to_top, unsafe_allow_html=True)
+        scroll_to_warning()
 
     if st.button("Refresh", key="refresh_button"):
         reset_all()
@@ -124,9 +130,9 @@ else:
                     'praep_name': st.session_state["praep_name"],
                     'total_count': total_count,
                     'erythroblast_count': erythroblast_count,
-                    'timestamp': datetime.datetime.now() 
+                    'timestamp': datetime.datetime.now()
                 }
             )
-            st.switch_page("pages/2_Auswertung.py")  # Seitenname ggf. anpassen
+            st.switch_page("pages/2_Auswertung.py")
         except Exception as e:
             st.error(f"Fehler beim Speichern der Daten: {e}")
