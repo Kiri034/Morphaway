@@ -39,7 +39,7 @@ if any(f"button_{i}_count" in st.session_state for i in range(1, 15)):
         {"label": "smudged cells"},
     ]
 
-    # Daten für die Tabelle und das Diagramm vorbereiten
+   # Daten für die Tabelle und das Diagramm vorbereiten
     data = []
     total_count = sum(st.session_state.get(f"button_{i}_count", 0) for i in range(1, 15))
     for idx, cell in enumerate(images, start=1):
@@ -49,12 +49,27 @@ if any(f"button_{i}_count" in st.session_state for i in range(1, 15)):
 
     df = pd.DataFrame(data)
 
+    # Ergebnisse speichern (optional)
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    filename = f"{praep_name}_{timestamp}.json"
+    filepath = os.path.join(history_directory, filename)
+    export_data = {
+        "praep_name": praep_name,
+        "timestamp": timestamp,
+        "data": df.to_dict(orient="records")
+    }
+    with open(filepath, "w", encoding="utf-8") as f:
+        json.dump(export_data, f, ensure_ascii=False, indent=2)
+
+    # Tabelle anzeigen
+        df = pd.DataFrame(data)
+
+    # Gesamtzeile anhängen
+    df.loc["Total"] = ["", total_count, round(df["Relativer Anteil (%)"].sum(), 2)]
+
     st.subheader("Tabelle der Ergebnisse")
     st.dataframe(df)
-
-    # Gesamtzahl unter der Tabelle anzeigen
-    st.markdown(f"**Differenzierte Zellen gesamt:** {total_count}")
-
+    
     # Kreisdiagramm erstellen (nur Zellen mit Anzahl > 0 und ohne Erythroblast)
     filtered_df = df[(df["Anzahl"] > 0) & (df["Zelle"] != "Erythroblast")]
 
