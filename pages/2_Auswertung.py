@@ -116,20 +116,15 @@ if not df.empty:
 else:
     pdf.cell(0, 5, txt="Keine Daten verfügbar.", ln=True)
 
-    # Kreisdiagramm ins PDF einfügen, falls vorhanden
-    if diagram_path and os.path.exists(diagram_path):
-        pdf.ln(10)
-        pdf.set_font("Arial", style="B", size=12)
-        pdf.cell(0, 10, txt="Kreisdiagramm:", ln=True)
-        pdf.ln(5)
-        pdf.image(diagram_path, x=40, w=120)  # x und w ggf. anpassen
+# Kreisdiagramm ins PDF einfügen, falls vorhanden
+if diagram_path and os.path.exists(diagram_path):
+    pdf.ln(10)
+    pdf.set_font("Arial", style="B", size=12)
+    pdf.cell(0, 10, txt="Kreisdiagramm:", ln=True)
+    pdf.ln(5)
+    pdf.image(diagram_path, x=40, w=120)  # x und w ggf. anpassen
 
-    # PDF in eine Datei speichern
-    pdf_file_path = f"{praep_name}_Auswertung.pdf"
-    pdf.output(pdf_file_path)
-
-
-# PDF in eine Datei speichern
+# PDF speichern
 pdf_file_path = f"{praep_name}_Auswertung.pdf"
 pdf.output(pdf_file_path)
 
