@@ -4,7 +4,6 @@ LoginManager().go_to_login('Start.py')
 # ====== End Login Block ======
 
 # ------------------------------------------------------------
-# Here starts the actual app, which was developed previously
 import streamlit as st
 import os
 import json
@@ -37,7 +36,7 @@ for file in files:
     # Schönes Datumsformat für die Anzeige
     if timestamp:
         try:
-            dt = datetime.datetime.strptime(timestamp, "%Y-%m-%d %H:%M:%S")
+            dt = datetime.datetime.strptime(timestamp, "%Y-%m-%d")
             timestamp_str = dt.strftime("%d.%m.%Y, %H:%M Uhr")
         except Exception:
             timestamp_str = timestamp
@@ -73,6 +72,13 @@ if file_info:
 
         df_loaded = pd.DataFrame(loaded_data["data"])
         st.dataframe(df_loaded)
+
+        # Löschfunktion mit Sicherheitsabfrage
+        if st.button("❌ Auswertung löschen"):
+            if st.confirm("Möchtest du diese Auswertung wirklich löschen?"):
+                os.remove(file_path)
+                st.success("Auswertung wurde gelöscht. Bitte Seite neu laden.")
+                st.stop()
 
         # Kreisdiagramm mit festen Farben anzeigen
         import plotly.express as px
