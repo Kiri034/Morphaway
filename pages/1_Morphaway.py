@@ -71,7 +71,14 @@ else:
             if st.session_state[f"button_{i}_count"] > 0:
                 st.session_state[f"button_{i}_count"] -= 1
                 break  # Wir machen nur einen Rückgängig-Schritt
+            
+                # Beide Gesamtzähler berechnen: mit und ohne Erythroblast
+                total_count_with_ery = sum(st.session_state[f"button_{i}_count"] for i in range(1, 15))
+                total_count_without_ery = sum(st.session_state[f"button_{i}_count"] for i in range(1, 15) if i != 13)
 
+                # Anzeigen beider Gesamtzähler
+                st.markdown(f"**Gesamtzahl (inkl. Erythroblasten):** {total_count_with_ery}")
+                st.markdown(f"**Gesamtzahl (ohne Erythroblasten):** {total_count_without_ery}")
     # Liste der Bildnamen und Beschriftungen
     images = [
         {"path": "https://cdn.cellwiki.net/db/cells/page-28/gallery-55/003.jpg", "label": "Lymphozyt"},
