@@ -115,19 +115,15 @@ else:
     st.markdown(f"### Gesamtzahl: *{total_count}*")
     st.markdown(f"### Erythroblasten: *{erythroblast_count}*")
 
-    # Map für die Optionen
-    option_map = {
-        "50 Zellen differenzieren": 50,
-        "100 Zellen differenzieren": 100,
-        "200 Zellen differenzieren": 200
-    }
 
-    # Sticky Warnbox nur anzeigen, wenn eine Auswahl getroffen wurde
+    # Sticky Warnbox und Warnmeldungen nur anzeigen, wenn eine Auswahl getroffen wurde
     if st.session_state.get("selected_option"):
-        # Nutze die Map, um max_cells zuverlässig zu setzen
-        max_cells = option_map.get(st.session_state["selected_option"], 50)  # fallback auf 50
+        try:
+            max_cells = int(st.session_state["selected_option"].split()[0])
+        except Exception:
+            max_cells = 0
 
-        # Sticky Warnbox CSS einbinden
+        # Sticky Warnbox CSS einbinden (nur einmal)
         st.markdown(
             """
             <style>
@@ -148,21 +144,24 @@ else:
             """, unsafe_allow_html=True
         )
 
-        # Zeige Warnung nur, wenn die Zielzahl erreicht oder überschritten wird
-        if total_count >= max_cells:
+        # Sticky Warnbox und Streamlit-Warnungen je nach Stand
+        if total_count == max_cells:
             st.markdown(
                 f"""
                 <div class="sticky-alert">
-                    ⚠️ <strong>Ziel erreicht!</strong> Sie haben die Zielzahl von {max_cells} Zellen erreicht oder überschritten.
+                    ⚠️ <strong>Ziel erreicht!</strong> Sie haben die Zielzahl von {max_cells} Zellen erreicht.
+                </div>
+                """, unsafe_allow_html=True
+            )
+        elif total_count > max_cells:
+            st.markdown(
+                f"""
+                <div class="sticky-alert">
+                    ❌ <strong>Grenze überschritten!</strong> Sie haben mehr als {max_cells} Zellen gezählt. Bitte zurücksetzen.
                 </div>
                 """, unsafe_allow_html=True
             )
 
-        # Warnmeldungen bei bestimmten Schwellenwerten (optional)
-        if total_count == max_cells:
-            st.warning(f"⚠️ Maximale Anzahl ausgezählter Zellen ({max_cells}) erreicht.")
-        elif total_count > max_cells:
-            st.error(f"❌ Grenze von {max_cells} Zellen überschritten! Bitte zurücksetzen.")
     # Reset-Button nach den Bild-Buttons
     if st.button("Refresh", key="refresh_button"):
         reset_all()
