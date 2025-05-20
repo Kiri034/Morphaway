@@ -55,8 +55,7 @@ if any(f"button_{i}_count" in st.session_state for i in range(1, 14)):
     # Daten in einen DataFrame umwandeln
     df = pd.DataFrame(data)
 
-# Ergebnisse speichern
-if 'df' in locals() and not df.empty:
+    # Ergebnisse speichern
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     filename = f"{praep_name}_{timestamp}.json"
     filepath = os.path.join(history_directory, filename)
@@ -76,6 +75,7 @@ if 'df' in locals() and not df.empty:
 
     # Kreisdiagramm erstellen (nur Zellen mit Anzahl > 0)
     filtered_df = df[df["Anzahl"] > 0]  # Filtere Zellen mit Anzahl > 0
+    diagram_path = None
     if not filtered_df.empty:
         st.subheader("Kreisdiagramm der Ergebnisse")
         fig = px.pie(filtered_df, names="Zelle", values="Anzahl", title="Verteilung der Zelltypen")
@@ -93,6 +93,8 @@ if 'df' in locals() and not df.empty:
         diagram_path = None
 else:
     st.warning("Keine Zählerdaten vorhanden. Bitte kehren Sie zurück und geben Sie Ihre Werte ein.")
+    df = pd.DataFrame()  # Leerer DataFrame, damit der PDF-Teil nicht crasht
+    diagram_path = None
 
 # PDF-Erstellung
 pdf = FPDF()
@@ -105,7 +107,7 @@ pdf.cell(200, 10, txt="Auswertung der Ergebnisse", ln=True, align="C")
 pdf.ln(10)
 
 # Tabelle in die PDF einfügen
-if 'df' in locals() and not df.empty:
+if not df.empty:
     pdf.set_font("Arial", size=12)
     pdf.cell(0, 5, txt="Tabelle der Ergebnisse:", ln=True)
     pdf.ln(5)
@@ -113,7 +115,6 @@ if 'df' in locals() and not df.empty:
         pdf.cell(0, 5, txt=f"{row['Zelle']}: {row['Anzahl']} Klicks ({row['Relativer Anteil (%)']}%)", ln=True)
 else:
     pdf.cell(0, 5, txt="Keine Daten verfügbar.", ln=True)
-
 
 # Diagramm in die PDF einfügen
 if diagram_path and os.path.exists(diagram_path):
