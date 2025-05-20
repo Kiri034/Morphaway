@@ -7,6 +7,16 @@ import streamlit as st
 import pandas as pd
 import datetime  # Für den Timestamp
 
+# ---------- Scroll beim Rendern, wenn nötig ----------
+if st.session_state.get("scroll_to_warnung"):
+    st.markdown("<a name='warnung'></a>", unsafe_allow_html=True)
+    st.markdown("""
+        <script>
+            document.querySelector("a[name='warnung']").scrollIntoView({ behavior: "smooth" });
+        </script>
+    """, unsafe_allow_html=True)
+    st.session_state["scroll_to_warnung"] = False  # zurücksetzen
+
 # Beispiel einer angepassten DataManager Klasse
 class DataManager:
     def __init__(self):
@@ -24,10 +34,10 @@ class DataManager:
         else:
             raise ValueError(f"Kein DataFrame gefunden für den Schlüssel: {session_state_key}")
 
-# Titel der Seite
+# ---------- Titel ----------
 st.title("Cell Counter")
 
-# Funktion zum Zurücksetzen der Session-Variablen
+# ---------- Funktion zum Zurücksetzen ----------
 def reset_all():
     for i in range(1, 15):
         st.session_state[f"button_{i}_count"] = 0
@@ -35,14 +45,15 @@ def reset_all():
     st.session_state["praep_name"] = ""
     st.session_state["selected_option"] = None
 
+# ---------- Session State vorbereiten ----------
 if "data_df" not in st.session_state:
     st.session_state["data_df"] = pd.DataFrame(
         columns=["selected_option", "praep_name", "total_count", "erythroblast_count", "timestamp"]
     )
-
 if "praep_name" not in st.session_state:
     st.session_state["praep_name"] = ""
 
+# ---------- Präparatname ----------
 if not st.session_state["praep_name"]:
     praep_name = st.text_input("Gib einen Namen für das Präparat ein:", key="praep_name_input")
     if st.button("Diffrenzieren", key="confirm_praep_name") and praep_name:
@@ -97,26 +108,22 @@ else:
 
     erythroblast_count = st.session_state["button_13_count"]
     total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 15) if i != 13)
+
     st.markdown(f"### Gesamtzahl: *{total_count}*")
     st.markdown(f"### Erythroblasten: *{erythroblast_count}*")
 
     max_cells = int(st.session_state["selected_option"].split()[0])
 
-    # ANKER für automatische Scroll-Zielposition
-    scroll_target = st.empty()
+    # Scroll-Flag setzen, falls nötig
+    if total_count >= max_cells:
+        st.session_state["scroll_to_warnung"] = True
 
-    # Warnung + automatischer Scroll (mit JS oder anchor)
-    def scroll_to_warning():
-        st.markdown("<script>document.querySelector(\"a[name='warnung']\").scrollIntoView({ behavior: 'smooth' });</script>", unsafe_allow_html=True)
-
+    # Warnung anzeigen (nach Anker)
+    st.markdown("<a name='warnung'></a>", unsafe_allow_html=True)
     if total_count == max_cells:
-        scroll_target.markdown("<a name='warnung'></a>", unsafe_allow_html=True)
         st.warning(f"⚠️ Maximale Anzahl ausgezählter Zellen ({max_cells}) erreicht.")
-        scroll_to_warning()
     elif total_count > max_cells:
-        scroll_target.markdown("<a name='warnung'></a>", unsafe_allow_html=True)
         st.error(f"❌ Grenze von {max_cells} Zellen überschritten! Bitte zurücksetzen.")
-        scroll_to_warning()
 
     if st.button("Refresh", key="refresh_button"):
         reset_all()
