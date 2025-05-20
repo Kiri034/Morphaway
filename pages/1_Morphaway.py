@@ -115,12 +115,22 @@ else:
     st.markdown(f"### Gesamtzahl: *{total_count}*")
     st.markdown(f"### Erythroblasten: *{erythroblast_count}*")
 
+
+    # Map für die Optionen
+    option_map = {
+        "50 Zellen differenzieren": 50,
+        "100 Zellen differenzieren": 100,
+        "200 Zellen differenzieren": 200
+    }
+
     # Sticky Warnbox nur anzeigen, wenn eine Auswahl getroffen wurde
     if st.session_state.get("selected_option"):
-        # Extrahiere die Zielzahl aus der Auswahl
-        max_cells = int(st.session_state["selected_option"].split()[0])
+        # Nutze die Map, um max_cells zuverlässig zu setzen
+        max_cells = option_map.get(st.session_state["selected_option"], 50)  # fallback auf 50
+        # Optional: Zeige die Zielzahl an
+        # st.write("Maximale Zielzahl:", max_cells)
 
-         # Sticky Warnbox CSS einbinden
+        # Sticky Warnbox CSS einbinden
         st.markdown(
             """
             <style>
@@ -149,14 +159,14 @@ else:
                     ⚠️ <strong>Ziel erreicht!</strong> Sie haben die Zielzahl von {max_cells} Zellen erreicht oder überschritten.
                 </div>
                 """, unsafe_allow_html=True
-            )   
+            )
 
         # Warnmeldungen bei bestimmten Schwellenwerten (optional)
         if total_count == max_cells:
             st.warning(f"⚠️ Maximale Anzahl ausgezählter Zellen ({max_cells}) erreicht.")
         elif total_count > max_cells:
             st.error(f"❌ Grenze von {max_cells} Zellen überschritten! Bitte zurücksetzen.")
-            
+
     # Reset-Button nach den Bild-Buttons
     if st.button("Refresh", key="refresh_button"):
         reset_all()
