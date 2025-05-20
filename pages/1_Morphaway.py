@@ -1,6 +1,6 @@
 # ====== Start Login Block ======
-# from utils.login_manager import LoginManager
-# LoginManager().go_to_login('Start.py')  
+#from utils.login_manager import LoginManager
+#LoginManager().go_to_login('Start.py')  
 # ====== End Login Block ======
 
 # ------------------------------------------------------------
@@ -33,6 +33,7 @@ class DataManager:
         else:
             raise ValueError(f"Kein DataFrame gefunden für den Schlüssel: {session_state_key}")
 
+
 # Titel der Seite
 st.title("Cell Counter")
 
@@ -58,7 +59,7 @@ if not st.session_state["praep_name"]:
     praep_name = st.text_input("Gib einen Namen für das Präparat ein:", key="praep_name_input")
     if st.button("Diffrenzieren", key="confirm_praep_name") and praep_name:
         st.session_state["praep_name"] = praep_name
-
+        
 # Counter-Logik
 else:
     # Zeige den gespeicherten Präparatnamen an
@@ -74,7 +75,7 @@ else:
         if selected:
             st.session_state["selected_option"] = selected
 
-    # --- Button-Zähler initialisieren ---
+    # --- HIER: Button-Zähler initialisieren ---
     for i in range(1, 15):
         if f"button_{i}_count" not in st.session_state:
             st.session_state[f"button_{i}_count"] = 0
@@ -84,6 +85,7 @@ else:
     total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 15) if i != 13)
     max_cells = int(st.session_state["selected_option"].split()[0])
 
+
     # Rückgängig Button
     if st.button("🔙 Rückgängig", key="undo_button"):
         for i in range(1, 15):
@@ -91,17 +93,20 @@ else:
                 st.session_state[f"button_{i}_count"] -= 1
                 break  # Wir machen nur einen Rückgängig-Schritt
 
-    # Anzeige des Gesamtzählers
+
+      # Anzeige des Gesamtzählers
     st.markdown(f"### Gesamtzahl: *{total_count}*")
+
+    # Maximale Zellzahl aus der Auswahl extrahieren
+    max_cells = int(st.session_state["selected_option"].split()[0])
 
     # Warnmeldungen bei bestimmten Schwellenwerten
     if total_count == max_cells:
         st.warning(f"⚠️ Maximale Anzahl ausgezählter Zellen ({max_cells}) erreicht.")
-        st.markdown(scroll_to_top, unsafe_allow_html=True)
     elif total_count > max_cells:
         st.error(f"❌ Grenze von {max_cells} Zellen überschritten! Bitte zurücksetzen.")
-        st.markdown(scroll_to_top, unsafe_allow_html=True)
 
+            
     images = [
         {"path": "https://cdn.cellwiki.net/db/cells/page-28/gallery-55/003.jpg", "label": "Lymphozyt"},
         {"path": "https://cdn.cellwiki.net/db/aberrations/page-73/gallery-181/008.jpg", "label": "reaktiver Lymphozyt"},
@@ -129,13 +134,21 @@ else:
             st.image(image["path"], use_container_width=True)
             st.write(f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}", use_container_width=True)
 
-    # Warnmeldungen bei bestimmten Schwellenwerten (nochmal, falls Buttons gedrückt wurden)
-    if total_count == max_cells:
-        st.warning(f"⚠️ Maximale Anzahl ausgezählter Zellen ({max_cells}) erreicht.")
-        st.markdown(scroll_to_top, unsafe_allow_html=True)
-    elif total_count > max_cells:
-        st.error(f"❌ Grenze von {max_cells} Zellen überschritten! Bitte zurücksetzen.")
-        st.markdown(scroll_to_top, unsafe_allow_html=True)
+# Erythroblast separat zählen (Button 13)
+erythroblast_count = st.session_state["button_13_count"]
+# Gesamtzähler OHNE Erythroblast (alle außer Button 13)
+total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 15) if i != 13)
+
+# Maximale Zellzahl aus der Auswahl extrahieren
+max_cells = int(st.session_state["selected_option"].split()[0])
+
+# Warnmeldungen bei bestimmten Schwellenwerten
+if total_count == max_cells:
+    st.warning(f"⚠️ Maximale Anzahl ausgezählter Zellen ({max_cells}) erreicht.")
+    st.markdown(scroll_to_top, unsafe_allow_html=True)
+elif total_count > max_cells:
+    st.error(f"❌ Grenze von {max_cells} Zellen überschritten! Bitte zurücksetzen.")
+    st.markdown(scroll_to_top, unsafe_allow_html=True)
 
     # Reset-Button nach den Bild-Buttons
     if st.button("Refresh", key="refresh_button"):
