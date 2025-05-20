@@ -69,14 +69,13 @@ else:
                 st.session_state[f"button_{i}_count"] -= 1
                 break  # Wir machen nur einen Rückgängig-Schritt
 
-            
 # Berechne den Total Counter nach allen Button-Events
-    erythro_count = st.session_state["button_13_count"]
-    total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 15) if i != 13)
-    total_count += 1
+    erythroblast_count = st.session_state["button_14_count"]  # Button 14 = Erythroblast
+    total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 14))  # Buttons 1-13
 
     # Anzeige des Gesamtzählers
     st.markdown(f"### Gesamtzahl: *{total_count}*")
+    st.markdown(f"### Erythroblasten (separat): *{erythroblast_count}*")
 
     # Maximale Zellzahl aus der Auswahl extrahieren
     max_cells = int(st.session_state["selected_option"].split()[0])
