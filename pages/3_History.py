@@ -62,8 +62,8 @@ if file_info:
         timestamp_raw = loaded_data.get('timestamp', '')
         if timestamp_raw:
             try:
-                dt = datetime.datetime.strptime(timestamp_raw, "%Y-%m-%d %H:%M:%S")
-                timestamp_str = dt.strftime("%d.%m.%Y, %H:%M Uhr")
+                dt = datetime.datetime.strptime(timestamp_raw, "%Y-%m-%d")
+                timestamp_str = dt.strftime("%d.%m.%Y Uhr")
             except Exception:
                 timestamp_str = timestamp_raw
             st.caption(f"Zeitpunkt: {timestamp_str}")
@@ -73,12 +73,6 @@ if file_info:
         df_loaded = pd.DataFrame(loaded_data["data"])
         st.dataframe(df_loaded)
 
-        # Löschfunktion mit Sicherheitsabfrage
-        if st.button("❌ Auswertung löschen"):
-            if st.confirm("Möchtest du diese Auswertung wirklich löschen?"):
-                os.remove(file_path)
-                st.success("Auswertung wurde gelöscht. Bitte Seite neu laden.")
-                st.stop()
 
         # Kreisdiagramm mit festen Farben anzeigen
         import plotly.express as px
@@ -92,5 +86,13 @@ if file_info:
                 color_discrete_sequence=px.colors.qualitative.Set3
             )
             st.plotly_chart(fig)
-else:
-    st.info("Es sind noch keine gespeicherten Auswertungen vorhanden.")
+
+        # Löschfunktion mit Sicherheitsabfrage am Schluss
+        st.markdown("---")
+        if st.button("❌ Auswertung löschen"):
+            if st.session_state.get("confirm_delete", False) or st.checkbox("Löschen bestätigen"):
+                os.remove(file_path)
+                st.success("Auswertung wurde gelöscht. Bitte Seite neu laden.")
+                st.stop()
+            else:
+                st.warning("Bitte 'Löschen bestätigen' anhaken und dann erneut auf 'Auswertung löschen' klicken.")
