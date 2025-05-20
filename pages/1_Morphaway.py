@@ -45,7 +45,8 @@ if not st.session_state["praep_name"]:
     praep_name = st.text_input("Gib einen Namen für das Präparat ein:", key="praep_name_input")
     if praep_name:
         st.session_state["praep_name"] = praep_name
-        
+        st.session_state["selected_option"] = None
+
 # Counter-Logik
 else:
     # Zeige den gespeicherten Präparatnamen an
