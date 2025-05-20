@@ -68,10 +68,11 @@ else:
             if st.session_state[f"button_{i}_count"] > 0:
                 st.session_state[f"button_{i}_count"] -= 1
                 break  # Wir machen nur einen Rückgängig-Schritt
-
-# Berechne den Total Counter nach allen Button-Events
-    erythroblast_count = st.session_state["button_14_count"]  # Button 14 = Erythroblast
-    total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 14))  # Buttons 1-13
+            
+    # Erythroblast separat zählen (Button 14, also Index 14)
+    erythroblast_count = st.session_state["button_14_count"]
+    # Gesamtzähler OHNE Erythroblast (nur Buttons 1-13)
+    total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 14))
 
     # Anzeige des Gesamtzählers
     st.markdown(f"### Gesamtzahl: *{total_count}*")
