@@ -78,6 +78,20 @@ else:
             if st.session_state[f"button_{i}_count"] > 0:
                 st.session_state[f"button_{i}_count"] -= 1
                 break  # Wir machen nur einen Rückgängig-Schritt
+
+              # Anzeige des Gesamtzählers
+    st.markdown(f"### Gesamtzahl: *{total_count}*")
+
+    # Maximale Zellzahl aus der Auswahl extrahieren
+    max_cells = int(st.session_state["selected_option"].split()[0])
+
+
+             # Warnmeldungen bei bestimmten Schwellenwerten
+    if total_count == max_cells:
+        st.warning(f"⚠️ Maximale Anzahl ausgezählter Zellen ({max_cells}) erreicht.")
+    elif total_count > max_cells:
+        st.error(f"❌ Grenze von {max_cells} Zellen überschritten! Bitte zurücksetzen.")
+
             
     images = [
         {"path": "https://cdn.cellwiki.net/db/cells/page-28/gallery-55/003.jpg", "label": "Lymphozyt"},
@@ -103,7 +117,6 @@ else:
         with col:
             if st.button("", key=f"button_{idx + 1}"):
                 st.session_state[f"button_{idx + 1}_count"] += 1
-                st.experimental_rerun() 
             st.image(image["path"], use_container_width=True)
             st.write(f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}", use_container_width=True)
             
