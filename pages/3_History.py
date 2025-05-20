@@ -8,7 +8,6 @@ import streamlit as st
 import os
 import json
 import pandas as pd
-import datetime  # Für den Timestamp
 
 st.title("🔍 History")
 
@@ -25,32 +24,22 @@ if not os.path.exists(history_directory):
 # Liste aller gespeicherten Auswertungen (Dateinamen)
 files = [f for f in os.listdir(history_directory) if f.endswith(".json")]
 
-# Erstelle eine Liste von Präparatnamen + Zeitstempel zusammen mit den zugehörigen Dateinamen
+
+# Erstelle eine Liste von Präparatnamen zusammen mit den zugehörigen Dateinamen
 file_info = []
 for file in files:
     file_path = os.path.join(history_directory, file)
     with open(file_path, "r", encoding="utf-8") as f:
         loaded_data = json.load(f)
     praep_name = loaded_data.get('praep_name', 'Unbekannt')
-    timestamp = loaded_data.get('timestamp', '')
-    # Schönes Datumsformat für die Anzeige
-    if timestamp:
-        try:
-            dt = datetime.datetime.strptime(timestamp, "%Y-%m-%d %H:%M:%S")
-            timestamp_str = dt.strftime("%d.%m.%Y, %H:%M Uhr")
-        except Exception:
-            timestamp_str = timestamp
-        display_name = f"{praep_name} ({timestamp_str})"
-    else:
-        display_name = praep_name
-    file_info.append((display_name, file))
+    file_info.append((praep_name, file))
 
 if file_info:
-    selected_display_name = st.selectbox(
+    selected_praep_name = st.selectbox(
         "Wähle eine gespeicherte Auswertung",
         [item[0] for item in file_info]
     )
-    selected_file = next(file for display, file in file_info if display == selected_display_name)
+    selected_file = next(file for name, file in file_info if name == selected_praep_name)
 
     if selected_file:
         file_path = os.path.join(history_directory, selected_file)
@@ -58,17 +47,6 @@ if file_info:
             loaded_data = json.load(f)
 
         st.subheader(f"Präparat: {loaded_data.get('praep_name', 'Unbekannt')}")
-        # Schönes Datumsformat für die Caption
-        timestamp_raw = loaded_data.get('timestamp', '')
-        if timestamp_raw:
-            try:
-                dt = datetime.datetime.strptime(timestamp_raw, "%Y-%m-%d %H:%M:%S")
-                timestamp_str = dt.strftime("%d.%m.%Y, %H:%M Uhr")
-            except Exception:
-                timestamp_str = timestamp_raw
-            st.caption(f"Zeitpunkt: {timestamp_str}")
-        else:
-            st.caption("Zeitpunkt: unbekannt")
 
         df_loaded = pd.DataFrame(loaded_data["data"])
         st.dataframe(df_loaded)
