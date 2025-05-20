@@ -37,6 +37,7 @@ if "data_df" not in st.session_state:
 if "praep_name" not in st.session_state:
     st.session_state["praep_name"] = ""
 
+
 # Zeige das Eingabefeld nur, wenn der Präparatname noch nicht eingegeben wurde
 if not st.session_state["praep_name"]:
     praep_name = st.text_input("Gib einen Namen für das Präparat ein:", key="praep_name_input")
@@ -46,21 +47,28 @@ else:
     # Zeige den gespeicherten Präparatnamen an
     st.markdown(f"### Präparat: *{st.session_state['praep_name']}*")
 
-    # Auswahloption IMMER anzeigen, damit sie aktualisiert wird
-    st.session_state["selected_option"] = st.radio(
-        "Wähle eine Funktion:",
-        ["50 Zellen differenzieren", "100 Zellen differenzieren", "200 Zellen differenzieren"],
-        key="function_select"
-    )
+    # Auswahloption NUR anzeigen, wenn noch keine Auswahl getroffen wurde
+    if not st.session_state.get("selected_option"):
+        selected = st.radio(
+            "Wähle eine Funktion:",
+            ["50 Zellen differenzieren", "100 Zellen differenzieren", "200 Zellen differenzieren"],
+            key="function_select"
+        )
+        if selected:
+            st.session_state["selected_option"] = selected
 
-    # Initialisiere Zähler für jeden Button im Session State
-    for i in range(1, 15):  # 14 Bilder
-        if f"button_{i}_count" not in st.session_state:
-            st.session_state[f"button_{i}_count"] = 0
+    # Restlicher Code NUR anzeigen, wenn Auswahl getroffen wurde
+    if st.session_state.get("selected_option"):
+        # ...hier kommt dein bisheriger Code für die Buttons, Zähler, etc...
+        # Beispiel:
+        # Initialisiere Zähler für jeden Button im Session State
+        for i in range(1, 15):  # 14 Bilder
+            if f"button_{i}_count" not in st.session_state:
+                st.session_state[f"button_{i}_count"] = 0
 
-    # Berechne den Total Counter
-    erythro_count = st.session_state["button_13_count"]
-    total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 15) if i != 13)
+        # Berechne den Total Counter
+        erythro_count = st.session_state["button_13_count"]
+        total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 15) if i != 13)
 
     # Rückgängig Button
     if st.button("🔙 Rückgängig", key="undo_button"):
@@ -110,24 +118,6 @@ else:
             st.image(image["path"], use_container_width=True)
             st.write(f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}", use_container_width=True)
 
-    # Gc* = Granulozyten
-    st.markdown("Gc = Granulozyten")
-
-    # Berechne den Total Counter nach allen Button-Events
-    erythro_count = st.session_state["button_13_count"]
-    total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 15) if i != 13)
-
-    # Anzeige des Gesamtzählers
-    st.markdown(f"### Gesamtzahl: *{total_count}*")
-
-    # Maximale Zellzahl aus der Auswahl extrahieren
-    max_cells = int(st.session_state["selected_option"].split()[0])
-
-    # Warnmeldungen bei bestimmten Schwellenwerten
-    if total_count == max_cells:
-        st.warning(f"⚠️ Maximale Anzahl ausgezählter Zellen ({max_cells}) erreicht.")
-    elif total_count > max_cells:
-        st.error(f"❌ Grenze von {max_cells} Zellen überschritten! Bitte zurücksetzen.")
 
     # Reset-Button nach den Bild-Buttons
     if st.button("Refresh", key="refresh_button"):
