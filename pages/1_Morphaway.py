@@ -59,6 +59,7 @@ if not st.session_state["praep_name"]:
     praep_name = st.text_input("Gib einen Namen für das Präparat ein:", key="praep_name_input")
     if st.button("Diffrenzieren", key="confirm_praep_name") and praep_name:
         st.session_state["praep_name"] = praep_name
+        
 # Counter-Logik
 else:
     # Zeige den gespeicherten Präparatnamen an
@@ -74,10 +75,16 @@ else:
         if selected:
             st.session_state["selected_option"] = selected
 
-    # Initialisiere Zähler für jeden Button im Session State
-    for i in range(1, 15):  # 14 Bilder
+    # --- HIER: Button-Zähler initialisieren ---
+    for i in range(1, 15):
         if f"button_{i}_count" not in st.session_state:
             st.session_state[f"button_{i}_count"] = 0
+
+    # Jetzt kannst du auf die Zähler zugreifen:
+    erythroblast_count = st.session_state["button_13_count"]
+    total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 15) if i != 13)
+    max_cells = int(st.session_state["selected_option"].split()[0])
+
 
     # Rückgängig Button
     if st.button("🔙 Rückgängig", key="undo_button"):
