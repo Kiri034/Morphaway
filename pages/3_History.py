@@ -9,6 +9,7 @@ import streamlit as st
 import os
 import json
 import pandas as pd
+import datetime  # Für den Timestamp
 
 st.title("🔍 History")
 
@@ -25,30 +26,33 @@ if not os.path.exists(history_directory):
 # Liste aller gespeicherten Auswertungen (Dateinamen)
 files = [f for f in os.listdir(history_directory) if f.endswith(".json")]
 
-# Erstelle eine Liste von Präparatnamen zusammen mit den zugehörigen Dateinamen
+# Erstelle eine Liste von Präparatnamen + Zeitstempel zusammen mit den zugehörigen Dateinamen
 file_info = []
 for file in files:
     file_path = os.path.join(history_directory, file)
     with open(file_path, "r", encoding="utf-8") as f:
         loaded_data = json.load(f)
-    praep_name = loaded_data['praep_name']
-    file_info.append((praep_name, file))
+    praep_name = loaded_data.get('praep_name', 'Unbekannt')
+    timestamp = loaded_data.get('timestamp', '')
+    display_name = f"{praep_name} ({timestamp})" if timestamp else praep_name
+    file_info.append((display_name, file))
 
-# Wähle den Präparatnamen zur Anzeige
 if file_info:
-    # Nur die Präparatnamen anzeigen
-    selected_praep_name = st.selectbox("Wähle eine gespeicherte Auswertung", [item[0] for item in file_info])
-
-    # Finde den zugehörigen Dateinamen
-    selected_file = next(file for praep_name, file in file_info if praep_name == selected_praep_name)
+    # Alle Einträge anzeigen, auch mit gleichem Präparatnamen
+    selected_display_name = st.selectbox(
+        "Wähle eine gespeicherte Auswertung",
+        [item[0] for item in file_info]
+    )
+    # Hole den Dateinamen zur Auswahl
+    selected_file = next(file for display, file in file_info if display == selected_display_name)
 
     if selected_file:
         file_path = os.path.join(history_directory, selected_file)
         with open(file_path, "r", encoding="utf-8") as f:
             loaded_data = json.load(f)
 
-        st.subheader(f"Präparat: {loaded_data['praep_name']}")
-        st.caption(f"Zeitpunkt: {loaded_data['timestamp']}")
+        st.subheader(f"Präparat: {loaded_data.get('praep_name', 'Unbekannt')}")
+        st.caption(f"Zeitpunkt: {loaded_data.get('timestamp', '')}")
 
         df_loaded = pd.DataFrame(loaded_data["data"])
         st.dataframe(df_loaded)
