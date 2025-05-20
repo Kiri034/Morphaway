@@ -124,7 +124,7 @@ else:
         <style>
         .sticky-alert {
             position: fixed;
-            top: 10px;
+            top: 80px;
             right: 10px;
             width: 300px;
             z-index: 9999;
