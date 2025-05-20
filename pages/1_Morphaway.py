@@ -128,21 +128,14 @@ else:
                 st.session_state[f"button_{idx + 1}_count"] += 1
             st.image(image["path"], use_container_width=True)
             st.write(f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}", use_container_width=True)
-# Erythroblast separat zählen (Button 13)
-erythroblast_count = st.session_state["button_13_count"]
-# Gesamtzähler OHNE Erythroblast (alle außer Button 13)
-total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 15) if i != 13)
 
-# Maximale Zellzahl aus der Auswahl extrahieren
-max_cells = int(st.session_state["selected_option"].split()[0])
-
-# Warnmeldungen bei bestimmten Schwellenwerten
-if total_count == max_cells:
-    st.warning(f"⚠️ Maximale Anzahl ausgezählter Zellen ({max_cells}) erreicht.")
-    st.markdown(scroll_to_top, unsafe_allow_html=True)
-elif total_count > max_cells:
-    st.error(f"❌ Grenze von {max_cells} Zellen überschritten! Bitte zurücksetzen.")
-    st.markdown(scroll_to_top, unsafe_allow_html=True)
+    # Warnmeldungen bei bestimmten Schwellenwerten (nochmal, falls Buttons gedrückt wurden)
+    if total_count == max_cells:
+        st.warning(f"⚠️ Maximale Anzahl ausgezählter Zellen ({max_cells}) erreicht.")
+        st.markdown(scroll_to_top, unsafe_allow_html=True)
+    elif total_count > max_cells:
+        st.error(f"❌ Grenze von {max_cells} Zellen überschritten! Bitte zurücksetzen.")
+        st.markdown(scroll_to_top, unsafe_allow_html=True)
 
     # Reset-Button nach den Bild-Buttons
     if st.button("Refresh", key="refresh_button"):
@@ -151,7 +144,7 @@ elif total_count > max_cells:
     # --- Save Cellcount data ---
     if st.button("Jetzt Auswerten", key="auswertung_button"):
         try:
-              # Erythroblast separat zählen (Button 13)
+            # Erythroblast separat zählen (Button 13)
             erythroblast_count = st.session_state["button_13_count"]
             # Gesamtzähler OHNE Erythroblast (nur Buttons 1-12 und 14)
             total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 15) if i != 13)
