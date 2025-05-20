@@ -65,7 +65,6 @@ if any(f"button_{i}_count" in st.session_state for i in range(1, 15)):
     st.subheader("Tabelle der Ergebnisse")
     st.dataframe(df)
 
-# ...existing code...
 
 # Kreisdiagramm erstellen (nur Zellen mit Anzahl > 0 und ohne Erythroblast)
 filtered_df = df[(df["Anzahl"] > 0) & (df["Zelle"] != "Erythroblast")]
@@ -94,16 +93,16 @@ else:
 if st.button("📄Export"):
     pdf = FPDF()
     pdf.add_page()
-    pdf.set_font("Arial", "B", 16)
+    pdf.set_font("Arial", "B", 14)
     pdf.cell(0, 10, "Auswertung der Ergebnisse", ln=True, align="C")
     pdf.ln(10)
 
     # Schöne Tabelle mit Rahmen und Überschriften
-    pdf.set_font("Arial", "B", 12)
+    pdf.set_font("Arial", "B", 10)
     pdf.cell(60, 10, "Zelle", 1, 0, "C")
     pdf.cell(40, 10, "Anzahl", 1, 0, "C")
     pdf.cell(60, 10, "Relativer Anteil (%)", 1, 1, "C")
-    pdf.set_font("Arial", "", 12)
+    pdf.set_font("Arial", "", 10)
     if not df.empty:
         for index, row in df.iterrows():
             pdf.cell(60, 10, str(row['Zelle']), 1, 0, "C")
@@ -118,10 +117,10 @@ if st.button("📄Export"):
         with open(img_path, "wb") as f:
             f.write(img_bytes)
         pdf.ln(10)
-        pdf.set_font("Arial", "B", 12)
+        pdf.set_font("Arial", "B", 10)
         pdf.cell(0, 10, txt="Kreisdiagramm:", ln=True)
         pdf.ln(5)
-        pdf.image(img_path, x=10, w=190)  # groß und farbig
+        pdf.image(img_path, x=10, w=140)  # groß und farbig
         os.remove(img_path)
 
     # PDF als Bytes speichern und Download anbieten (nur EIN Button!)
