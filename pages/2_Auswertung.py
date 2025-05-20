@@ -48,10 +48,12 @@ if any(f"button_{i}_count" in st.session_state for i in range(1, 15)):
         data.append({"Zelle": cell["label"], "Anzahl": count, "Relativer Anteil (%)": round(relative_count, 2)})
 
     df = pd.DataFrame(data)
-    df.loc["Total"] = ["", total_count, round(df["Relativer Anteil (%)"].sum(), 2)]
 
     st.subheader("Tabelle der Ergebnisse")
     st.dataframe(df)
+
+    # Gesamtzahl unter der Tabelle anzeigen
+    st.markdown(f"**Differenzierte Zellen gesamt:** {total_count}")
 
     # Kreisdiagramm erstellen (nur Zellen mit Anzahl > 0 und ohne Erythroblast)
     filtered_df = df[(df["Anzahl"] > 0) & (df["Zelle"] != "Erythroblast")]
