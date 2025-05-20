@@ -37,11 +37,12 @@ if "data_df" not in st.session_state:
 if "praep_name" not in st.session_state:
     st.session_state["praep_name"] = ""
 
-# Zeige das Eingabefeld nur, wenn der Präparatname noch nicht eingegeben wurde
+# Präparatname-Eingabe mit Bestätigungsbutton
 if not st.session_state["praep_name"]:
     praep_name = st.text_input("Gib einen Namen für das Präparat ein:", key="praep_name_input")
-    if praep_name:
+    if st.button("Bestätigen", key="confirm_praep_name") and praep_name:
         st.session_state["praep_name"] = praep_name
+# Counter-Logik
 else:
     # Zeige den gespeicherten Präparatnamen an
     st.markdown(f"### Präparat: *{st.session_state['praep_name']}*")
