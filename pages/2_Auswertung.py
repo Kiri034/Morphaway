@@ -66,7 +66,7 @@ if any(f"button_{i}_count" in st.session_state for i in range(1, 15)):
         df = pd.DataFrame(data)
 
     # Gesamtzeile anhängen
-    df.loc["Gesamt"] = ["", total_count, round(df["Relativer Anteil (%)"].sum(), 2)]
+    df.loc["Total"] = ["", total_count, round(df["Relativer Anteil (%)"].sum(), 2)]
 
     st.subheader("Tabelle der Ergebnisse")
     st.dataframe(df)
