@@ -69,7 +69,7 @@ if any(f"button_{i}_count" in st.session_state for i in range(1, 15)):
 
     st.subheader("Tabelle der Ergebnisse")
     st.dataframe(df)
-    
+
     # Kreisdiagramm erstellen (nur Zellen mit Anzahl > 0 und ohne Erythroblast)
     filtered_df = df[(df["Anzahl"] > 0) & (df["Zelle"] != "Erythroblast")]
 
@@ -136,7 +136,7 @@ if any(f"button_{i}_count" in st.session_state for i in range(1, 15)):
             mime="application/pdf"
         )
 
-    # Button zum Speichern und Wechsel zu History
+   # Button zum Speichern und Wechsel zu History
     if st.button("Zur History (speichern)"):
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         filename = f"{praep_name}_{timestamp}.json"
@@ -144,7 +144,7 @@ if any(f"button_{i}_count" in st.session_state for i in range(1, 15)):
         export_data = {
             "praep_name": praep_name,
             "timestamp": timestamp,
-            "data": df.reset_index().to_dict(orient="records")
+            "data": df.reset_index(drop=True).to_dict(orient="records")
         }
         with open(filepath, "w", encoding="utf-8") as f:
             json.dump(export_data, f, ensure_ascii=False, indent=2)
