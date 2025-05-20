@@ -6,7 +6,9 @@ import datetime  # Für den Timestamp
 class DataManager:
     def __init__(self):
         if "data_df" not in st.session_state:
-            st.session_state["data_df"] = pd.DataFrame(columns=["selected_option", "praep_name", "total_count", "timestamp"])
+            st.session_state["data_df"] = pd.DataFrame(
+                columns=["selected_option", "praep_name", "total_count", "erythroblast_count", "timestamp"]
+            )
 
     def append_record(self, session_state_key: str, record_dict: dict):
         df = st.session_state.get(session_state_key)
@@ -30,9 +32,10 @@ def reset_all():
     st.session_state["selected_option"] = None  # Zurücksetzen der Auswahloption
 
 # Initialisierung von 'data_df' falls nicht vorhanden (z.B. als leeres DataFrame)
-st.session_state["data_df"] = pd.DataFrame(
-    columns=["selected_option", "praep_name", "total_count", "erythroblast_count", "timestamp"]
-)
+if "data_df" not in st.session_state:
+    st.session_state["data_df"] = pd.DataFrame(
+        columns=["selected_option", "praep_name", "total_count", "erythroblast_count", "timestamp"]
+    )
 # Überprüfen, ob ein Präparatname bereits in st.session_state gespeichert ist
 if "praep_name" not in st.session_state:
     st.session_state["praep_name"] = ""
@@ -47,7 +50,7 @@ else:
     # Zeige den gespeicherten Präparatnamen an
     st.markdown(f"### Präparat: *{st.session_state['praep_name']}*")
 
-        # Auswahloption NUR anzeigen, wenn noch keine Auswahl getroffen wurde
+    # Auswahloption NUR anzeigen, wenn noch keine Auswahl getroffen wurde
     if not st.session_state.get("selected_option"):
         selected = st.radio(
             "Wähle eine Funktion:",
@@ -68,24 +71,6 @@ else:
             if st.session_state[f"button_{i}_count"] > 0:
                 st.session_state[f"button_{i}_count"] -= 1
                 break  # Wir machen nur einen Rückgängig-Schritt
-            
-    # Erythroblast separat zählen (Button 14, also Index 14)
-    erythroblast_count = st.session_state["button_13_count"]
-    # Gesamtzähler OHNE Erythroblast (nur Buttons 1-13)
-    total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 15) if i != 13)
-
-    # Anzeige des Gesamtzählers
-    st.markdown(f"### Gesamtzahl: *{total_count}*")
-    st.markdown(f"### Erythroblasten: *{erythroblast_count}*")
-
-    # Maximale Zellzahl aus der Auswahl extrahieren
-    max_cells = int(st.session_state["selected_option"].split()[0])
-
-    # Warnmeldungen bei bestimmten Schwellenwerten
-    if total_count == max_cells:
-        st.warning(f"⚠️ Maximale Anzahl ausgezählter Zellen ({max_cells}) erreicht.")
-    elif total_count > max_cells:
-        st.error(f"❌ Grenze von {max_cells} Zellen überschritten! Bitte zurücksetzen.")
 
     # Liste der Bildnamen und Beschriftungen
     images = [
@@ -105,29 +90,51 @@ else:
         {"path": "https://cdn.cellwiki.net/db/pathology/page-372/gallery-1739/030.jpg", "label": "smudged cells"},
     ]
 
-    # Zeige die Bilder in einem Raster an
+    # Zuerst Buttons zählen, dann anzeigen!
     cols = st.columns(4)  # 4 Spalten pro Reihe
-
     for idx, image in enumerate(images):
         col = cols[idx % 4]
         with col:
             if st.button("", key=f"button_{idx + 1}"):
                 st.session_state[f"button_{idx + 1}_count"] += 1
+
+    # Nach allen Button-Events: Einzelwerte unter den Bildern anzeigen
+    cols = st.columns(4)
+    for idx, image in enumerate(images):
+        col = cols[idx % 4]
+        with col:
             st.image(image["path"], use_container_width=True)
             st.write(f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}", use_container_width=True)
 
+    # Erythroblast separat zählen (Button 13)
+    erythroblast_count = st.session_state["button_13_count"]
+    # Gesamtzähler OHNE Erythroblast (alle außer Button 13)
+    total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 15) if i != 13)
 
-   # Reset-Button nach den Bild-Buttons
+    # Anzeige des Gesamtzählers
+    st.markdown(f"### Gesamtzahl: *{total_count}*")
+    st.markdown(f"### Erythroblasten: *{erythroblast_count}*")
+
+    # Maximale Zellzahl aus der Auswahl extrahieren
+    max_cells = int(st.session_state["selected_option"].split()[0])
+
+    # Warnmeldungen bei bestimmten Schwellenwerten
+    if total_count == max_cells:
+        st.warning(f"⚠️ Maximale Anzahl ausgezählter Zellen ({max_cells}) erreicht.")
+    elif total_count > max_cells:
+        st.error(f"❌ Grenze von {max_cells} Zellen überschritten! Bitte zurücksetzen.")
+
+    # Reset-Button nach den Bild-Buttons
     if st.button("Refresh", key="refresh_button"):
         reset_all()
 
     # --- Save Cellcount data ---
     if st.button("Jetzt Auswerten", key="auswertung_button"):
         try:
-            # Erythroblast separat zählen (Button 14, also Index 14)
-            erythroblast_count = st.session_state["button_14_count"]
-            # Gesamtzähler OHNE Erythroblast (nur Buttons 1-13)
-            total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 14))
+            # Erythroblast separat zählen (Button 13)
+            erythroblast_count = st.session_state["button_13_count"]
+            # Gesamtzähler OHNE Erythroblast (nur Buttons 1-12 und 14)
+            total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 15) if i != 13)
 
             # Speichere die Daten, Erythroblast separat
             DataManager().append_record(
