@@ -99,17 +99,17 @@ if st.button("📄Export"):
 
     # Schöne Tabelle mit Rahmen und Überschriften
     pdf.set_font("Arial", "B", 10)
-    pdf.cell(60, 10, "Zelle", 1, 0, "C")
-    pdf.cell(40, 10, "Anzahl", 1, 0, "C")
-    pdf.cell(60, 10, "Relativer Anteil (%)", 1, 1, "C")
+    pdf.cell(40, 10, "Zelle", 1, 0, "C")
+    pdf.cell(25, 10, "Anzahl", 1, 0, "C")
+    pdf.cell(40, 10, "Relativer Anteil (%)", 1, 1, "C")
     pdf.set_font("Arial", "", 10)
     if not df.empty:
         for index, row in df.iterrows():
-            pdf.cell(60, 10, str(row['Zelle']), 1, 0, "C")
-            pdf.cell(40, 10, str(row['Anzahl']), 1, 0, "C")
-            pdf.cell(60, 10, str(row['Relativer Anteil (%)']), 1, 1, "C")
+            pdf.cell(40, 10, str(row['Zelle']), 1, 0, "C")
+            pdf.cell(25, 10, str(row['Anzahl']), 1, 0, "C")
+            pdf.cell(40, 10, str(row['Relativer Anteil (%)']), 1, 1, "C")
     else:
-        pdf.cell(160, 10, "Keine Daten verfügbar.", 1, 1, "C")
+        pdf.cell(105, 10, "Keine Daten verfügbar.", 1, 1, "C")
 
     # Kreisdiagramm ins PDF einfügen, falls vorhanden
     if img_bytes:
