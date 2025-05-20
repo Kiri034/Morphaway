@@ -103,6 +103,7 @@ else:
         with col:
             if st.button("", key=f"button_{idx + 1}"):
                 st.session_state[f"button_{idx + 1}_count"] += 1
+                st.experimental_rerun() 
             st.image(image["path"], use_container_width=True)
             st.write(f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}", use_container_width=True)
             
