@@ -54,18 +54,17 @@ if not st.session_state["praep_name"]:
         st.session_state["praep_name"] = praep_name
 # Counter-Logik
 else:
+
     # Zeige den gespeicherten Präparatnamen an
     st.markdown(f"### Präparat: *{st.session_state['praep_name']}*")
 
-    # Auswahloption NUR anzeigen, wenn noch keine Auswahl getroffen wurde
-    if not st.session_state.get("selected_option"):
-        selected = st.radio(
-            "Wähle eine Funktion:",
-            ["50 Zellen differenzieren", "100 Zellen differenzieren", "200 Zellen differenzieren"],
-            key="function_select"
-        )
-        if selected:
-            st.session_state["selected_option"] = selected
+    # Auswahloption IMMER anzeigen, damit sie aktualisiert wird
+    selected = st.radio(
+        "Wähle eine Funktion:",
+        ["50 Zellen differenzieren", "100 Zellen differenzieren", "200 Zellen differenzieren"],
+        key="function_select"
+    )
+    st.session_state["selected_option"] = selected
 
     # Initialisiere Zähler für jeden Button im Session State
     for i in range(1, 15):  # 14 Bilder
@@ -115,52 +114,38 @@ else:
     st.markdown(f"### Gesamtzahl: *{total_count}*")
     st.markdown(f"### Erythroblasten: *{erythroblast_count}*")
 
+    # Maximale Zellzahl aus der Auswahl extrahieren
+    max_cells = int(st.session_state["selected_option"].split()[0])
 
-    # Sticky Warnbox und Warnmeldungen nur anzeigen, wenn eine Auswahl getroffen wurde
-    if st.session_state.get("selected_option"):
-        try:
-            max_cells = int(st.session_state["selected_option"].split()[0])
-        except Exception:
-            max_cells = 0
+    # Sticky Warnbox CSS einbinden
+    st.markdown(
+        """
+        <style>
+        .sticky-alert {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            width: 300px;
+            z-index: 9999;
+            background-color: #fff3cd;
+            padding: 15px;
+            border: 1px solid #ffeeba;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        </style>
+        """, unsafe_allow_html=True
+    )
 
-        # Sticky Warnbox CSS einbinden (nur einmal)
+    # Sticky Warnbox anzeigen, wenn Ziel erreicht/überschritten
+    if total_count >= max_cells:
         st.markdown(
-            """
-            <style>
-            .sticky-alert {
-                position: fixed;
-                top: 80px;
-                right: 10px;
-                width: 300px;
-                z-index: 9999;
-                background-color: #fff3cd;
-                color: #b30000; /* ROTER Text */
-                padding: 15px;
-                border: 1px solid #ffeeba;
-                border-radius: 5px;
-                box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            }
-            </style>
+            f"""
+            <div class="sticky-alert">
+                ⚠️ <strong>Ziel erreicht!</strong> Sie haben die Zielzahl von {max_cells} Zellen erreicht oder überschritten.
+            </div>
             """, unsafe_allow_html=True
         )
-
-        # Sticky Warnbox und Streamlit-Warnungen je nach Stand
-        if total_count == max_cells:
-            st.markdown(
-                f"""
-                <div class="sticky-alert">
-                    ⚠️ <strong>Ziel erreicht!</strong> Sie haben die Zielzahl von {max_cells} Zellen erreicht.
-                </div>
-                """, unsafe_allow_html=True
-            )
-        elif total_count > max_cells:
-            st.markdown(
-                f"""
-                <div class="sticky-alert">
-                    ❌ <strong>Grenze überschritten!</strong> Sie haben mehr als {max_cells} Zellen gezählt. Bitte zurücksetzen.
-                </div>
-                """, unsafe_allow_html=True
-            )
 
     # Reset-Button nach den Bild-Buttons
     if st.button("Refresh", key="refresh_button"):
