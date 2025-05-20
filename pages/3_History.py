@@ -62,8 +62,8 @@ if file_info:
         timestamp_raw = loaded_data.get('timestamp', '')
         if timestamp_raw:
             try:
-                dt = datetime.datetime.strptime(timestamp_raw, "%Y-%m-%d")
-                timestamp_str = dt.strftime("%d.%m.%Y Uhr")
+                dt = datetime.datetime.strptime(timestamp_raw, "%Y-%m-%d %H:%M:%S")
+                timestamp_str = dt.strftime("%d.%m.%Y, %H:%M Uhr")
             except Exception:
                 timestamp_str = timestamp_raw
             st.caption(f"Zeitpunkt: {timestamp_str}")
@@ -88,7 +88,6 @@ if file_info:
             st.plotly_chart(fig)
 
         # Löschfunktion mit Sicherheitsabfrage am Schluss
-        st.markdown("---")
         if st.button("❌ Auswertung löschen"):
             if st.session_state.get("confirm_delete", False) or st.checkbox("Löschen bestätigen"):
                 os.remove(file_path)
