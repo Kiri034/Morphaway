@@ -3,19 +3,18 @@
 # LoginManager().go_to_login('Start.py')  
 # ====== End Login Block ======
 
+# ------------------------------------------------------------
+# Hier beginnt die eigentliche App
 import streamlit as st
 import pandas as pd
 import datetime  # Für den Timestamp
 
-# ---------- Scroll beim Rendern, wenn nötig ----------
-if st.session_state.get("scroll_to_warnung"):
-    st.markdown("<a name='warnung'></a>", unsafe_allow_html=True)
-    st.markdown("""
-        <script>
-            document.querySelector("a[name='warnung']").scrollIntoView({ behavior: "smooth" });
-        </script>
-    """, unsafe_allow_html=True)
-    st.session_state["scroll_to_warnung"] = False  # zurücksetzen
+# Ganz oben im Skript (nach den Imports)
+scroll_to_top = """
+    <script>
+        window.scrollTo(0, 0);
+    </script>
+"""
 
 # Beispiel einer angepassten DataManager Klasse
 class DataManager:
@@ -34,33 +33,38 @@ class DataManager:
         else:
             raise ValueError(f"Kein DataFrame gefunden für den Schlüssel: {session_state_key}")
 
-# ---------- Titel ----------
+# Titel der Seite
 st.title("Cell Counter")
 
-# ---------- Funktion zum Zurücksetzen ----------
+# Funktion zum Zurücksetzen des Total Count und der Session-Variablen
 def reset_all():
-    for i in range(1, 15):
+    for i in range(1, 15):  # 14 Buttons
         st.session_state[f"button_{i}_count"] = 0
-    st.session_state["total_count"] = 0
-    st.session_state["praep_name"] = ""
-    st.session_state["selected_option"] = None
+    st.session_state["total_count"] = 0  # Zurücksetzen des Gesamtzählers
+    st.session_state["praep_name"] = ""  # Zurücksetzen des Präparatnamens
+    st.session_state["selected_option"] = None  # Zurücksetzen der Auswahloption
 
-# ---------- Session State vorbereiten ----------
+# Initialisierung von 'data_df' falls nicht vorhanden (z.B. als leeres DataFrame)
 if "data_df" not in st.session_state:
     st.session_state["data_df"] = pd.DataFrame(
         columns=["selected_option", "praep_name", "total_count", "erythroblast_count", "timestamp"]
     )
+# Überprüfen, ob ein Präparatname bereits in st.session_state gespeichert ist
 if "praep_name" not in st.session_state:
     st.session_state["praep_name"] = ""
 
-# ---------- Präparatname ----------
+# Präparatname-Eingabe mit Bestätigungsbutton
 if not st.session_state["praep_name"]:
     praep_name = st.text_input("Gib einen Namen für das Präparat ein:", key="praep_name_input")
     if st.button("Diffrenzieren", key="confirm_praep_name") and praep_name:
         st.session_state["praep_name"] = praep_name
+
+# Counter-Logik
 else:
+    # Zeige den gespeicherten Präparatnamen an
     st.markdown(f"### Präparat: *{st.session_state['praep_name']}*")
 
+    # Auswahloption NUR anzeigen, wenn noch keine Auswahl getroffen wurde
     if not st.session_state.get("selected_option"):
         selected = st.radio(
             "Wähle eine Funktion:",
@@ -70,15 +74,33 @@ else:
         if selected:
             st.session_state["selected_option"] = selected
 
+    # --- Button-Zähler initialisieren ---
     for i in range(1, 15):
         if f"button_{i}_count" not in st.session_state:
             st.session_state[f"button_{i}_count"] = 0
 
+    # Jetzt kannst du auf die Zähler zugreifen:
+    erythroblast_count = st.session_state["button_13_count"]
+    total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 15) if i != 13)
+    max_cells = int(st.session_state["selected_option"].split()[0])
+
+    # Rückgängig Button
     if st.button("🔙 Rückgängig", key="undo_button"):
         for i in range(1, 15):
             if st.session_state[f"button_{i}_count"] > 0:
                 st.session_state[f"button_{i}_count"] -= 1
-                break
+                break  # Wir machen nur einen Rückgängig-Schritt
+
+    # Anzeige des Gesamtzählers
+    st.markdown(f"### Gesamtzahl: *{total_count}*")
+
+    # Warnmeldungen bei bestimmten Schwellenwerten
+    if total_count == max_cells:
+        st.warning(f"⚠️ Maximale Anzahl ausgezählter Zellen ({max_cells}) erreicht.")
+        st.markdown(scroll_to_top, unsafe_allow_html=True)
+    elif total_count > max_cells:
+        st.error(f"❌ Grenze von {max_cells} Zellen überschritten! Bitte zurücksetzen.")
+        st.markdown(scroll_to_top, unsafe_allow_html=True)
 
     images = [
         {"path": "https://cdn.cellwiki.net/db/cells/page-28/gallery-55/003.jpg", "label": "Lymphozyt"},
@@ -96,8 +118,9 @@ else:
         {"path": "https://cdn.cellwiki.net/db/cells/page-36/gallery-75/004.jpg", "label": "Erythroblast"},
         {"path": "https://cdn.cellwiki.net/db/pathology/page-372/gallery-1739/030.jpg", "label": "smudged cells"},
     ]
+    # Zeige die Bilder in einem Raster an
+    cols = st.columns(4)  # 4 Spalten pro Reihe
 
-    cols = st.columns(4)
     for idx, image in enumerate(images):
         col = cols[idx % 4]
         with col:
@@ -105,31 +128,35 @@ else:
                 st.session_state[f"button_{idx + 1}_count"] += 1
             st.image(image["path"], use_container_width=True)
             st.write(f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}", use_container_width=True)
+# Erythroblast separat zählen (Button 13)
+erythroblast_count = st.session_state["button_13_count"]
+# Gesamtzähler OHNE Erythroblast (alle außer Button 13)
+total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 15) if i != 13)
 
-    erythroblast_count = st.session_state["button_13_count"]
-    total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 15) if i != 13)
+# Maximale Zellzahl aus der Auswahl extrahieren
+max_cells = int(st.session_state["selected_option"].split()[0])
 
-    st.markdown(f"### Gesamtzahl: *{total_count}*")
-    st.markdown(f"### Erythroblasten: *{erythroblast_count}*")
+# Warnmeldungen bei bestimmten Schwellenwerten
+if total_count == max_cells:
+    st.warning(f"⚠️ Maximale Anzahl ausgezählter Zellen ({max_cells}) erreicht.")
+    st.markdown(scroll_to_top, unsafe_allow_html=True)
+elif total_count > max_cells:
+    st.error(f"❌ Grenze von {max_cells} Zellen überschritten! Bitte zurücksetzen.")
+    st.markdown(scroll_to_top, unsafe_allow_html=True)
 
-    max_cells = int(st.session_state["selected_option"].split()[0])
-
-    # Scroll-Flag setzen, falls nötig
-    if total_count >= max_cells:
-        st.session_state["scroll_to_warnung"] = True
-
-    # Warnung anzeigen (nach Anker)
-    st.markdown("<a name='warnung'></a>", unsafe_allow_html=True)
-    if total_count == max_cells:
-        st.warning(f"⚠️ Maximale Anzahl ausgezählter Zellen ({max_cells}) erreicht.")
-    elif total_count > max_cells:
-        st.error(f"❌ Grenze von {max_cells} Zellen überschritten! Bitte zurücksetzen.")
-
+    # Reset-Button nach den Bild-Buttons
     if st.button("Refresh", key="refresh_button"):
         reset_all()
 
+    # --- Save Cellcount data ---
     if st.button("Jetzt Auswerten", key="auswertung_button"):
         try:
+              # Erythroblast separat zählen (Button 13)
+            erythroblast_count = st.session_state["button_13_count"]
+            # Gesamtzähler OHNE Erythroblast (nur Buttons 1-12 und 14)
+            total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 15) if i != 13)
+
+            # Speichere die Daten, Erythroblast separat
             DataManager().append_record(
                 session_state_key='data_df',
                 record_dict={
@@ -137,9 +164,11 @@ else:
                     'praep_name': st.session_state["praep_name"],
                     'total_count': total_count,
                     'erythroblast_count': erythroblast_count,
-                    'timestamp': datetime.datetime.now()
+                    'timestamp': datetime.datetime.now() 
                 }
             )
-            st.switch_page("pages/2_Auswertung.py")
+
+            # Wechsel zur Auswertungsseite
+            st.switch_page("pages/2_Auswertung.py")  # Achte darauf, dass der Seitenname stimmt
         except Exception as e:
             st.error(f"Fehler beim Speichern der Daten: {e}")
