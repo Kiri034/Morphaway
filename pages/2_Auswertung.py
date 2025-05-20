@@ -114,14 +114,13 @@ if 'df' in locals() and not df.empty:
 else:
     pdf.cell(0, 5, txt="Keine Daten verfügbar.", ln=True)
 
+
 # Diagramm in die PDF einfügen
-diagram_path = None  # Sicherstellen, dass die Variable immer definiert ist
 if diagram_path and os.path.exists(diagram_path):
     pdf.ln(10)
     pdf.set_font("Arial", size=10)
     pdf.cell(0, 10, txt="Kreisdiagramm der Ergebnisse:", ln=True)
     pdf.ln(5)
-
     try:
         pdf.image(diagram_path, x=10, y=pdf.get_y(), w=180)
     except Exception as e:
