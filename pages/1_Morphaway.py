@@ -87,7 +87,13 @@ else:
                 break  # Wir machen nur einen Rückgängig-Schritt
 
 
-             # Warnmeldungen bei bestimmten Schwellenwerten
+      # Anzeige des Gesamtzählers
+    st.markdown(f"### Gesamtzahl: *{total_count}*")
+
+    # Maximale Zellzahl aus der Auswahl extrahieren
+    max_cells = int(st.session_state["selected_option"].split()[0])
+
+    # Warnmeldungen bei bestimmten Schwellenwerten
     if total_count == max_cells:
         st.warning(f"⚠️ Maximale Anzahl ausgezählter Zellen ({max_cells}) erreicht.")
     elif total_count > max_cells:
@@ -110,9 +116,9 @@ else:
         {"path": "https://cdn.cellwiki.net/db/cells/page-36/gallery-75/004.jpg", "label": "Erythroblast"},
         {"path": "https://cdn.cellwiki.net/db/pathology/page-372/gallery-1739/030.jpg", "label": "smudged cells"},
     ]
-
-    # Buttons, Bilder und Labels gemeinsam anzeigen (nur eine Schleife!)
+    # Zeige die Bilder in einem Raster an
     cols = st.columns(4)  # 4 Spalten pro Reihe
+
     for idx, image in enumerate(images):
         col = cols[idx % 4]
         with col:
@@ -120,7 +126,6 @@ else:
                 st.session_state[f"button_{idx + 1}_count"] += 1
             st.image(image["path"], use_container_width=True)
             st.write(f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}", use_container_width=True)
-            
 
 # Erythroblast separat zählen (Button 13)
 erythroblast_count = st.session_state["button_13_count"]
@@ -137,7 +142,7 @@ if total_count == max_cells:
 elif total_count > max_cells:
     st.error(f"❌ Grenze von {max_cells} Zellen überschritten! Bitte zurücksetzen.")
     st.markdown(scroll_to_top, unsafe_allow_html=True)
-    
+
     # Reset-Button nach den Bild-Buttons
     if st.button("Refresh", key="refresh_button"):
         reset_all()
