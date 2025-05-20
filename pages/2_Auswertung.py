@@ -92,7 +92,7 @@ else:
     img_bytes = None
 
 # --- PDF-Download-Button ---
-if st.button("📄 PDF herunterladen"):
+if st.button("📄Export"):
     pdf = FPDF()
     pdf.add_page()
     pdf.set_font("Arial", "B", 16)
