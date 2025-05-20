@@ -47,12 +47,15 @@ else:
     # Zeige den gespeicherten Präparatnamen an
     st.markdown(f"### Präparat: *{st.session_state['praep_name']}*")
 
-    # Auswahloption IMMER anzeigen, damit sie aktualisiert wird
-    st.session_state["selected_option"] = st.radio(
-        "Wähle eine Funktion:",
-        ["50 Zellen differenzieren", "100 Zellen differenzieren", "200 Zellen differenzieren"],
-        key="function_select"
-    )
+        # Auswahloption NUR anzeigen, wenn noch keine Auswahl getroffen wurde
+    if not st.session_state.get("selected_option"):
+        selected = st.radio(
+            "Wähle eine Funktion:",
+            ["50 Zellen differenzieren", "100 Zellen differenzieren", "200 Zellen differenzieren"],
+            key="function_select"
+        )
+        if selected:
+            st.session_state["selected_option"] = selected
 
     # Initialisiere Zähler für jeden Button im Session State
     for i in range(1, 15):  # 14 Bilder
