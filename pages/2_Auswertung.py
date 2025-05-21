@@ -9,19 +9,12 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 from fpdf import FPDF
-import os
-import json
 from datetime import datetime
 
 from utils.data_manager import DataManager
 
 praep_name = st.session_state.get("praep_name", "Unbekanntes Präparat")
 st.title(f"Auswertung für {praep_name}")
-
-# Verzeichnis für gespeicherte Auswertungen
-history_directory = "history_exports"
-if not os.path.exists(history_directory):
-    os.makedirs(history_directory)
 
 # Prüfen, ob überhaupt gezählt wurde
 if any(f"button_{i}_count" in st.session_state for i in range(1, 15)):
@@ -56,7 +49,7 @@ if any(f"button_{i}_count" in st.session_state for i in range(1, 15)):
     st.subheader("Tabelle der Ergebnisse")
     st.dataframe(df)
 
-    # Kreisdiagramm erstellen (nur Zellen mit Anzahl > 0 und ohne Erythroblast)
+    # Kreisdiagramm erstellen (ohne Erythroblast und nur mit Anzahl > 0, falls sinnvoll)
     filtered_df = df[(df["Anzahl"] > 0) & (df["Zelle"] != "Erythroblast")]
 
     img_bytes = None
@@ -111,6 +104,7 @@ if any(f"button_{i}_count" in st.session_state for i in range(1, 15)):
             pdf.cell(0, 9, txt="Kreisdiagramm:", ln=True)
             pdf.ln(4)
             pdf.image(img_path, x=30, w=120)  # w=120 ist größer, passt aber noch auf A4 quer
+            import os
             os.remove(img_path)
 
         # PDF als Bytes speichern und Download anbieten
@@ -122,31 +116,19 @@ if any(f"button_{i}_count" in st.session_state for i in range(1, 15)):
             mime="application/pdf"
         )
 
-    # Button zur History-Seite mit Speicherung
+    # Speicherung in SwitchDrive (CSV) und Wechsel zur History-Seite
     if st.button("Zur History"):
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        filename = f"{praep_name}_{timestamp}.json"
-        filepath = os.path.join(history_directory, filename)
-        export_data = {
-            "praep_name": praep_name,
-            "timestamp": timestamp,
-            "data": df.to_dict(orient="records")
-        }
-        with open(filepath, "w", encoding="utf-8") as f:
-            json.dump(export_data, f, ensure_ascii=False, indent=2)
+        DataManager().append_record(
+            session_state_key='data_df',
+            record_dict={
+                "praep_name": praep_name,
+                "timestamp": datetime.now(),
+                "total_count": total_count,
+                "erythroblast_count": int(df[df["Zelle"] == "Erythroblast"]["Anzahl"].values[0]) if "Erythroblast" in df["Zelle"].values else 0,
+            }
+        )
         st.success("Auswertung gespeichert!")
         st.switch_page("pages/3_History.py")
 
 else:
     st.info("Noch keine Zellen gezählt. Es sind keine Auswertungen verfügbar.")
-
-DataManager().append_record(
-    session_state_key='data_df',
-    record_dict={
-        "praep_name": praep_name,
-        "timestamp": datetime.now(),
-        "total_count": total_count,
-        "erythroblast_count": int(df[df["Zelle"] == "Erythroblast"]["Anzahl"].values[0]) if "Erythroblast" in df["Zelle"].values else 0,
-
-    }
-)
