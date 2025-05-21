@@ -113,6 +113,8 @@ else:
 
 # Lade die CSV-Daten aus SwitchDrive (optional, falls du die Tabelle unten anzeigen willst
 DataManager().load_user_data(
+    user=user,
+    data_directory='data',
     session_state_key='data_df',
     file_name='data.csv',
     initial_value=pd.DataFrame(),
