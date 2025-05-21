@@ -117,20 +117,18 @@ if any(f"button_{i}_count" in st.session_state for i in range(1, 15)):
         )
 
     # Speicherung in SwitchDrive (CSV) und Wechsel zur History-Seite
-if st.button("Zur History"):
-    DataManager().append_record(
-        session_state_key='data_df',
-        record_dict={
-            "user" : st.session_state.get("user"),
-            "praep_name": praep_name,
-            "timestamp": datetime.now(),
-            "total_count": total_count,
-            "erythroblast_count": int(df[df["Zelle"] == "Erythroblast"]["Anzahl"].values[0]) if "Erythroblast" in df["Zelle"].values else 0,
-            "zell_auswertung": df.to_json(orient="records")  # <-- komplette Tabelle als JSON-String speichern!
-        }
-    )
-    st.success("Auswertung gespeichert!")
-    st.switch_page("pages/3_History.py")
+    if st.button("Zur History"):
+        DataManager().append_record(
+            session_state_key='data_df',
+            record_dict={
+                "praep_name": praep_name,
+                "timestamp": datetime.now(),
+                "total_count": total_count,
+                "erythroblast_count": int(df[df["Zelle"] == "Erythroblast"]["Anzahl"].values[0]) if "Erythroblast" in df["Zelle"].values else 0,
+            }
+        )
+        st.success("Auswertung gespeichert!")
+        st.switch_page("pages/3_History.py")
 
 else:
     st.info("Noch keine Zellen gezählt. Es sind keine Auswertungen verfügbar.")
