@@ -165,25 +165,22 @@ else:
 
     # --- Save Cellcount data ---
     if st.button("Jetzt Auswerten", key="auswertung_button"):
-        try:
-            # Erythroblast separat zählen (Button 13)
-            erythroblast_count = st.session_state["button_13_count"]
-            # Gesamtzähler OHNE Erythroblast (nur Buttons 1-12 und 14)
-            total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 15) if i != 13)
+        # Erythroblast separat zählen (Button 13)
+        erythroblast_count = st.session_state["button_13_count"]
+        # Gesamtzähler OHNE Erythroblast (nur Buttons 1-12 und 14)
+        total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 15) if i != 13)
 
-            # Speichere die Daten, Erythroblast separat
-            DataManager().append_record(
-                session_state_key='data_df',
-                record_dict={
-                    'selected_option': st.session_state["selected_option"],
-                    'praep_name': st.session_state["praep_name"],
-                    'total_count': total_count,
-                    'erythroblast_count': erythroblast_count,
-                    'timestamp': datetime.datetime.now() 
-                }
-            )
+        # Speichere die Daten, Erythroblast separat
+        DataManager().append_record(
+            session_state_key='data_df',
+            record_dict={
+                'selected_option': st.session_state["selected_option"],
+                'praep_name': st.session_state["praep_name"],
+                'total_count': total_count,
+                'erythroblast_count': erythroblast_count,
+                'timestamp': datetime.datetime.now() 
+            }
+        )
 
-            # Wechsel zur Auswertungsseite
-            st.switch_page("pages/2_Auswertung.py")  # Achte darauf, dass der Seitenname stimmt
-        except Exception as e:
-            st.error(f"Fehler beim Speichern der Daten: {e}")
+        # Wechsel zur Auswertungsseite
+        st.switch_page("pages/2_Auswertung.py")  # Achte darauf, dass der Seitenname stimmt
