@@ -3,12 +3,9 @@ from utils.login_manager import LoginManager
 LoginManager().go_to_login('Home.py') 
 # ====== End Login Block ======
 
-# ------------------------------------------------------------
-# Hier startet die eigentliche App
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-import json
 import os
 from fpdf import FPDF
 
@@ -25,17 +22,19 @@ else:
 if not os.path.exists(history_directory):
     os.makedirs(history_directory)
 
-# Liste aller gespeicherten Auswertungen (Dateinamen)
-files = [f for f in os.listdir(history_directory) if f.endswith(".json")]
+# Liste aller gespeicherten Auswertungen (Dateinamen) - jetzt CSV!
+files = [f for f in os.listdir(history_directory) if f.endswith(".csv")]
 
 # Erstelle eine Liste von Präparatnamen zusammen mit den zugehörigen Dateinamen
 file_info = []
 for file in files:
     file_path = os.path.join(history_directory, file)
-    with open(file_path, "r", encoding="utf-8") as f:
-        loaded_data = json.load(f)
-    praep_name = loaded_data.get('praep_name', 'Unbekannt')
-    file_info.append((praep_name, file))
+    try:
+        df = pd.read_csv(file_path)
+        praep_name = os.path.splitext(file)[0]  # Dateiname ohne .csv
+        file_info.append((praep_name, file))
+    except Exception as e:
+        st.warning(f"Fehler beim Laden von {file}: {e}")
 
 if file_info:
     selected_praep_name = st.selectbox(
@@ -46,17 +45,9 @@ if file_info:
 
     if selected_file:
         file_path = os.path.join(history_directory, selected_file)
-        with open(file_path, "r", encoding="utf-8") as f:
-            loaded_data = json.load(f)
+        df_loaded = pd.read_csv(file_path)
 
-        st.subheader(f"Präparat: {loaded_data.get('praep_name', 'Unbekannt')}")
-
-        # Umwandeln der Daten in ein DataFrame für die Tabelle
-        df_loaded = pd.DataFrame(loaded_data["data"])
-        
-        # Falls beim Speichern ein Index mitgespeichert wurde, setze ihn wieder
-        if "index" in df_loaded.columns:
-            df_loaded = df_loaded.set_index("index")
+        st.subheader(f"Präparat: {selected_praep_name}")
 
         # Gesamtzahl extrahieren und anzeigen
         total_count = None
@@ -105,7 +96,7 @@ if file_info:
             pdf = FPDF()
             pdf.add_page()
             pdf.set_font("Arial", "B", 16)
-            pdf.cell(200, 10, txt=f"Auswertung für {loaded_data['praep_name']}", ln=True, align="C")
+            pdf.cell(200, 10, txt=f"Auswertung für {selected_praep_name}", ln=True, align="C")
             pdf.ln(10)
             
             # Tabelle zum PDF hinzufügen
@@ -135,7 +126,7 @@ if file_info:
             st.download_button(
                 label="📄 PDF herunterladen",
                 data=pdf_output,
-                file_name=f"{loaded_data['praep_name']}_Auswertung.pdf",
+                file_name=f"{selected_praep_name}_Auswertung.pdf",
                 mime="application/pdf"
             )
 
