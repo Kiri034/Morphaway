@@ -143,15 +143,26 @@ if any(f"button_{i}_count" in st.session_state for i in range(1, 15)):
         st.switch_page("pages/3_History.py")
 
 else:
-    st.info("Noch keine Zellen gezählt. Es sind keine Auswertungen verfügbar.")
+    # Vor dem if-Block initialisieren
+    total_count = 0
+    df = pd.DataFrame()
 
-DataManager().append_record(
-    session_state_key='data_df',
-    record_dict={
-        "praep_name": praep_name,
-        "timestamp": datetime.now(),
-        "total_count": total_count,
-        "erythroblast_count": int(df[df["Zelle"] == "Erythroblast"]["Anzahl"].values[0]) if "Erythroblast" in df["Zelle"].values else 0,
+    # Prüfen, ob überhaupt gezählt wurde
+    if any(f"button_{i}_count" in st.session_state for i in range(1, 15)):
+        # ...deine Zähl- und DataFrame-Logik...
+        # total_count und df werden hier überschrieben
+        pass
+    else:
+        st.info("Noch keine Zellen gezählt. Es sind keine Auswertungen verfügbar.")
 
-    }
-)
+    # Nur speichern, wenn df nicht leer ist
+    if not df.empty:
+        DataManager().append_record(
+            session_state_key='data_df',
+            record_dict={
+                "praep_name": praep_name,
+                "timestamp": datetime.now(),
+                "total_count": total_count,
+                "erythroblast_count": int(df[df["Zelle"] == "Erythroblast"]["Anzahl"].values[0]) if "Erythroblast" in df["Zelle"].values else 0,
+            }
+        )
