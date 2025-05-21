@@ -8,23 +8,8 @@ LoginManager().go_to_login('Home.py')
 import streamlit as st
 import pandas as pd
 import datetime  # Für den Timestamp
+from utils.data_manager import DataManager
 
-# Beispiel einer angepassten DataManager Klasse
-class DataManager:
-    def __init__(self):
-        if "data_df" not in st.session_state:
-            st.session_state["data_df"] = pd.DataFrame(
-                columns=["selected_option", "praep_name", "total_count", "erythroblast_count", "timestamp"]
-            )
-
-    def append_record(self, session_state_key: str, record_dict: dict):
-        df = st.session_state.get(session_state_key)
-        if df is not None:
-            new_entry = pd.DataFrame([record_dict])
-            updated_df = pd.concat([df, new_entry], ignore_index=True)
-            st.session_state[session_state_key] = updated_df
-        else:
-            raise ValueError(f"Kein DataFrame gefunden für den Schlüssel: {session_state_key}")
 
 
 # Titel der Seite

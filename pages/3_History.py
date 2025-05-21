@@ -9,6 +9,9 @@ import os
 import json
 import pandas as pd
 
+from utils.data_manager import DataManager
+
+
 st.title("🔍 History")
 
 # Optional: Nutzername aus Session holen (falls vorhanden)
@@ -94,3 +97,11 @@ if file_info:
             st.stop()
 else:
     st.info("Es sind noch keine gespeicherten Auswertungen vorhanden.")
+
+# Lade die CSV-Daten aus SwitchDrive (optional, falls du die Tabelle unten anzeigen willst
+DataManager().load_user_data(
+    session_state_key='data_df',
+    file_name='data.csv',
+    initial_value=pd.DataFrame(),
+    parse_dates=['timestamp']
+)

@@ -13,6 +13,8 @@ import os
 import json
 from datetime import datetime
 
+from utils.data_manager import DataManager
+
 praep_name = st.session_state.get("praep_name", "Unbekanntes Präparat")
 st.title(f"Auswertung für {praep_name}")
 
@@ -137,3 +139,14 @@ if any(f"button_{i}_count" in st.session_state for i in range(1, 15)):
 
 else:
     st.info("Noch keine Zellen gezählt. Es sind keine Auswertungen verfügbar.")
+
+DataManager().append_record(
+    session_state_key='data_df',
+    record_dict={
+        "praep_name": praep_name,
+        "timestamp": datetime.now(),
+        "total_count": total_count,
+        "erythroblast_count": int(df[df["Zelle"] == "Erythroblast"]["Anzahl"].values[0]) if "Erythroblast" in df["Zelle"].values else 0,
+
+    }
+)
