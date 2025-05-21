@@ -44,7 +44,12 @@ if any(f"button_{i}_count" in st.session_state for i in range(1, 15)):
 
     # Daten für die Tabelle und das Diagramm vorbereiten
     data = []
-    total_count = sum(st.session_state.get(f"button_{i}_count", 0) for i in range(1, 15))
+    
+    erythroblast_index = 13  # 13. Zelle in der Liste (Index 13, da range(1,15))
+    total_count = sum(
+        st.session_state.get(f"button_{i}_count", 0)
+        for i in range(1, 15) if i != erythroblast_index
+    )
     for idx, cell in enumerate(images, start=1):
         count = st.session_state.get(f"button_{idx}_count", 0)
         relative_count = (count / total_count * 100) if total_count > 0 else 0

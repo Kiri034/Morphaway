@@ -72,23 +72,33 @@ if file_info:
         if total_count not in (None, "", " "):
             st.markdown(f"**Differenzierte Zellen gesamt:** {total_count}")
 
-        # "Total" und "Gesamt" aus der Anzeige entfernen
-        df_display = df_loaded[~df_loaded["Zelle"].isin(["Total", "Gesamt"])] if "Zelle" in df_loaded.columns else df_loaded
+    
+    # "Total" und "Gesamt" aus der Anzeige entfernen, aber Erythroblast bleibt sichtbar
+    df_display = df_loaded[~df_loaded["Zelle"].isin(["Total", "Gesamt"])] if "Zelle" in df_loaded.columns else df_loaded
 
-        st.dataframe(df_display)
+    # Relativer Anteil (%) neu berechnen, ohne Erythroblast in der 100%-Summe
+    if "Zelle" in df_display.columns and "Anzahl" in df_display.columns:
+        total_ohne_ery = df_display.loc[df_display["Zelle"] != "Erythroblast", "Anzahl"].sum()
+        df_display["Relativer Anteil (%)"] = df_display.apply(
+            lambda row: round(row["Anzahl"] / total_ohne_ery * 100, 2) if row["Zelle"] != "Erythroblast" and total_ohne_ery > 0 else 0,
+            axis=1
+        )
 
-        # Kreisdiagramm mit festen Farben anzeigen (ohne "Total"/"Gesamt")
-        import plotly.express as px
-        filtered_df = df_display[df_display["Anzahl"] > 0] if "Anzahl" in df_display.columns else df_display
-        if not filtered_df.empty:
-            fig = px.pie(
-                filtered_df,
-                names="Zelle",
-                values="Anzahl",
-                title="Verteilung der Zelltypen",
-                color_discrete_sequence=px.colors.qualitative.Set3
-            )
-            st.plotly_chart(fig)
+    st.dataframe(df_display)
+
+    # Kreisdiagramm: Erythroblast ausschließen
+    import plotly.express as px
+    filtered_df = df_display[(df_display["Anzahl"] > 0) & (df_display["Zelle"] != "Erythroblast")] if "Anzahl" in df_display.columns else df_display
+    if not filtered_df.empty:
+        fig = px.pie(
+            filtered_df,
+            names="Zelle",
+            values="Anzahl",
+            title="Verteilung der Zelltypen",
+            color_discrete_sequence=px.colors.qualitative.Set3
+        )
+        st.plotly_chart(fig)
+
 
         # Löschfunktion am Schluss (ohne Bestätigung)
         if st.button("❌ Auswertung löschen"):
