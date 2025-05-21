@@ -106,7 +106,7 @@ if "Zelle" in df_display.columns and "Anzahl" in df_display.columns:
 if st.button("❌ Auswertung löschen"):
     os.remove(file_path)
     st.success("Auswertung wurde gelöscht.")
-    st.experimental_rerun()
+    st.rerun()
 
 else:
     st.info("Es sind noch keine gespeicherten Auswertungen vorhanden.")
