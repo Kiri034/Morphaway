@@ -4,7 +4,7 @@ LoginManager().go_to_login('Home.py')
 # ====== End Login Block ======
 
 # ------------------------------------------------------------
-# Here starts the actual app, which was developed previously
+# Hier startet die eigentliche App
 import streamlit as st
 import pandas as pd
 import plotly.express as px
@@ -12,12 +12,15 @@ import json
 import os
 from fpdf import FPDF
 
+# SwitchDrive-Pfad zu deinem synchronisierten Morphy-Ordner
+switchdrive_path = os.path.expanduser("~/SwitchDrive/Morphy")
+
 # Optional: Nutzername aus Session holen (falls vorhanden)
 user = st.session_state.get("user")
 if user:
-    history_directory = os.path.join("history_exports", user)
+    history_directory = os.path.join(switchdrive_path, user)
 else:
-    history_directory = "history_exports"
+    history_directory = switchdrive_path
 
 if not os.path.exists(history_directory):
     os.makedirs(history_directory)
