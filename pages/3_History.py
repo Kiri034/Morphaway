@@ -2,6 +2,14 @@
 from utils.login_manager import LoginManager
 LoginManager().go_to_login('Home.py')  # Weiterleitung zur Login-Seite
 # ====== End Login Block ======
+import streamlit as st
+import os
+import json
+import pandas as pd
+from utils.data_manager import DataManager
+
+
+st.title("🔍 History")
 
 # Benutzerspezifisches Verzeichnis erstellen
 user = st.session_state["user"]
