@@ -67,12 +67,11 @@ else:
         if f"button_{i}_count" not in st.session_state:
             st.session_state[f"button_{i}_count"] = 0
 
-    # Rückgängig Button
     if st.button("🔙 Rückgängig", key="undo_button"):
-        for i in range(1, 15):
+        for i in range(14, 0, -1):  # Von 14 runter bis 1
             if st.session_state[f"button_{i}_count"] > 0:
                 st.session_state[f"button_{i}_count"] -= 1
-                break  # Wir machen nur einen Rückgängig-Schritt
+                break  # Nur einen Rückgängig-Schritt machen
             
     images = [
         {"path": "https://cdn.cellwiki.net/db/cells/page-28/gallery-55/003.jpg", "label": "Lymphozyt"},
