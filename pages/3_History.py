@@ -13,6 +13,7 @@ import os
 from fpdf import FPDF
 from utils.data_manager import DataManager
 
+st.title("🔍 History")
 # Optional: Nutzername aus Session holen (falls vorhanden)
 user = st.session_state.get("user")
 if user:
