@@ -1,21 +1,17 @@
-import streamlit as st
-import pandas as pd
-import plotly.express as px
-import json
-import os
-from fpdf import FPDF
+# ====== Start Login Block ======
+from utils.login_manager import LoginManager
+LoginManager().go_to_login('Home.py')  # Weiterleitung zur Login-Seite
+# ====== End Login Block ======
 
-# Optional: Nutzername aus Session holen (falls vorhanden)
-user = st.session_state.get("user")
-if user:
-    history_directory = os.path.join("history_exports", user)
-else:
-    history_directory = "history_exports"
+# Benutzerspezifisches Verzeichnis erstellen
+user = st.session_state["user"]
+history_directory = os.path.join("history_exports", user)
 
+# Stelle sicher, dass das Verzeichnis existiert
 if not os.path.exists(history_directory):
     os.makedirs(history_directory)
 
-# Liste aller gespeicherten Auswertungen (Dateinamen)
+# Liste der gespeicherten Auswertungen für den aktuellen Benutzer
 files = [f for f in os.listdir(history_directory) if f.endswith(".json")]
 
 # Erstelle eine Liste von Präparatnamen zusammen mit den zugehörigen Dateinamen
@@ -27,6 +23,7 @@ for file in files:
     praep_name = loaded_data.get('praep_name', 'Unbekannt')
     file_info.append((praep_name, file))
 
+# Falls gespeicherte Auswertungen vorhanden sind, zeige sie an
 if file_info:
     selected_praep_name = st.selectbox(
         "Wähle eine gespeicherte Auswertung",
