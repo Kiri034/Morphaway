@@ -17,11 +17,6 @@ if "user" not in st.session_state:
     if st.session_state.get("user"):
         # Benutzername wurde beim Login gesetzt, z.B. 'user123'
         pass
-    else:
-        # Benutzer nicht angemeldet
-        st.warning("Du musst dich anmelden, um fortzufahren.")
-        st.stop()  # Stoppe die Ausführung, falls der Benutzer nicht angemeldet ist
-
 # ------------------------------
 # Benutzerspezifisches Verzeichnis erstellen
 user = st.session_state["user"]
