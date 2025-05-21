@@ -5,80 +5,49 @@ LoginManager().go_to_login('Home.py')
 
 # ------------------------------------------------------------
 import streamlit as st
-import os
-import json
 import pandas as pd
-from utils.data_manager import DataManager
-
+import plotly.express as px
+import os
 
 st.title("🔍 History")
 
-# Optional: Nutzername aus Session holen (falls vorhanden)
-user = st.session_state.get("user")
-if user:
-    history_directory = os.path.join("history_exports", user)
-else:
-    history_directory = "history_exports"
+# Pfad zur zentralen CSV-Datei im SwitchDrive (bitte anpassen!)
+csv_path = r"X:\SwitchDrive\gemeinsamer_ordner\history.csv"  # <-- Passe diesen Pfad an!
 
-if not os.path.exists(history_directory):
-    os.makedirs(history_directory)
+zelltypen = [
+    "Lymphozyt", "reaktiver Lymphozyt", "Monozyt", "Eosinophile Gc*", "Basophile Gc*",
+    "Segmentkernige Gc*", "Stabkernige Gc*", "Blasten", "Promyelozyt", "Myelozyt",
+    "Metamyelozyt", "Plasmazelle", "Erythroblast", "smudged cells"
+]
 
-# Liste aller gespeicherten Auswertungen (Dateinamen)
-files = [f for f in os.listdir(history_directory) if f.endswith(".json")]
+if os.path.exists(csv_path):
+    df = pd.read_csv(csv_path)
+    if not df.empty:
+        # Dropdown für Auswahl einer Auswertung
+        auswahl = st.selectbox(
+            "Auswertung auswählen:",
+            df.apply(lambda row: f"{row['timestamp']} - {row['praep_name']}", axis=1)
+        )
+        idx = df.index[df.apply(lambda row: f"{row['timestamp']} - {row['praep_name']}", axis=1) == auswahl][0]
+        auswertung = df.loc[idx]
 
-# Erstelle eine Liste von Präparatnamen zusammen mit den zugehörigen Dateinamen
-file_info = []
-for file in files:
-    file_path = os.path.join(history_directory, file)
-    with open(file_path, "r", encoding="utf-8") as f:
-        loaded_data = json.load(f)
-    praep_name = loaded_data.get('praep_name', 'Unbekannt')
-    file_info.append((praep_name, file))
+        st.subheader(f"Präparat: {auswertung['praep_name']}")
+        st.caption(f"Zeitpunkt: {auswertung['timestamp']}")
 
-if file_info:
-    selected_praep_name = st.selectbox(
-        "Wähle eine gespeicherte Auswertung",
-        [item[0] for item in file_info]
-    )
-    selected_file = next(file for name, file in file_info if name == selected_praep_name)
+        # Tabelle der Zelltypen
+        daten = []
+        total = 0
+        for zelle in zelltypen:
+            anzahl = int(auswertung.get(zelle, 0))
+            daten.append({"Zelle": zelle, "Anzahl": anzahl})
+            total += anzahl
+        for d in daten:
+            d["Relativer Anteil (%)"] = round((d["Anzahl"] / total * 100) if total > 0 else 0, 2)
+        df_zellen = pd.DataFrame(daten)
+        st.dataframe(df_zellen)
 
-    if selected_file:
-        file_path = os.path.join(history_directory, selected_file)
-        with open(file_path, "r", encoding="utf-8") as f:
-            loaded_data = json.load(f)
-
-        st.subheader(f"Präparat: {loaded_data.get('praep_name', 'Unbekannt')}")
-
-        df_loaded = pd.DataFrame(loaded_data["data"])
-        # Falls beim Speichern ein Index mitgespeichert wurde, setze ihn wieder
-        if "index" in df_loaded.columns:
-            df_loaded = df_loaded.set_index("index")
-
-        # Gesamtzahl extrahieren und anzeigen, robust für verschiedene Formate
-        total_count = None
-        if "Total" in df_loaded.index or "Gesamt" in df_loaded.index:
-            idx = "Total" if "Total" in df_loaded.index else "Gesamt"
-            try:
-                total_count = int(float(df_loaded.loc[idx, "Anzahl"]))
-            except Exception:
-                total_count = df_loaded.loc[idx, "Anzahl"]
-        elif "Zelle" in df_loaded.columns and any(df_loaded["Zelle"].isin(["Total", "Gesamt"])):
-            row = df_loaded[df_loaded["Zelle"].isin(["Total", "Gesamt"])].iloc[0]
-            try:
-                total_count = int(float(row["Anzahl"]))
-            except Exception:
-                total_count = row["Anzahl"]
-        if total_count not in (None, "", " "):
-            st.markdown(f"**Differenzierte Zellen gesamt:** {total_count}")
-
-        # "Total" und "Gesamt" aus der Anzeige entfernen
-        df_display = df_loaded[~df_loaded["Zelle"].isin(["Total", "Gesamt"])] if "Zelle" in df_loaded.columns else df_loaded
-
-        st.dataframe(df_display)
-
-        # Kreisdiagramm mit festen Farben anzeigen (ohne "Total"/"Gesamt")
-        import plotly.express as px
-        filtered_df = df_display[df_display["Anzahl"] > 0] if "Anzahl" in df_display.columns else df_display
+        # Kreisdiagramm
+        filtered_df = df_zellen[(df_zellen["Anzahl"] > 0) & (df_zellen["Zelle"] != "Erythroblast")]
         if not filtered_df.empty:
             fig = px.pie(
                 filtered_df,
@@ -88,19 +57,14 @@ if file_info:
                 color_discrete_sequence=px.colors.qualitative.Set3
             )
             st.plotly_chart(fig)
+        else:
+            st.info("Keine Daten für das Kreisdiagramm verfügbar.")
 
-        # Löschfunktion am Schluss (ohne Bestätigung)
+        # Löschfunktion für einzelne Auswertung
         if st.button("❌ Auswertung löschen"):
-            os.remove(file_path)
+            df = df.drop(idx)
+            df.to_csv(csv_path, index=False)
             st.success("Auswertung wurde gelöscht. Bitte Seite neu laden.")
             st.stop()
-else:
-    st.info("Es sind noch keine gespeicherten Auswertungen vorhanden.")
-
-# Lade die CSV-Daten aus SwitchDrive (optional, falls du die Tabelle unten anzeigen willst
-DataManager().load_user_data(
-    session_state_key='data_df',
-    file_name='data.csv',
-    initial_value=pd.DataFrame(),
-    parse_dates=['timestamp']
-)
+    else:
+        st.info("Noch keine Auswertungen vorhanden.")
