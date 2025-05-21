@@ -21,11 +21,6 @@ DataManager().load_user_data(
 df = st.session_state.get("data_df", pd.DataFrame())
 
 if not df.empty:
-    # Optional: Nur eigene Daten anzeigen, falls du User-Spalte hast
-    # user = st.session_state.get("user")
-    # if "user" in df.columns and user:
-    #     df = df[df["user"] == user]
-
     # Auswahlbox für Präparatnamen
     praep_names = df["praep_name"].unique()
     selected_praep = st.selectbox("Wähle ein Präparat", praep_names)
