@@ -76,13 +76,15 @@ if file_info:
     # "Total" und "Gesamt" aus der Anzeige entfernen, aber Erythroblast bleibt sichtbar
     df_display = df_loaded[~df_loaded["Zelle"].isin(["Total", "Gesamt"])] if "Zelle" in df_loaded.columns else df_loaded
 
-    # Relativer Anteil (%) neu berechnen, ohne Erythroblast in der 100%-Summe
-    if "Zelle" in df_display.columns and "Anzahl" in df_display.columns:
-        total_ohne_ery = df_display.loc[df_display["Zelle"] != "Erythroblast", "Anzahl"].sum()
-        df_display["Relativer Anteil (%)"] = df_display.apply(
-            lambda row: round(row["Anzahl"] / total_ohne_ery * 100, 2) if row["Zelle"] != "Erythroblast" and total_ohne_ery > 0 else 0,
-            axis=1
-        )
+    
+# Relativer Anteil (%) wie in Auswertung.py: immer auf Basis total_ohne_ery, auch für Erythroblast
+if "Zelle" in df_display.columns and "Anzahl" in df_display.columns:
+    total_ohne_ery = df_display.loc[df_display["Zelle"] != "Erythroblast", "Anzahl"].sum()
+    df_display["Relativer Anteil (%)"] = df_display.apply(
+        lambda row: round(row["Anzahl"] / total_ohne_ery * 100, 2) if total_ohne_ery > 0 else 0,
+        axis=1
+    )
+
 
     st.dataframe(df_display)
 
