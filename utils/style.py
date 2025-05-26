@@ -1,8 +1,6 @@
 # filepath: utils/style.py
-import streamlit as st
-
-
-def set_background_color(color="#FFD6DA", sidebar_color="#FFE4EC", image_path="assets/erythro.png"):
+def set_background_color(color="#FFD6DA", sidebar_color="#FFE4EC", image_path="/utils/static/erythro.png"):
+    import streamlit as st
     st.markdown(
         f"""
         <style>
@@ -17,5 +15,5 @@ def set_background_color(color="#FFD6DA", sidebar_color="#FFE4EC", image_path="a
         }}
         </style>
         """,
-        unsafe_allow_html=True 
+        unsafe_allow_html=True
     )
