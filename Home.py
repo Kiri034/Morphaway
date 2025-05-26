@@ -39,7 +39,7 @@ st.markdown(
     """
     <style>
     .stApp {
-        background: linear-gradient(to bottom, #8B0000 0%, #FFB6B6 100%);
+        background-color: #FFB6B6;
     }
     .stButton>button {
         background-color: #1976d2;
