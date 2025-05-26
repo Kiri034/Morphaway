@@ -10,11 +10,7 @@ def set_background_color(color="#FFD6DA", sidebar_color="#FFE4EC"):
         .stApp {{
             background-color: {color};
         }}
-         section[data-testid="stSidebar"] {{
-            background-color: {sidebar_color};
-        }}
         </style>
         """,
         unsafe_allow_html=True 
     )
-
