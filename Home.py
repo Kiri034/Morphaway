@@ -3,6 +3,9 @@ import pandas as pd
 from utils.data_manager import DataManager
 from utils.login_manager import LoginManager
 
+from utils.style import set_background_color
+set_background_color("#FFD6DA")
+
 # ====== Start Init Block ======
 # This needs to copied on top of the entry point of the app (Start.py)
 
@@ -35,24 +38,3 @@ st.write("Drücke auf den unteren Knopf, um mit der Differenzierung zu starten o
 # Button zur Navigation zu Morphaway.py
 if st.button("Jetzt differenzieren"):
     st.switch_page("pages/1_Morphaway.py")
-st.markdown(
-    """
-    <style>
-    .stApp {
-        background-color: #FFB6B6;
-    }
-    .stButton>button {
-        background-color: #1976d2;
-        color: white;
-        border-radius: 8px;
-        padding: 0.5em 1.5em;
-        font-weight: bold;
-    }
-    .stButton>button:hover {
-        background-color: #1565c0;
-        color: #fff;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)

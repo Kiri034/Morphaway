@@ -14,6 +14,8 @@ import json
 from datetime import datetime
 
 from utils.data_manager import DataManager
+from utils.style import set_background_color
+set_background_color("#FFD6DA")
 
 praep_name = st.session_state.get("praep_name", "Unbekanntes Präparat")
 st.title(f"Auswertung für {praep_name}")

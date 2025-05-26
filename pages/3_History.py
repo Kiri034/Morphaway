@@ -12,6 +12,8 @@ import json
 import os
 from fpdf import FPDF
 from utils.data_manager import DataManager
+from utils.style import set_background_color
+set_background_color("#FFD6DA")
 
 st.title("🔍 History")
 # Optional: Nutzername aus Session holen (falls vorhanden)

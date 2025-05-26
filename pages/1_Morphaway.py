@@ -10,7 +10,8 @@ import pandas as pd
 import datetime  # Für den Timestamp
 from utils.data_manager import DataManager
 
-
+from utils.style import set_background_color
+set_background_color("#FFD6DA")
 
 # Titel der Seite
 st.title("Cell Counter")
