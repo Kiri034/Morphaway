@@ -11,7 +11,7 @@ import datetime  # Für den Timestamp
 from utils.data_manager import DataManager
 
 from utils.style import set_background_color
-set_background_color("#FFD6DA", "#FFE4EC", "/utils/static/erythro.png")  # Hauptbereich und Seitenleiste Hintergrundfarbe setzen
+set_background_color("#FFD6DA", "#FFE4EC", "/static/erythro.png")  # Hauptbereich und Seitenleiste Hintergrundfarbe setzen
 
 # Titel der Seite
 st.title("Cell Counter")
