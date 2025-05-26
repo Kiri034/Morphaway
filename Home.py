@@ -4,7 +4,7 @@ from utils.data_manager import DataManager
 from utils.login_manager import LoginManager
 
 from utils.style import set_background_color
-set_background_color("#FFD6DA", "#FFE4EC")  # Hauptbereich und Seitenleiste Hintergrundfarbe setzen
+set_background_color("#FFD6DA", "#FFE4EC", "assets/erythro.png")
 
 # ====== Start Init Block ======
 # This needs to copied on top of the entry point of the app (Start.py)

@@ -1,14 +1,19 @@
 # filepath: utils/style.py
 import streamlit as st
 
-def set_background_color(color="#FFD6DA", sidebar_color="#FFE4EC"):
-    import streamlit as st
-    # Set the background color for the main app area
+
+def set_background_color(color="#FFD6DA", sidebar_color="#FFE4EC", image_path="assets/erythro.png"):
     st.markdown(
         f"""
         <style>
         .stApp {{
             background-color: {color};
+            background-image: url('{image_path}');
+            background-repeat: repeat;
+            background-size: 60px;  /* Bildgröße, z.B. 60px x 60px */
+        }}
+        section[data-testid="stSidebar"] {{
+            background-color: {sidebar_color};
         }}
         </style>
         """,
