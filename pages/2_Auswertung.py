@@ -15,7 +15,7 @@ from datetime import datetime
 
 from utils.data_manager import DataManager
 from utils.style import set_background_color
-set_background_color("#FFD6DA")
+set_background_color("#FFD6DA", "#FFE4EC")  # Hauptbereich und Seitenleiste Hintergrundfarbe setzen
 
 praep_name = st.session_state.get("praep_name", "Unbekanntes Präparat")
 st.title(f"Auswertung für {praep_name}")
