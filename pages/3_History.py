@@ -16,7 +16,8 @@ from utils.style import set_background_color
 set_background_color("#d3bad8", "#dfbce7")  # Hauptbereich und Seitenleiste Hintergrundfarbe setzen
 
 # Logo
-st.logo("https://github.com/Kiri034/Morphaway/blob/6c3dd1f0f8c1077711fa16b0206ee4268ad1c48f/Bilder/logo.png")
+st.image("https://raw.githubusercontent.com/Kiri034/Morphaway/bd399c4a2b974d03fc9117a45bd700e447c0a61b/Bilder/Logo.png", width=320) 
+
 
 st.title("🔍 History")
 # Optional: Nutzername aus Session holen (falls vorhanden)

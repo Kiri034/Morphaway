@@ -17,6 +17,10 @@ from utils.data_manager import DataManager
 from utils.style import set_background_color
 set_background_color("#d3bad8", "#dfbce7")  # Hauptbereich und Seitenleiste Hintergrundfarbe setzen
 
+# Logo
+st.image("https://raw.githubusercontent.com/Kiri034/Morphaway/bd399c4a2b974d03fc9117a45bd700e447c0a61b/Bilder/Logo.png", width=320) 
+
+
 praep_name = st.session_state.get("praep_name", "Unbekanntes Präparat")
 st.title(f"📄Auswertung für {praep_name}")
 
