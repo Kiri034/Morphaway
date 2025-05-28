@@ -54,15 +54,20 @@ else:
     )
     st.session_state["selected_option"] = selected
 
+    # Initialisiere Button-Zähler falls noch nicht vorhanden
     for i in range(1, 15):
         if f"button_{i}_count" not in st.session_state:
             st.session_state[f"button_{i}_count"] = 0
+
+    # Gesamtzähler direkt nach Auswahlmöglichkeit anzeigen
+    total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 15) if i != 13)
+    st.markdown(f"### Gesamtzähler: *{total_count}*")
 
     if st.button("🔙", key="undo_button"):
         for i in range(14, 0, -1):
             if st.session_state[f"button_{i}_count"] > 0:
                 st.session_state[f"button_{i}_count"] -= 1
-                break
+                st.rerun()
 
     images = [
         {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/Lymphozyt.png", "label": "Lymphozyt"},
@@ -93,14 +98,13 @@ else:
                 st.rerun()
 
     erythroblast_count = st.session_state["button_13_count"]
-    total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 15) if i != 13)
 
     st.markdown(f"### Gesamtzahl: *{total_count}*")
     st.markdown(f"### Erythroblasten: *{erythroblast_count}*")
 
     max_cells = int(st.session_state["selected_option"].split()[0])
 
-    # Sticky-Note für Zielwarnung
+   # Sticky-Note für Zielwarnung
     st.markdown(
         """
         <style>
@@ -128,30 +132,6 @@ else:
             </div>
             """, unsafe_allow_html=True
         )
-
-    # Sticky-Note für Gesamtzähler, angepasst an Hintergrund (leicht lila, kein Rahmen)
-    st.markdown(
-        """
-        <style>
-        .sticky-counter {{
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            z-index: 9999;
-            padding: 5px 12px;
-            font-weight: bold;
-            font-size: 18px;
-            color: #6a4c93;  /* dunkles Lila */
-            background-color: #fbeaff;  /* helles Lila, wie Hintergrund */
-            border-radius: 8px;
-            box-shadow: 0 0 6px rgba(106, 76, 147, 0.15);
-        }}
-        </style>
-        <div class="sticky-counter">
-            Gesamtzähler: <span style="font-size:24px;">{total_count}</span>
-        </div>
-        """.format(total_count=total_count), unsafe_allow_html=True
-    )
 
     if st.button("⟳", key="refresh_button"):
         reset_all()
