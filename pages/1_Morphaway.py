@@ -75,19 +75,19 @@ else:
 
     images = [
         {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/lymph_round.png", "label": "Lymphozyt"},
-        {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/reaktlymph.png", "label": "reaktiver Lymphozyt"},
-        {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/mono_round.png", "label": "Monozyt"},
-        {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/eos_round.png", "label": "Eosinophile Gc*"},
-        {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/baso_round.png", "label": "Basophile Gc*"},
-        {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/seg_round.png", "label": "Segmentkernige Gc*"},
-        {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/band_round.png", "label": "Stabkernige Gc*"},
-        {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/blast_round.png", "label": "Blasten"},
-        {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/promyelo_round.png", "label": "Promyelozyt"},
-        {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/myelo_round.png", "label": "Myelozyt"},
-        {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/metamyelo_round.png", "label": "Metamyelozyt"},
-        {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/plasma_round.png", "label": "Plasmazelle"},
-        {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/smudged_round.png", "label": "smudged cells"},
-        {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/erythro_round.png", "label": "Erythroblast"}
+        {"path": "Bilder/reaktlymph.png", "label": "reaktiver Lymphozyt"},
+        {"path": "Bilder/mono_round.png", "label": "Monozyt"},
+        {"path": "Bilder/eos_round.png", "label": "Eosinophile Gc*"},
+        {"path": "Bilder/baso_round.png", "label": "Basophile Gc*"},
+        {"path": "Bilder/seg_round.png", "label": "Segmentkernige Gc*"},
+        {"path": "Bilder/band_round.png", "label": "Stabkernige Gc*"},
+        {"path": "Bilder/blast_round.png", "label": "Blasten"},
+        {"path": "Bilder/promyelo_round.png", "label": "Promyelozyt"},
+        {"path": "Bilder/myelo_round.png", "label": "Myelozyt"},
+        {"path": "Bilder/metamyelo_round.png", "label": "Metamyelozyt"},
+        {"path": "Bilder/plasma_round.png", "label": "Plasmazelle"},
+        {"path": "Bilder/smudged_round.png", "label": "smudged cells"},
+        {"path": "Bilder/erythro_round.png", "label": "Erythroblast"}
     ]
 
     cols = st.columns(4)
