@@ -13,6 +13,7 @@ from utils.style import set_background_color
 set_background_color("#fbeaff", "#fae2ff", "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/ec_background_purple_20.png")
 
 st.title("🔬 Beurteilung der Zellen")
+st.markdown("Beurteile das Blutbild und fahre fort, sobald du mit der Beurteilung fertig bist.")
 
 # Beispiel-Fotopfad-Liste (ersetze durch deine eigenen Bildpfade)
 images_beurteilung = [
@@ -41,6 +42,3 @@ for idx, images_beurteilung in enumerate(images_beurteilung):
     if "ratings" not in st.session_state:
         st.session_state["ratings"] = {}
     st.session_state["ratings"][images_beurteilung["caption"]] = rating
-
-    st.write(f"Deine Bewertung: {rating}")
-    st.markdown("---")
