@@ -75,19 +75,19 @@ else:
 
     images = [
         {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/lymph_round.png", "label": "Lymphozyt"},
-        {"path": "Bilder/reaktlymph.png", "label": "reaktiver Lymphozyt"},
-        {"path": "Bilder/mono_round.png", "label": "Monozyt"},
-        {"path": "Bilder/eos_round.png", "label": "Eosinophile Gc*"},
-        {"path": "Bilder/baso_round.png", "label": "Basophile Gc*"},
-        {"path": "Bilder/seg_round.png", "label": "Segmentkernige Gc*"},
-        {"path": "Bilder/band_round.png", "label": "Stabkernige Gc*"},
-        {"path": "Bilder/blast_round.png", "label": "Blasten"},
-        {"path": "Bilder/promyelo_round.png", "label": "Promyelozyt"},
-        {"path": "Bilder/myelo_round.png", "label": "Myelozyt"},
-        {"path": "Bilder/metamyelo_round.png", "label": "Metamyelozyt"},
-        {"path": "Bilder/plasma_round.png", "label": "Plasmazelle"},
-        {"path": "Bilder/smudged_round.png", "label": "smudged cells"},
-        {"path": "Bilder/erythro_round.png", "label": "Erythroblast"}
+        {"path": "https://cdn.cellwiki.net/db/aberrations/page-73/gallery-181/008.jpg", "label": "reaktiver Lymphozyt"},
+        {"path": "https://cdn.cellwiki.net/db/cells/page-32/gallery-63/002.jpg", "label": "Monozyt"},
+        {"path": "https://cdn.cellwiki.net/db/cells/page-21/gallery-30/011.jpg", "label": "Eosinophile Gc*"},
+        {"path": "https://cdn.cellwiki.net/db/cells/page-17/gallery-17/006.jpg", "label": "Basophile Gc*"},
+        {"path": "https://cdn.cellwiki.net/db/cells/page-26/gallery-45/003.jpg", "label": "Segmentkernige Gc*"},
+        {"path": "https://cdn.cellwiki.net/db/cells/page-25/gallery-44/003.jpg", "label": "Stabkernige Gc*"},
+        {"path": "https://cdn.cellwiki.net/db/cells/page-340/gallery-1537/004.jpg", "label": "Blasten"},
+        {"path": "https://cdn.cellwiki.net/db/cells/page-22/gallery-41/002.jpg", "label": "Promyelozyt"},
+        {"path": "https://cdn.cellwiki.net/db/cells/page-23/gallery-42/001.jpg", "label": "Myelozyt"},
+        {"path": "https://cdn.cellwiki.net/db/cells/page-24/gallery-43/002.jpg", "label": "Metamyelozyt"},
+        {"path": "https://cdn.cellwiki.net/db/cells/page-30/gallery-57/001.jpg", "label": "Plasmazelle"},
+        {"path": "https://cdn.cellwiki.net/db/pathology/page-372/gallery-1739/030.jpg", "label": "smudged cells"},
+        {"path": "https://cdn.cellwiki.net/db/cells/page-36/gallery-75/004.jpg", "label": "Erythroblast"}
     ]
 
     cols = st.columns(4)
