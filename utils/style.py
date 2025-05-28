@@ -1,5 +1,6 @@
 # filepath: utils/style.py
-def set_background_color(color="#FFD6DA", sidebar_color="#FFE4EC", image_path="/static/erythro.png"):
+
+def set_background_color(color="#fbeaff", sidebar_color="#fae2ff", image_path="https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/ec_background_purple_50.png"):
     import streamlit as st
     st.markdown(
         f"""
