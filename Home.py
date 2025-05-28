@@ -9,7 +9,7 @@ from utils.style import set_background_color
 set_background_color(
     main_color="#fbeaff",
     sidebar_color="#fae2ff",
-    background_image="/static/erythro.png",
+    background_image="https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/ec_background_purple_50.png",
     image_position="right" 
 )
 
