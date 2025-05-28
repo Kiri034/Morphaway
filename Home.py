@@ -4,7 +4,14 @@ from utils.data_manager import DataManager
 from utils.login_manager import LoginManager
 
 from utils.style import set_background_color
-set_background_color("#fbeaff", "#fae2ff", "/static/erythro.png")
+
+# Setze einen Hintergrund und ein Bild nur auf die rechte Seite
+set_background_color(
+    main_color="#fbeaff",
+    sidebar_color="#fae2ff",
+    background_image="/static/erythro.png",
+    image_position="right" 
+)
 
 # ====== Start Init Block ======
 # This needs to copied on top of the entry point of the app (Start.py)
