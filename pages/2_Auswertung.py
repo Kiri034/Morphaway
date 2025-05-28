@@ -61,7 +61,7 @@ if any(f"button_{i}_count" in st.session_state for i in range(1, 15)):
 
     # Tabelle anzeigen
     st.subheader("Tabelle der Ergebnisse")
-    st.dataframe(df)
+    st.dataframe(df.style.hide(axis="index"), use_container_width=True) # erste Spalte ausblenden
 
     # Kreisdiagramm erstellen (nur Zellen mit Anzahl > 0 und ohne Erythroblast)
     filtered_df = df[(df["Anzahl"] > 0) & (df["Zelle"] != "Erythroblast")]
