@@ -55,13 +55,18 @@ if any(f"button_{i}_count" in st.session_state for i in range(1, 15)):
     for idx, cell in enumerate(images, start=1):
         count = st.session_state.get(f"button_{idx}_count", 0)
         relative_count = (count / total_count * 100) if total_count > 0 else 0
-        data.append({"Zelle": cell["label"], "Anzahl": count, "Relativer Anteil (%)": round(relative_count, 2)})
+        # Runde hier auf 2 Nachkommastellen und speichere als float
+        data.append({
+            "Zelle": cell["label"],
+            "Anzahl": count,
+            "Relativer Anteil (%)": float(f"{relative_count:.2f}")
+        })
 
     df = pd.DataFrame(data)
 
     # Tabelle anzeigen
     st.subheader("Tabelle der Ergebnisse")
-    st.dataframe(df.style.hide(axis="index"), use_container_width=True) # erste Spalte ausblenden
+    st.dataframe(df.style.format({"Relativer Anteil (%)": "{:.2f}"}).hide(axis="index"), use_container_width=True)
 
     # Kreisdiagramm erstellen (nur Zellen mit Anzahl > 0 und ohne Erythroblast)
     filtered_df = df[(df["Anzahl"] > 0) & (df["Zelle"] != "Erythroblast")]
