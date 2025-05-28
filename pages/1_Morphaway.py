@@ -94,9 +94,9 @@ else:
     ]
 
     # Buttons, Bilder und Labels gemeinsam anzeigen (nur eine Schleife!)
-    cols = st.columns(4)  # 4 Spalten pro Reihe
+    cols = st.columns(5)  # 5 Spalten pro Reihe
     for idx, image in enumerate(images):
-        col = cols[idx % 4]
+        col = cols[idx % 5]
         with col:
             if st.button("", key=f"button_{idx + 1}"):
                 st.session_state[f"button_{idx + 1}_count"] += 1
@@ -153,14 +153,4 @@ else:
         # Wechsel zur Auswertungsseite
         st.switch_page("pages/2_Auswertung.py")
 
-
-# Zähler im Session State initialisieren
-if "lymphozyt_count" not in st.session_state:
-    st.session_state["lymphozyt_count"] = 0
-
-# Button für Lymphozyt
-if st.button(f"Lymphozyt +1 (Anzahl: {st.session_state['lymphozyt_count']})"):
-    st.session_state["lymphozyt_count"] += 1
-
-# Optional: Aktuelle Anzahl anzeigen
-st.write(f"Aktuelle Anzahl Lymphozyten: {st.session_state['lymphozyt_count']}")
+# --- CSS für Sticky Alert ---
