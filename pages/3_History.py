@@ -15,6 +15,9 @@ from utils.data_manager import DataManager
 from utils.style import set_background_color
 set_background_color("#FFD6DA", "#FFE4EC")  # Hauptbereich und Seitenleiste Hintergrundfarbe setzen
 
+# Logo
+st.logo("https://github.com/Kiri034/Morphaway/blob/6c3dd1f0f8c1077711fa16b0206ee4268ad1c48f/Bilder/logo.png")
+
 st.title("🔍 History")
 # Optional: Nutzername aus Session holen (falls vorhanden)
 user = st.session_state.get("user")
