@@ -81,7 +81,7 @@ else:
         {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/baso_round.png", "label": "Basophile Gc*"},
         {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/seg_round.png", "label": "Segmentkernige Gc*"},
         {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/band_round.png", "label": "Stabkernige Gc*"},
-        {"path": "https://cdn.cellwiki.net/db/cells/page-340/gallery-1537/004.jpg", "label": "Blasten"},
+        {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/blast_round.png", "label": "Blasten"},
         {"path": "https://cdn.cellwiki.net/db/cells/page-22/gallery-41/002.jpg", "label": "Promyelozyt"},
         {"path": "https://cdn.cellwiki.net/db/cells/page-23/gallery-42/001.jpg", "label": "Myelozyt"},
         {"path": "https://cdn.cellwiki.net/db/cells/page-24/gallery-43/002.jpg", "label": "Metamyelozyt"},
