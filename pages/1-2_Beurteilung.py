@@ -16,9 +16,7 @@ st.title("🔬 Beurteilung der Zellen")
 
 # Beispiel-Fotopfad-Liste (ersetze durch deine eigenen Bildpfade)
 images_beurteilung = [
-    {"path": "images/photo1.jpg", "caption": "Foto 1"},
-    {"path": "images/photo2.jpg", "caption": "Foto 2"},
-    {"path": "images/photo3.jpg", "caption": "Foto 3"},
+    {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/baso_tuepfelung.jpg", "caption": "Basophile Tüpfelung"}
 ]
 
 for idx, images_beurteilung in enumerate(images_beurteilung):
