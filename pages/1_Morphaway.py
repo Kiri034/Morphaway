@@ -14,7 +14,7 @@ from utils.style import set_background_color
 set_background_color("#FFD6DA", "#FFE4EC", "/static/erythro.png")  # Hauptbereich und Seitenleiste Hintergrundfarbe setzen
 
 # Titel der Seite
-st.title("Morphaway")
+st.title("🔬 Morphaway")
 
 # Funktion zum Zurücksetzen des Total Count und der Session-Variablen
 def reset_all():
@@ -68,7 +68,7 @@ else:
         if f"button_{i}_count" not in st.session_state:
             st.session_state[f"button_{i}_count"] = 0
 
-    if st.button("🔙 Rückgängig", key="undo_button"):
+    if st.button("🔙", key="undo_button"):
         for i in range(14, 0, -1):  # Von 14 runter bis 1
             if st.session_state[f"button_{i}_count"] > 0:
                 st.session_state[f"button_{i}_count"] -= 1
@@ -124,7 +124,7 @@ else:
         )
 
     # Reset-Button nach den Bild-Buttons
-    if st.button("Refresh", key="refresh_button"):
+    if st.button("⟳", key="refresh_button"):
         reset_all()
 
     # --- Save Cellcount data ---
@@ -147,4 +147,4 @@ else:
         )
 
         # Wechsel zur Auswertungsseite
-        st.switch_page("pages/2_Auswertung.py")  # Achte darauf, dass der Seitenname stimmt
+        st.switch_page("pages/2_Auswertung.py")
