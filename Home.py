@@ -6,11 +6,19 @@ from utils.login_manager import LoginManager
 from utils.style import set_background_color
 
 # Setze einen Hintergrund und ein Bild nur auf die rechte Seite
-set_background_color(
-    main_color="#fbeaff",
-    sidebar_color="#fae2ff",
-    background_image="https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/ec_background_purple_50.png",
-    image_position="right" 
+st.markdown(
+    """
+    <style>
+    .stApp {
+        background: linear-gradient(to left, #fbeaff 60%, #fae2ff 100%);
+        background-image: url('https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/ec_background_purple_50.png');
+        background-repeat: no-repeat;
+        background-position: right center;
+        background-size: 40% auto;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
 )
 
 # ====== Start Init Block ======
