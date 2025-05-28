@@ -94,14 +94,14 @@ else:
     ]
 
     # Buttons, Bilder und Labels gemeinsam anzeigen (nur eine Schleife!)
-    cols = st.columns(4)  # 4 Spalten pro Reihe
+    cols = st.columns(3)  # 3 Spalten pro Reihe
     for idx, image in enumerate(images):
-        col = cols[idx % 4]
+        col = cols[idx % 3]
         with col:
+            st.image(image["path"], use_container_width=True)
             btn_label = f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}"
             if st.button(btn_label, key=f"button_{idx + 1}"):
                 st.session_state[f"button_{idx + 1}_count"] += 1
-            st.image(image["path"], use_container_width=True)
 
     # Erythroblast separat zählen (Button 13)
     erythroblast_count = st.session_state["button_13_count"]
