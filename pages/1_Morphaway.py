@@ -152,5 +152,3 @@ else:
 
         # Wechsel zur Auswertungsseite
         st.switch_page("pages/2_Auswertung.py")
-
-# --- CSS für Sticky Alert ---
