@@ -98,8 +98,6 @@ else:
                 st.rerun()
 
     erythroblast_count = st.session_state["button_13_count"]
-
-    st.markdown(f"### Gesamtzahl: *{total_count}*")
     st.markdown(f"### Erythroblasten: *{erythroblast_count}*")
 
     max_cells = int(st.session_state["selected_option"].split()[0])
