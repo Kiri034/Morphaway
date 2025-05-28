@@ -96,14 +96,9 @@ else:
         col = cols[idx % 3]
         with col:
             st.image(image["path"], use_container_width=True)
-            btn_label = f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}"
-            st.markdown(
-                f"<div style='display: flex; justify-content: center;'>"
-                f"<button style='font-size:0.9em;width:100%' disabled>{btn_label}</button>"
-                f"</div>",
-                unsafe_allow_html=True
-            )
-            if st.button("", key=f"button_{idx + 1}", help=btn_label):
+            # Button mittig unter dem Bild, kleinerer Text durch font_size-Parameter nicht möglich, aber kurzer Text
+            btn_label = f"{image['label']} ({st.session_state[f'button_{idx + 1}_count']})"
+            if st.button(btn_label, key=f"button_{idx + 1}"):
                 st.session_state[f"button_{idx + 1}_count"] += 1
                 st.rerun()
 
