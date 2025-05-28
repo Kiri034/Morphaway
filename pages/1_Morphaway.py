@@ -41,7 +41,7 @@ if "praep_name" not in st.session_state or not st.session_state["praep_name"]:
         if submitted:
             if praep_name_input and praep_name_input not in existing_names:
                 st.session_state["praep_name"] = praep_name_input
-                st.rerun()
+                st.experimental_rerun()
             else:
                 st.warning("Es existiert bereits ein Präparat mit diesem Namen oder der Name ist ungültig.")
 else:
@@ -94,7 +94,7 @@ else:
 
     if clicked_button_index:
         st.session_state[f"button_{clicked_button_index}_count"] += 1
-        st.rerun()
+        st.experimental_rerun()
 
     erythroblast_count = st.session_state["button_13_count"]
     total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 15) if i != 13)
@@ -104,10 +104,10 @@ else:
 
     max_cells = int(st.session_state["selected_option"].split()[0])
 
-    # Sticky-Note
+    # Sticky-Note für Zielwarnung
     st.markdown(
-            """
-            <style>
+        """
+        <style>
         .sticky-alert {
             position: fixed;
             top: 80px;
@@ -120,9 +120,9 @@ else:
             border-radius: 5px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
-            </style>
-            """, unsafe_allow_html=True
-        )
+        </style>
+        """, unsafe_allow_html=True
+    )
 
     if total_count >= max_cells:
         st.markdown(
@@ -132,6 +132,30 @@ else:
             </div>
             """, unsafe_allow_html=True
         )
+
+    # Sticky-Note für Gesamtzähler, angepasst an Hintergrund (leicht lila, kein Rahmen)
+    st.markdown(
+        """
+        <style>
+        .sticky-counter {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 9999;
+            padding: 5px 12px;
+            font-weight: bold;
+            font-size: 18px;
+            color: #6a4c93;  /* dunkles Lila */
+            background-color: #fbeaff;  /* helles Lila, wie Hintergrund */
+            border-radius: 8px;
+            box-shadow: 0 0 6px rgba(106, 76, 147, 0.15);
+        }
+        </style>
+        <div class="sticky-counter">
+            Gesamtzähler: <span style="font-size:24px;">{total_count}</span>
+        </div>
+        """.format(total_count=total_count), unsafe_allow_html=True
+    )
 
     if st.button("⟳", key="refresh_button"):
         reset_all()
@@ -147,4 +171,5 @@ else:
                 'timestamp': datetime.datetime.now()
             }
         )
-        st.switch_page("pages/2_Auswertung.py")
+        st.experimental_set_query_params()  # Falls du irgendwelche Query Params zurücksetzen willst
+        st.experimental_rerun()  # Oder st.switch_page("pages/2_Auswertung.py") wenn du das nutzt
