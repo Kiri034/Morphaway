@@ -10,7 +10,7 @@ def set_background_color(color="#fbeaff", sidebar_color="#fae2ff", image_path="h
             background-image: url('{image_path}');
             background-repeat: no-repeat;
             background-position: right;
-            background-size: 60px;  /* Bildgröße, z.B. 60px x 60px */
+            background-size: cover;
         }}
         section[data-testid="stSidebar"] {{
             background-color: {sidebar_color};
