@@ -94,7 +94,7 @@ else:
 
     if clicked_button_index:
         st.session_state[f"button_{clicked_button_index}_count"] += 1
-        st.experimental_rerun()
+        st.rerun()
 
     erythroblast_count = st.session_state["button_13_count"]
     total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 15) if i != 13)
