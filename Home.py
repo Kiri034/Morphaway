@@ -28,7 +28,7 @@ data_manager.load_user_data(
 # ------------------------------------------------------------
 # Here starts the actual app, which was developed previously
 
-st.image("https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/Logo.png", width=120) 
+st.image("https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/Logo.png", width=360) 
 
 st.title("🏠Home")
 st.write("Willkommen bei Morphaway! Morphaway ist eine einfache und übersichtliche Variante, um ein Blutbild auszuzählen. ")
