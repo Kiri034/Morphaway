@@ -82,7 +82,6 @@ else:
     ]
 
     cols = st.columns(4)
-    clicked_button_index = None  # Merken, welcher gedrückt wurde
 
     for idx, image in enumerate(images):
         col = cols[idx % 4]
@@ -90,11 +89,8 @@ else:
             st.image(image["path"], use_container_width=True)
             btn_label = f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}"
             if st.button(btn_label, key=f"button_{idx + 1}"):
-                clicked_button_index = idx + 1
-
-    if clicked_button_index:
-        st.session_state[f"button_{clicked_button_index}_count"] += 1
-        st.rerun()
+                st.session_state[f"button_{idx + 1}_count"] += 1
+                st.rerun()
 
     erythroblast_count = st.session_state["button_13_count"]
     total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 15) if i != 13)
@@ -137,7 +133,7 @@ else:
     st.markdown(
         """
         <style>
-        .sticky-counter {
+        .sticky-counter {{
             position: fixed;
             top: 10px;
             right: 10px;
@@ -149,7 +145,7 @@ else:
             background-color: #fbeaff;  /* helles Lila, wie Hintergrund */
             border-radius: 8px;
             box-shadow: 0 0 6px rgba(106, 76, 147, 0.15);
-        }
+        }}
         </style>
         <div class="sticky-counter">
             Gesamtzähler: <span style="font-size:24px;">{total_count}</span>
@@ -159,6 +155,7 @@ else:
 
     if st.button("⟳", key="refresh_button"):
         reset_all()
+        st.rerun()
 
     if st.button("Jetzt Auswerten", key="auswertung_button"):
         DataManager().append_record(
@@ -171,5 +168,4 @@ else:
                 'timestamp': datetime.datetime.now()
             }
         )
-        st.experimental_set_query_params()  # Falls du irgendwelche Query Params zurücksetzen willst
-        st.experimental_rerun()  # Oder st.switch_page("pages/2_Auswertung.py") wenn du das nutzt
+        st.switch_page("pages/2_Auswertung.py")
