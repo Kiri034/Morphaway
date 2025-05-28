@@ -16,7 +16,9 @@ st.title("🔬 Beurteilung der Zellen")
 
 # Beispiel-Fotopfad-Liste (ersetze durch deine eigenen Bildpfade)
 images_beurteilung = [
-    {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/baso_tuepfelung.jpg", "caption": "Basophile Tüpfelung"}
+    {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/baso_tuepfelung.jpg", "caption": "Basophile Tüpfelung"},
+    {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/howell-jolly.jpg", "caption": "Howell-Jolly-Körperchen"},
+    {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/polychromasie.jpg", "caption": "Polychromasie"}
 ]
 
 cols = st.columns(4)
@@ -32,5 +34,10 @@ for idx, images_beurteilung in enumerate(images_beurteilung):
         step=1,
         key=f"rating_{idx}"
     )
+
+    if "ratings" not in st.session_state:
+        st.session_state["ratings"] = {}
+    st.session_state["ratings"][images_beurteilung["caption"]] = rating
+
     st.write(f"Deine Bewertung: {rating}")
     st.markdown("---")
