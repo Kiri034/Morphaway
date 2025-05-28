@@ -76,7 +76,7 @@ else:
     images = [
         {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/lymph_round.png", "label": "Lymphozyt"},
         {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/reaktlymph.png", "label": "reaktiver Lymphozyt"},
-        {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/reaktlymph.png", "label": "Monozyt"},
+        {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/mono_round.png", "label": "Monozyt"},
         {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/eos_round.png", "label": "Eosinophile Gc*"},
         {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/baso_round.png", "label": "Basophile Gc*"},
         {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/seg_round.png", "label": "Segmentkernige Gc*"},
