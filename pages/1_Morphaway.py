@@ -90,25 +90,22 @@ else:
         {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/erythro_round.png", "label": "Erythroblast"}
     ]
 
-    # ...existing code...
-
     cols = st.columns(3)
 
     for idx, image in enumerate(images):
         col = cols[idx % 3]
         with col:
             st.image(image["path"], use_container_width=True)
-            # Button mittig unter dem Bild mit kleinerem Text
-            btn_label = f"<span style='font-size:0.9em'>{image['label']} - {st.session_state[f'button_{idx + 1}_count']}</span>"
+            btn_label = f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}"
             st.markdown(
                 f"<div style='display: flex; justify-content: center;'>"
-                f"{st.button('', key=f'button_{idx + 1}', help=f'{image['label']} - {st.session_state[f'button_{idx + 1}_count']}') and st.session_state.__setitem__(f'button_{idx + 1}_count', st.session_state[f'button_{idx + 1}_count'] + 1) and st.rerun() or ''}"
-                f"<button disabled style='border:none;background:none;padding:0;margin:0;pointer-events:none'>{btn_label}</button>"
+                f"<button style='font-size:0.9em;width:100%' disabled>{btn_label}</button>"
                 f"</div>",
                 unsafe_allow_html=True
             )
-
-# ...existing code...
+            if st.button("", key=f"button_{idx + 1}", help=btn_label):
+                st.session_state[f"button_{idx + 1}_count"] += 1
+                st.rerun()
 
     max_cells = int(st.session_state["selected_option"].split()[0])
 
