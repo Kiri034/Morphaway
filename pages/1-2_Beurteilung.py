@@ -1,3 +1,8 @@
+# ====== Start Login Block ======
+from utils.login_manager import LoginManager
+LoginManager().go_to_login('Home.py') 
+# ====== End Login Block ======
+
 import streamlit as st
 import pandas as pd
 import datetime
@@ -9,15 +14,12 @@ set_background_color("#fbeaff", "#fae2ff", "https://raw.githubusercontent.com/Ki
 
 st.title("🔬 Beurteilung der Zellen")
 
-
 # Beispiel-Fotopfad-Liste (ersetze durch deine eigenen Bildpfade)
 images_beurteilung = [
     {"path": "images/photo1.jpg", "caption": "Foto 1"},
     {"path": "images/photo2.jpg", "caption": "Foto 2"},
     {"path": "images/photo3.jpg", "caption": "Foto 3"},
 ]
-
-st.title("Beurteilung der Zellen")
 
 for idx, images_beurteilung in enumerate(images_beurteilung):
     st.image(images_beurteilung["path"], caption=images_beurteilung["caption"], use_container_width=True)
