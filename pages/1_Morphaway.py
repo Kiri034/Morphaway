@@ -3,7 +3,6 @@ from utils.login_manager import LoginManager
 LoginManager().go_to_login('Home.py') 
 # ====== End Login Block ======
 
-# -------------------------------------------------------------
 import streamlit as st
 import pandas as pd
 import datetime
@@ -33,10 +32,8 @@ if "data_df" not in st.session_state or st.session_state["data_df"].empty:
 if "praep_name" not in st.session_state or not st.session_state["praep_name"]:
     st.info("Der Präparatname darf nur einmal verwendet werden. Wenn du denselben Namen nochmal brauchst, hänge eine Nummer an, z.B. 'Blutbild 2'.")
 
-    # Vorhandene Namen prüfen
     existing_names = set(st.session_state["data_df"]["praep_name"]) if "praep_name" in st.session_state["data_df"].columns else set()
 
-    # Form für sauberes UI-Verhalten
     with st.form("praep_form"):
         praep_name_input = st.text_input("Gib einen Namen für das Präparat ein:")
         submitted = st.form_submit_button("Differenzieren")
@@ -48,7 +45,6 @@ if "praep_name" not in st.session_state or not st.session_state["praep_name"]:
             else:
                 st.warning("Es existiert bereits ein Präparat mit diesem Namen oder der Name ist ungültig.")
 else:
-    # Schritt 2: Zellzählung durchführen
     st.markdown(f"### Präparat: *{st.session_state['praep_name']}*")
 
     selected = st.radio(
@@ -86,13 +82,19 @@ else:
     ]
 
     cols = st.columns(4)
+    clicked_button_index = None  # Merken, welcher gedrückt wurde
+
     for idx, image in enumerate(images):
         col = cols[idx % 4]
         with col:
             st.image(image["path"], use_container_width=True)
             btn_label = f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}"
             if st.button(btn_label, key=f"button_{idx + 1}"):
-                st.session_state[f"button_{idx + 1}_count"] += 1
+                clicked_button_index = idx + 1
+
+    if clicked_button_index:
+        st.session_state[f"button_{clicked_button_index}_count"] += 1
+        st.rerun()
 
     erythroblast_count = st.session_state["button_13_count"]
     total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 15) if i != 13)
@@ -102,27 +104,26 @@ else:
 
     max_cells = int(st.session_state["selected_option"].split()[0])
 
+    # Sticky-Note
     st.markdown(
             """
             <style>
-            .sticky-alert {
-                position: fixed;
-                top: 80px;
-                right: 10px;
-                width: 300px;
-                z-index: 9999;
-                background-color: #fff3cd;
-                color: #b30000; /* ROTER Text */
-                padding: 15px;
-                border: 1px solid #ffeeba;
-                border-radius: 5px;
-                box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            }
+        .sticky-alert {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            width: 300px;
+            z-index: 9999;
+            background-color: #fff3cd;
+            padding: 15px;
+            border: 1px solid #ffeeba;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
             </style>
             """, unsafe_allow_html=True
         )
 
-    # Sticky Warnbox anzeigen, wenn Ziel erreicht/überschritten
     if total_count >= max_cells:
         st.markdown(
             f"""
