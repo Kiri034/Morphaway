@@ -4,7 +4,7 @@ from utils.data_manager import DataManager
 from utils.login_manager import LoginManager
 
 from utils.style import set_background_color
-set_background_color("#e7caec", "#e2c0ea", "/static/erythro.png")
+set_background_color("#eacdf0", "#d7b8df", "/static/erythro.png")
 
 # ====== Start Init Block ======
 # This needs to copied on top of the entry point of the app (Start.py)
