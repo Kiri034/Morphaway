@@ -87,7 +87,7 @@ else:
         {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/metamyelo_round.png", "label": "Metamyelozyt"},
         {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/plasma_round.png", "label": "Plasmazelle"},
         {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/smudged_round.png", "label": "smudged cells"},
-        {"path": "https://cdn.cellwiki.net/db/cells/page-36/gallery-75/004.jpg", "label": "Erythroblast"}
+        {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/erythro_round.png", "label": "Erythroblast"}
     ]
 
     cols = st.columns(4)
