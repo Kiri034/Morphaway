@@ -8,7 +8,8 @@ def set_background_color(color="#fbeaff", sidebar_color="#fae2ff", image_path="h
         .stApp {{
             background-color: {color};
             background-image: url('{image_path}');
-            background-repeat: repeat;
+            background-repeat: no-repeat;
+            background-position: right;
             background-size: 60px;  /* Bildgröße, z.B. 60px x 60px */
         }}
         section[data-testid="stSidebar"] {{
