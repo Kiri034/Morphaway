@@ -90,10 +90,10 @@ else:
         {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/erythro_round.png", "label": "Erythroblast"}
     ]
 
-    cols = st.columns(4)
+    cols = st.columns(3)
 
     for idx, image in enumerate(images):
-        col = cols[idx % 4]
+        col = cols[idx % 3]
         with col:
             st.image(image["path"], use_container_width=True)
             btn_label = f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}"
