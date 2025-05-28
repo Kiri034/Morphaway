@@ -65,7 +65,6 @@ else:
 
 
     st.markdown(f"### Gesamtzahl: *{total_count}*")
-    st.markdown(f"### Erythroblasten: *{erythroblast_count}*")
 
     # Button zum Zurücksetzen der Zähler
     if st.button("🔙", key="undo_button"):
