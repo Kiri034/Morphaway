@@ -76,7 +76,7 @@ else:
     images = [
         {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/lymph_round.png", "label": "Lymphozyt"},
         {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/reaktlymph.png", "label": "reaktiver Lymphozyt"},
-        {"path": "https://cdn.cellwiki.net/db/cells/page-32/gallery-63/002.jpg", "label": "Monozyt"},
+        {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/reaktlymph.png", "label": "Monozyt"},
         {"path": "https://cdn.cellwiki.net/db/cells/page-21/gallery-30/011.jpg", "label": "Eosinophile Gc*"},
         {"path": "https://cdn.cellwiki.net/db/cells/page-17/gallery-17/006.jpg", "label": "Basophile Gc*"},
         {"path": "https://cdn.cellwiki.net/db/cells/page-26/gallery-45/003.jpg", "label": "Segmentkernige Gc*"},
