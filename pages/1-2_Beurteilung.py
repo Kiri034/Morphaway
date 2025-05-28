@@ -29,6 +29,8 @@ for idx, images_beurteilung in enumerate(images_beurteilung):
     with col:
         st.image(images_beurteilung["path"], caption=images_beurteilung["caption"], use_container_width=True)
         rating = st.slider(
+        f"Bewerte die Zelle: {images_beurteilung['caption']}",
+        label_visibility="collapsed",   # Versteckt die Beschriftung des Sliders
         min_value=0,
         max_value=3,
         value=0,
