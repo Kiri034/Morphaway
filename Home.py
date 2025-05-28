@@ -4,7 +4,7 @@ from utils.data_manager import DataManager
 from utils.login_manager import LoginManager
 
 from utils.style import set_background_color
-set_background_color("#FFD6DA", "#FFE4EC", "/static/erythro.png")
+set_background_color("#d3bad8", "#dfbce7", "/static/erythro.png")
 
 # ====== Start Init Block ======
 # This needs to copied on top of the entry point of the app (Start.py)
@@ -30,7 +30,6 @@ data_manager.load_user_data(
 
 st.image("https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/Logo.png", width=360) 
 
-st.title("🏠Home")
 st.write("Willkommen bei Morphaway! Morphaway ist eine einfache und übersichtliche Variante, um ein Blutbild auszuzählen. ")
 st.write("Durch eine individuelle Auswahl der Differenzier-Möglichkeiten ist unsere App sehr nutzerfreundlich aufgebaut und kann so in verschiedene Situationen angewendet werden. Egal, ob du dein:e Dozent:in mit einer schnellen 50er-Leukozytendifferenzierung beeindrucken möchtest, 100 Leukozyten für eine genauere Bestimmung brauchst oder ganze 200 Leukozyten zur Labordiagnostik differenzieren möchtest - Morphaway bietet dir die Unterstützung.")
 st.write('Die Werte der ausgezählten Zellen findest du prozentual sowie grafisch dargestellt unter "History". Durch dein Nutzerlogin kannst du sie jederzeit als PDF-Datei herunterladen.')
