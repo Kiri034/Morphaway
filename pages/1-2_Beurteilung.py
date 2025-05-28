@@ -29,7 +29,6 @@ for idx, images_beurteilung in enumerate(images_beurteilung):
     with col:
         st.image(images_beurteilung["path"], caption=images_beurteilung["caption"], use_container_width=True)
         rating = st.slider(
-        f"Bewertung für {images_beurteilung['caption']}:",
         min_value=0,
         max_value=3,
         value=0,
