@@ -108,6 +108,8 @@ else:
     # Gesamtzähler OHNE Erythroblast (alle außer Button 13)
     total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 15) if i != 13)
 
+
+
     # Anzeige des Gesamtzählers
     st.markdown(f"### Gesamtzahl: *{total_count}*")
     st.markdown(f"### Erythroblasten: *{erythroblast_count}*")
@@ -150,3 +152,15 @@ else:
 
         # Wechsel zur Auswertungsseite
         st.switch_page("pages/2_Auswertung.py")
+
+
+# Zähler im Session State initialisieren
+if "lymphozyt_count" not in st.session_state:
+    st.session_state["lymphozyt_count"] = 0
+
+# Button für Lymphozyt
+if st.button(f"Lymphozyt +1 (Anzahl: {st.session_state['lymphozyt_count']})"):
+    st.session_state["lymphozyt_count"] += 1
+
+# Optional: Aktuelle Anzahl anzeigen
+st.write(f"Aktuelle Anzahl Lymphozyten: {st.session_state['lymphozyt_count']}")
