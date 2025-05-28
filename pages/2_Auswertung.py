@@ -17,7 +17,8 @@ from utils.data_manager import DataManager
 from utils.style import set_background_color
 
 # Setze einen Hintergrund und ein Bild nur auf die rechte Seite
-set_background_color("#fbeaff", "#fae2ff", "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/ec_background_purple_50.png")  # Hauptbereich und Seitenleiste Hintergrundfarbe setzen
+set_background_color("#fbeaff", "#fae2ff", "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/ec_background_purple_20.png")  # Hauptbereich und Seitenleiste Hintergrundfarbe setzen
+
 # Logo
 st.image("https://raw.githubusercontent.com/Kiri034/Morphaway/bd399c4a2b974d03fc9117a45bd700e447c0a61b/Bilder/Logo.png", width=320) 
 
