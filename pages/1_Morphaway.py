@@ -100,21 +100,7 @@ else:
         with col:
             st.image(image["path"], use_container_width=True)
             btn_label = f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}"
-            # Button zentrieren
-            st.markdown(
-                f"""
-                <div style="display: flex; justify-content: center;">
-                    <form action="" method="post">
-                        <button type="submit" name="button_{idx + 1}" style="width: 100%; padding: 0.5em 0; font-size: 1em;">
-                            {btn_label}
-                        </button>
-                    </form>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
-            # Streamlit Button für Funktionalität (unsichtbar)
-            if st.button("", key=f"button_{idx + 1}"):
+            if st.button(btn_label, key=f"button_{idx + 1}"):
                 st.session_state[f"button_{idx + 1}_count"] += 1
 
     # Erythroblast separat zählen (Button 13)
