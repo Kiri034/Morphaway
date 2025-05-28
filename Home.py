@@ -28,6 +28,21 @@ data_manager.load_user_data(
 # ------------------------------------------------------------
 # Here starts the actual app, which was developed previously
 
+# Menü-Button im Hauptbereich
+if st.button("☰ Menü öffnen", key="open_sidebar"):
+    st.session_state["show_sidebar"] = True
+
+# Sidebar-Inhalt nur anzeigen, wenn gewünscht
+if st.session_state.get("show_sidebar", False):
+    with st.sidebar:
+        st.header("Menü")
+        st.write("Hier ist deine Sidebar!")  # Hier ggf. Navigation/Links einbauen
+        if st.button("Schließen", key="close_sidebar"):
+            st.session_state["show_sidebar"] = False
+else:
+    # Optional: Sidebar leer lassen
+    with st.sidebar:
+        st.empty()
 
 st.title("Home")
 st.write("Willkommen bei Morphaway! Morphaway ist eine einfache und übersichtliche Variante, um ein Blutbild auszuzählen. ")
@@ -38,3 +53,5 @@ st.write("Drücke auf den unteren Knopf, um mit der Differenzierung zu starten o
 # Button zur Navigation zu Morphaway.py
 if st.button("Jetzt differenzieren"):
     st.switch_page("pages/1_Morphaway.py")
+
+
