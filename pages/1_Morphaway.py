@@ -14,7 +14,7 @@ from utils.style import set_background_color
 set_background_color("#FFD6DA", "#FFE4EC", "/static/erythro.png")  # Hauptbereich und Seitenleiste Hintergrundfarbe setzen
 
 # Titel der Seite
-st.title("Cell Counter")
+st.title("Morphaway")
 
 # Funktion zum Zurücksetzen des Total Count und der Session-Variablen
 def reset_all():
@@ -47,7 +47,7 @@ if not st.session_state["praep_name"]:
         existing_names = set()
         st.warning("Es existiert bereits ein Präparat mit diesem Namen. Bitte wähle einen anderen Namen oder hänge eine Nummer an.")
 
-    if st.button("Diffrenzieren", key="confirm_praep_name") and praep_name and praep_name not in existing_names:
+    if st.button("Differenzieren", key="confirm_praep_name") and praep_name and praep_name not in existing_names:
         st.session_state["praep_name"] = praep_name
 # Counter-Logik
 else:
