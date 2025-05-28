@@ -44,7 +44,7 @@ if "praep_name" not in st.session_state or not st.session_state["praep_name"]:
         if submitted:
             if praep_name_input and praep_name_input not in existing_names:
                 st.session_state["praep_name"] = praep_name_input
-                st.experimental_rerun()
+                st.rerun()
             else:
                 st.warning("Es existiert bereits ein Präparat mit diesem Namen oder der Name ist ungültig.")
 else:
