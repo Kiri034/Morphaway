@@ -19,7 +19,10 @@ images_beurteilung = [
     {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/baso_tuepfelung.jpg", "caption": "Basophile Tüpfelung"}
 ]
 
+cols = st.columns(4)
+
 for idx, images_beurteilung in enumerate(images_beurteilung):
+    col = cols[idx % 4]
     st.image(images_beurteilung["path"], caption=images_beurteilung["caption"], use_container_width=True)
     rating = st.slider(
         f"Bewertung für {images_beurteilung['caption']}:",
