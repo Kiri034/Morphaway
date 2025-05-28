@@ -79,7 +79,7 @@ if file_info:
         
         # Zeige die Tabelle an
         st.subheader("Tabelle der Ergebnisse")
-        st.dataframe(df_loaded.style.hide(axis="index"), use_container_width=True)
+        st.dataframe(df_loaded)
 
         # Kreisdiagramm erstellen
         st.subheader("Kreisdiagramm der Ergebnisse")
