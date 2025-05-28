@@ -3,7 +3,7 @@ from utils.login_manager import LoginManager
 LoginManager().go_to_login('Home.py') 
 # ====== End Login Block ======
 
-# ------------------------------------------------------------
+# -------------------------------------------------------------
 # Here starts the actual app, which was developed previously
 import streamlit as st
 import pandas as pd

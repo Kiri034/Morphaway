@@ -8,7 +8,7 @@ from utils.style import set_background_color
 # Setze einen Hintergrund und ein Bild nur auf die rechte Seite
 set_background_color("#fbeaff", "#fae2ff", "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/ec_background_purple_50_fullright.png")  # Hauptbereich und Seitenleiste Hintergrundfarbe setzen
 
-# ====== Start Init Block ======
+# ====== Start Init Block =======
 # This needs to copied on top of the entry point of the app (Start.py)
 
 # initialize the data manager
