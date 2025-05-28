@@ -94,9 +94,9 @@ else:
     ]
 
     # Buttons, Bilder und Labels gemeinsam anzeigen (nur eine Schleife!)
-    cols = st.columns(3)  # 3 Spalten pro Reihe
+    cols = st.columns(4)  # 4 Spalten pro Reihe
     for idx, image in enumerate(images):
-        col = cols[idx % 3]
+        col = cols[idx % 4]
         with col:
             st.image(image["path"], use_container_width=True)
             btn_label = f"{image['label']} - {st.session_state[f'button_{idx + 1}_count']}"
