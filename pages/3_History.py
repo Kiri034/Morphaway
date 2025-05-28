@@ -109,29 +109,29 @@ if file_info:
     if st.button("📄 Exportiere als PDF"):
         pdf = FPDF()
         pdf.add_page()
-        pdf.set_font("Arial", "B", 16)
-        pdf.cell(0, 10, f"Auswertung für {loaded_data['praep_name']}", ln=True, align="C")
-        pdf.ln(10)
+        pdf.set_font("Arial", "B", 15)
+        pdf.cell(0, 12, f"Auswertung für {loaded_data['praep_name']}", ln=True, align="C")
+        pdf.ln(8)
 
-        pdf.set_font("Arial", "B", 12)
-        pdf.cell(40, 10, "Zelle", 1, 0, "C")
-        pdf.cell(40, 10, "Anzahl", 1, 0, "C")
-        pdf.cell(40, 10, "Relativer Anteil (%)", 1, 1, "C")
+        pdf.set_font("Arial", "B", 11)
+        pdf.cell(38, 9, "Zelle", 1, 0, "C")
+        pdf.cell(22, 9, "Anzahl", 1, 0, "C")
+        pdf.cell(36, 9, "Relativer Anteil (%)", 1, 1, "C")
 
-        pdf.set_font("Arial", "", 12)
+        pdf.set_font("Arial", "", 10)
         for _, row in df_loaded.iterrows():
-            pdf.cell(40, 10, str(row["Zelle"]), 1, 0, "C")
-            pdf.cell(40, 10, str(row["Anzahl"]), 1, 0, "C")
-            pdf.cell(40, 10, str(row["Relativer Anteil (%)"]), 1, 1, "C")
+            pdf.cell(38, 9, str(row["Zelle"]), 1, 0, "C")
+            pdf.cell(22, 9, str(row["Anzahl"]), 1, 0, "C")
+            pdf.cell(36, 9, str(row["Relativer Anteil (%)"]), 1, 1, "C")
 
         # Kreisdiagramm als Bild einfügen (temporär speichern)
         img_path = "temp_chart.png"
         if not filtered_df.empty:
             fig.write_image(img_path)
-            pdf.ln(10)
+            pdf.ln(7)
             pdf.set_font("Arial", "B", 12)
-            pdf.cell(0, 10, "Kreisdiagramm:", ln=True)
-            pdf.image(img_path, x=30, w=150)
+            pdf.cell(0, 9, "Kreisdiagramm:", ln=True)
+            pdf.image(img_path, x=30, w=120)
             os.remove(img_path)
 
         pdf_bytes = pdf.output(dest="S").encode("latin1")
