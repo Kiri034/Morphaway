@@ -26,8 +26,8 @@ if user and not df.empty:
     df_user = df[df["user"] == user]
     if not df_user.empty:
         st.subheader("Tabelle der gespeicherten Auswertungen")
-        st.dataframe(df_user.style.hide(axis="index"), use_container_width=True)
-
+        st.dataframe(df_user[["praep_name", "timestamp", "total_count", "erythroblast_count"]], use_container_width=True)
+        
         # Auswahl einer Auswertung per Präparatname
         praep_names = df_user["praep_name"].unique()
         selected_praep = st.selectbox("Wähle ein Präparat für Details & PDF:", praep_names)
