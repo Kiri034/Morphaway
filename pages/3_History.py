@@ -22,20 +22,6 @@ st.image("https://raw.githubusercontent.com/Kiri034/Morphaway/bd399c4a2b974d03fc
 st.title("🔍 History")
 
 user = st.session_state.get("user")
-df = st.session_state.get("data_df", pd.DataFrame())
-
-if user and not df.empty:
-    df_user = df[df["user"] == user]
-    if not df_user.empty:
-        st.dataframe(df_user)
-    else:
-        st.info("Keine gespeicherten Auswertungen für diesen Benutzer.")
-else:
-    st.info("Keine gespeicherten Auswertungen vorhanden.")
-
-
-# Verzeichnis für gespeicherte Auswertungen
-history_directory = "history_exports"
 if user:
     history_directory = os.path.join("history_exports", user)
 else:
