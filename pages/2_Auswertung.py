@@ -50,8 +50,9 @@ if counted:
         {"label": "Myelozyt"},
         {"label": "Metamyelozyt"},
         {"label": "Plasmazelle"},
+        {"label": "Kernschatten"},
         {"label": "Erythroblast"},
-        {"label": "smudged cells"},
+        
     ]
 
     erythroblast_index = 13
