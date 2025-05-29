@@ -77,10 +77,10 @@ if counted:
     df = pd.DataFrame(data)
 
     st.subheader("Tabelle der Ergebnisse")
-    
+
     # Erythroblast-Zeile ausblenden
     df_ohne_ery = df[df["Zelle"] != "Erythroblast"]
-    st.dataframe(df_ohne_ery)
+    st.dataframe(df_ohne_ery, hide_index=True, use_container_width=True)
 
     st.markdown(f"**Erythroblasten / 100 Leukozyten:** {eryblast_per_100}")
 
