@@ -144,6 +144,8 @@ else:
     df = pd.DataFrame()
     total_count = 0
 
+user = st.session_state.get("user")
+
 if not df.empty:
     DataManager().append_record(
         session_state_key=f'data_df_{user}' if user else 'data_df',
