@@ -47,6 +47,7 @@ for file in files:
     timestamp = loaded_data.get('timestamp', '')
     file_info.append((f"{praep_name} ({timestamp})", file))
 
+
 if file_info:
     selected_label = st.selectbox(
         "Wähle eine gespeicherte Auswertung",
@@ -66,30 +67,25 @@ if file_info:
     if "index" in df_loaded.columns:
         df_loaded = df_loaded.set_index("index")
 
-    # Gesamtanzahl ermitteln und anzeigen
-    total_count = None
-    if "Total" in df_loaded.index or "Gesamt" in df_loaded.index:
-        idx = "Total" if "Total" in df_loaded.index else "Gesamt"
-        try:
-            total_count = int(float(df_loaded.loc[idx, "Anzahl"]))
-        except Exception:
-            total_count = df_loaded.loc[idx, "Anzahl"]
-    elif "Zelle" in df_loaded.columns and any(df_loaded["Zelle"].isin(["Total", "Gesamt"])):
-        row = df_loaded[df_loaded["Zelle"].isin(["Total", "Gesamt"])].iloc[0]
-        try:
-            total_count = int(float(row["Anzahl"]))
-        except Exception:
-            total_count = row["Anzahl"]
+    # Erythroblasten pro 100 Leukozyten berechnen
+    if "Erythroblast" in df_loaded["Zelle"].values:
+        erythro_row = df_loaded[df_loaded["Zelle"] == "Erythroblast"].iloc[0]
+        erythro_count = erythro_row["Anzahl"]
+        total_wo_ery = df_loaded[df_loaded["Zelle"] != "Erythroblast"]["Anzahl"].sum()
+        eryblast_per_100 = round(erythro_count / total_wo_ery * 100, 2) if total_wo_ery > 0 else 0.0
+    else:
+        eryblast_per_100 = 0.0
 
-    if total_count not in (None, "", " "):
-        st.markdown(f"**Differenzierte Zellen gesamt:** {total_count}")
-
-    # Tabelle anzeigen
+    # Tabelle anzeigen (ohne Erythroblast)
     st.subheader("Tabelle der Ergebnisse")
-    st.dataframe(df_loaded)
+    df_ohne_ery = df_loaded[df_loaded["Zelle"] != "Erythroblast"]
+    st.dataframe(df_ohne_ery, hide_index=True, use_container_width=True)
+
+    # Erythroblasten pro 100 Leukozyten anzeigen
+    st.markdown(f"**Erythroblasten / 100 Leukozyten:** {eryblast_per_100}")
 
     # Kreisdiagramm (Zellen mit Anzahl > 0, ohne Erythroblast)
-    filtered_df = df_loaded[(df_loaded["Anzahl"] > 0) & (df_loaded["Zelle"] != "Erythroblast")]
+    filtered_df = df_ohne_ery[df_ohne_ery["Anzahl"] > 0]
 
     if not filtered_df.empty:
         st.subheader("Kreisdiagramm der Ergebnisse")
@@ -124,10 +120,14 @@ if file_info:
         pdf.cell(36, 9, "Relativer Anteil (%)", 1, 1, "C")
 
         pdf.set_font("Arial", "", 10)
-        for _, row in df_loaded.iterrows():
+        for _, row in df_ohne_ery.iterrows():
             pdf.cell(38, 9, str(row["Zelle"]), 1, 0, "C")
             pdf.cell(22, 9, str(row["Anzahl"]), 1, 0, "C")
             pdf.cell(36, 9, str(row["Relativer Anteil (%)"]), 1, 1, "C")
+
+        pdf.ln(7)
+        pdf.set_font("Arial", "B", 12)
+        pdf.cell(0, 9, f"Erythroblasten / 100 Leukozyten: {eryblast_per_100}", ln=True)
 
         # Kreisdiagramm als Bild einfügen (temporär speichern)
         img_path = "temp_chart.png"
@@ -149,13 +149,3 @@ if file_info:
 
 else:
     st.info("Es sind noch keine gespeicherten Auswertungen vorhanden.")
-
-    # Daten aus DataManager laden, falls vorhanden
-    DataManager().load_user_data(
-        user='username',
-        data_directory='data',
-        session_state_key='data_df',
-        file_name='data.csv',
-        initial_value=pd.DataFrame(),
-        parse_dates=['timestamp']
-    )
