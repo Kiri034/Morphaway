@@ -158,4 +158,3 @@ if not df.empty:
             "erythroblast_count": int(df[df["Zelle"] == "Erythroblast"]["Anzahl"].values[0]) if "Erythroblast" in df["Zelle"].values else 0,
         }
     )
-    DataManager().save_all_data() # Speichere die Daten in der CSV-Datei
