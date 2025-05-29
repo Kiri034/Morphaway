@@ -6,7 +6,7 @@ from utils.login_manager import LoginManager
 from utils.style import set_background_color
 
 # Setze einen Hintergrund und ein Bild nur auf die rechte Seite
-set_background_color("#fbeaff", "#fae2ff", "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/ec_background_purple_50_home.png")  # Hauptbereich und Seitenleiste Hintergrundfarbe setzen
+set_background_color("#fbeaff", "#fae2ff", "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/ec_background_purple_20.png")  # Hauptbereich und Seitenleiste Hintergrundfarbe setzen
 
 # ====== Start Init Block =======
 # This needs to copied on top of the entry point of the app (Start.py)
