@@ -148,9 +148,9 @@ user = st.session_state.get("user")
 
 if not df.empty:
     DataManager().append_record(
-        session_state_key=f'data_df_{user}' if user else 'data_df',
+        session_state_key='data_df',  # immer gleich, nicht user-spezifisch!
         record_dict={
-            "user": user,
+            "user": user if user else "Unbekannt",
             "praep_name": praep_name,
             "timestamp": datetime.now(),
             "total_count": total_count,
