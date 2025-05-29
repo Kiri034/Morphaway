@@ -28,6 +28,13 @@ data_manager.load_user_data(
 
 # ====== End Init Block ======
 
+# Zeige den aktuell eingeloggten Nutzer an
+current_user = st.session_state.get("user")
+if current_user:
+    st.info(f"👤 Eingeloggt als: **{current_user}**")
+else:
+    st.warning("Kein Nutzer eingeloggt.")
+
 # ------------------------------------------------------------
 # Here starts the actual app, which was developed previously
 
