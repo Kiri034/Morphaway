@@ -35,6 +35,7 @@ else:
 
 
 # Verzeichnis für gespeicherte Auswertungen
+history_directory = "history_exports"
 if user:
     history_directory = os.path.join("history_exports", user)
 else:
