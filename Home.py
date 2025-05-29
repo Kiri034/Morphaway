@@ -31,8 +31,14 @@ data_manager.load_user_data(
 
 st.image("https://raw.githubusercontent.com/Kiri034/Morphaway/bd399c4a2b974d03fc9117a45bd700e447c0a61b/Bilder/Logo.png", width=320)
 
-name = st.session_state.get("name")
-st.write(f"Willkommen {name} bei Morphaway! Morphaway ist eine einfache und übersichtliche Variante, um ein Blutbild auszuzählen.")
+with st.sidebar:
+    username = st.session_state.get("username")
+    if username:
+        st.markdown(f"**Eingeloggt als:** {username}")
+
+first_name = st.session_state.get("first_name")
+st.write(f"Willkommen {first_name} bei Morphaway!")
+st.write("Morphaway ist eine einfache und übersichtliche Variante, um ein Blutbild auszuzählen.")
 st.write("Durch eine individuelle Auswahl der Differenzier-Möglichkeiten ist unsere App sehr nutzerfreundlich aufgebaut und kann so in verschiedene Situationen angewendet werden. Egal, ob du dein:e Dozent:in mit einer schnellen 50er-Leukozytendifferenzierung beeindrucken möchtest, 100 Leukozyten für eine genauere Bestimmung brauchst oder ganze 200 Leukozyten zur Labordiagnostik differenzieren möchtest - Morphaway bietet dir die Unterstützung.")
 st.write('Die Werte der ausgezählten Zellen findest du prozentual sowie grafisch dargestellt unter "History". Durch dein Nutzerlogin kannst du sie jederzeit als PDF-Datei herunterladen.')
 st.write("Drücke auf den unteren Knopf, um mit der Differenzierung zu starten oder nutze die Seitenleiste für andere Funktionen!")
