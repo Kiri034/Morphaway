@@ -77,12 +77,10 @@ if counted:
 
     df = pd.DataFrame(data)
 
-    st.markdown(f"**Erythroblasten / 100 Leukozyten:** {eryblast_per_100}")
-
     st.subheader("Tabelle der Ergebnisse")
     st.dataframe(df)
 
-
+    st.markdown(f"**Erythroblasten / 100 Leukozyten:** {eryblast_per_100}")
 
     filtered_df = df[(df["Anzahl"] > 0) & (df["Zelle"] != "Erythroblast")]
     img_bytes = None
