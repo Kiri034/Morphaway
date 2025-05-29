@@ -5,7 +5,7 @@ from utils.login_manager import LoginManager
 
 from utils.style import set_background_color
 
-# Setze das Standard-Theme auf "light"
+# Sidebar-Konfiguration
 st.set_page_config(initial_sidebar_state="collapsed")
 
 # Setze einen Hintergrund und ein Bild nur auf die rechte Seite
