@@ -29,7 +29,7 @@ data_manager.load_user_data(
 # ====== End Init Block ======
 
 # Zeige den aktuell eingeloggten Nutzer an
-current_user = st.session_state.get("user")
+current_user = st.session_state.get(self)
 if current_user:
     st.info(f"👤 Eingeloggt als: **{current_user}**")
 else:
