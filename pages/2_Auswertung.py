@@ -51,16 +51,15 @@ if counted:
         {"label": "Metamyelozyt"},
         {"label": "Plasmazelle"},
         {"label": "Kernschatten"},
-        {"label": "Erythroblast"},       
+        {"label": "Erythroblast"},  # Index 13
     ]
 
-    erythroblast_index = 14
+    erythroblast_index = 14  # weil enumerate(images, start=1)
     total_count = sum(
         st.session_state.get(f"button_{i}_count", 0)
-        for i in range(1, 15) if i != erythroblast_index
+        for i in range(1, 15) if images[i-1]["label"] != "Erythroblast"
     )
     erythroblast_count = st.session_state.get(f"button_{erythroblast_index}_count", 0)
-    # Erythroblasten pro 100 gezählte Zellen berechnen (unabhängig von Zielanzahl)
     eryblast_per_100 = round(erythroblast_count / total_count * 100, 2) if total_count > 0 else 0.0
 
     data = []
