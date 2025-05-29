@@ -13,6 +13,11 @@ import json
 from utils.data_manager import DataManager
 from utils.style import set_background_color
 
+with st.sidebar:
+    username = st.session_state.get("username")
+    if username:
+        st.markdown(f"**Eingeloggt als:** {username}")
+
 # Hintergrundfarbe & Bild nur rechts
 set_background_color("#fbeaff", "#fae2ff", "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/ec_background_purple_20.png")
 
