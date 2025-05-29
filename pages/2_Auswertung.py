@@ -72,13 +72,12 @@ if counted:
             "Anzahl": count,
             "Relativer Anteil (%)": round(relative, 2)
         }
-        if cell["label"] == "Erythroblast":
-            row["Erythroblasten pro 100 Leukozyten"] = eryblast_per_100
         data.append(row)
 
     df = pd.DataFrame(data)
 
     st.subheader("Tabelle der Ergebnisse")
+    
     # Erythroblast-Zeile ausblenden
     df_ohne_ery = df[df["Zelle"] != "Erythroblast"]
     st.dataframe(df_ohne_ery)
