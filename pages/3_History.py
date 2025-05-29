@@ -10,6 +10,7 @@ from fpdf import FPDF
 import os
 import json
 
+from utils.data_manager import DataManager
 from utils.style import set_background_color
 
 # Hintergrundfarbe & Bild nur rechts
@@ -29,7 +30,7 @@ else:
 if not os.path.exists(history_directory):
     os.makedirs(history_directory)
 
-# Alle gespeicherten JSON-Dateien auslesen (nur für den eingeloggten Nutzer)
+# Alle gespeicherten JSON-Dateien auslesen
 files = [f for f in os.listdir(history_directory) if f.endswith(".json")]
 
 file_info = []
@@ -143,3 +144,13 @@ if file_info:
 
 else:
     st.info("Es sind noch keine gespeicherten Auswertungen vorhanden.")
+
+    # Daten aus DataManager laden, falls vorhanden
+    DataManager().load_user_data(
+        user=user,
+        data_directory='data',
+        session_state_key='data_df',
+        file_name='data.csv',
+        initial_value=pd.DataFrame(),
+        parse_dates=['timestamp']
+    )
