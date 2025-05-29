@@ -65,14 +65,14 @@ else:
             st.session_state[f"button_{i}_count"] = 0
 
     # Gesamtzähler direkt nach Auswahlmöglichkeit anzeigen
-    erythroblast_count = st.session_state["button_13_count"]
-    total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 15) if i != 13)
+    erythroblast_count = st.session_state["button_14_count"]
+    total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 15) if i != 14)
 
     st.markdown(f"### Gesamtzahl: *{total_count}*")
 
     # Button zum Zurücksetzen der Zähler
     if st.button("🔙", key="undo_button"):
-        for i in range(14, 0, -1):
+        for i in range(15, 0, -1):
             if st.session_state[f"button_{i}_count"] > 0:
                 st.session_state[f"button_{i}_count"] -= 1
                 st.rerun()

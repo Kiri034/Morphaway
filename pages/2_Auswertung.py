@@ -50,10 +50,11 @@ if counted:
         {"label": "Myelozyt"},
         {"label": "Metamyelozyt"},
         {"label": "Plasmazelle"},
-        {"label": "Kernschatten"},        
+        {"label": "Kernschatten"},
+        {"label": "Erythroblast"},       
     ]
 
-    erythroblast_index = 13
+    erythroblast_index = 14
     total_count = sum(
         st.session_state.get(f"button_{i}_count", 0)
         for i in range(1, 15) if i != erythroblast_index
