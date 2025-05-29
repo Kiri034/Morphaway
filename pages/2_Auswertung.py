@@ -21,7 +21,7 @@ st.image("https://raw.githubusercontent.com/Kiri034/Morphaway/bd399c4a2b974d03fc
 praep_name = st.session_state.get("praep_name", "Unbekanntes Präparat")
 st.title(f"📄Auswertung für {praep_name}")
 
-user = st.session_state.get("user")
+user = st.session_state.get("username")
 if user:
     history_directory = os.path.join("history_exports", user)
 else:
@@ -144,14 +144,14 @@ else:
     df = pd.DataFrame()
     total_count = 0
 
-user = st.session_state.get("user")
+user = st.session_state.get("username")
 
 # Speichere die Auswertung in der Datenbank
 if not df.empty:
     DataManager().append_record(
         session_state_key='data_df',  # immer gleich, nicht user-spezifisch!
         record_dict={
-            "user": user if user else "Unbekannt",
+            "username": user if user else "Unbekannt",
             "praep_name": praep_name,
             "timestamp": datetime.now(),
             "total_count": total_count,
