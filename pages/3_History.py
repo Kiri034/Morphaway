@@ -103,7 +103,7 @@ if file_info:
     if st.button("❌ Auswertung löschen"):
         os.remove(file_path)
         st.success("Auswertung wurde gelöscht.")
-        st.experimental_rerun()
+        st.rerun()
 
     # PDF Export Button
     if st.button("📄 Exportiere als PDF"):
