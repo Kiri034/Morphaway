@@ -90,7 +90,7 @@ else:
         {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/myelo_round.png", "label": "Myelozyt"},
         {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/metamyelo_round.png", "label": "Metamyelozyt"},
         {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/plasma_round.png", "label": "Plasmazelle"},
-        {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/smudged_round.png", "label": "Kernschatten"},
+        {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/smudgcell_round.png", "label": "Kernschatten"},
         {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/erythro_round.png", "label": "Erythroblast"}
     ]
 
