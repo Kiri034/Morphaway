@@ -100,10 +100,17 @@ if file_info:
         st.warning("Keine geeigneten Daten für das Kreisdiagramm gefunden.")
 
     # Löschen Button
-    if st.button("❌ Auswertung löschen"):
-        os.remove(file_path)
-        st.success("Auswertung wurde gelöscht.")
-        st.rerun()
+        if st.button("❌ Auswertung löschen"):
+            os.remove(file_path)
+            st.session_state["deleted_file"] = selected_file
+            st.success("Auswertung wurde gelöscht.")
+            st.experimental_rerun()
+    
+    # Prevent reprocessing the deleted file
+    if st.session_state.get("deleted_file") == selected_file:
+        st.info("Die gelöschte Auswertung wird nicht erneut geladen.")
+        st.session_state.pop("deleted_file", None)
+        st.stop()
 
     # PDF Export Button
     if st.button("📄 Exportiere als PDF"):
