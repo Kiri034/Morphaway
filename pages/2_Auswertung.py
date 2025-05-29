@@ -146,6 +146,7 @@ else:
 
 user = st.session_state.get("user")
 
+# Speichere die Auswertung in der Datenbank
 if not df.empty:
     DataManager().append_record(
         session_state_key='data_df',  # immer gleich, nicht user-spezifisch!
@@ -157,3 +158,4 @@ if not df.empty:
             "erythroblast_count": int(df[df["Zelle"] == "Erythroblast"]["Anzahl"].values[0]) if "Erythroblast" in df["Zelle"].values else 0,
         }
     )
+    DataManager().save_all_data() # Speichere die Daten in der CSV-Datei
