@@ -68,6 +68,11 @@ else:
     erythroblast_count = st.session_state["button_13_count"]
     total_count = sum(st.session_state[f"button_{i}_count"] for i in range(1, 15) if i != 13)
 
+    # Erythroblasten pro 100 gezählte Zellen berechnen (unabhängig von Zielanzahl)
+    if total_count > 0:
+        eryblast_per_100 = round(erythroblast_count / total_count * 100, 2)
+    else:
+        eryblast_per_100 = 0.0
 
     st.markdown(f"### Gesamtzahl: *{total_count}*")
 

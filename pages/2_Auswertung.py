@@ -50,9 +50,7 @@ if counted:
         {"label": "Myelozyt"},
         {"label": "Metamyelozyt"},
         {"label": "Plasmazelle"},
-        {"label": "Kernschatten"},
-        {"label": "Erythroblast"},
-        
+        {"label": "Kernschatten"},        
     ]
 
     erythroblast_index = 13
@@ -60,21 +58,31 @@ if counted:
         st.session_state.get(f"button_{i}_count", 0)
         for i in range(1, 15) if i != erythroblast_index
     )
+    erythroblast_count = st.session_state.get(f"button_{erythroblast_index}_count", 0)
+    # Erythroblasten pro 100 gezählte Zellen berechnen (unabhängig von Zielanzahl)
+    eryblast_per_100 = round(erythroblast_count / total_count * 100, 2) if total_count > 0 else 0.0
 
     data = []
     for idx, cell in enumerate(images, start=1):
         count = st.session_state.get(f"button_{idx}_count", 0)
         relative = (count / total_count * 100) if total_count > 0 else 0
-        data.append({
+        row = {
             "Zelle": cell["label"],
             "Anzahl": count,
             "Relativer Anteil (%)": round(relative, 2)
-        })
+        }
+        if cell["label"] == "Erythroblast":
+            row["Erythroblasten pro 100 Leukozyten"] = eryblast_per_100
+        data.append(row)
 
     df = pd.DataFrame(data)
 
+    st.markdown(f"**Erythroblasten / 100 Leukozyten:** {eryblast_per_100}")
+
     st.subheader("Tabelle der Ergebnisse")
     st.dataframe(df)
+
+
 
     filtered_df = df[(df["Anzahl"] > 0) & (df["Zelle"] != "Erythroblast")]
     img_bytes = None
@@ -153,12 +161,12 @@ else:
 # Speichere die Auswertung in der Datenbank
 if not df.empty:
     DataManager().append_record(
-        session_state_key='data_df',  # immer gleich, nicht user-spezifisch!
+        session_state_key='data_df',
         record_dict={
             "username": user if user else "Unbekannt",
             "praep_name": praep_name,
             "timestamp": datetime.now(),
             "total_count": total_count,
-            "erythroblast_count": int(df[df["Zelle"] == "Erythroblast"]["Anzahl"].values[0]) if "Erythroblast" in df["Zelle"].values else 0,
+            "erythroblast_count": eryblast_per_100,
         }
     )
