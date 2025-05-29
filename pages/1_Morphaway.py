@@ -146,11 +146,12 @@ else:
         DataManager().append_record(
             session_state_key='data_df',
             record_dict={
+                "username": user if user else "Unbekannt",
                 'selected_option': st.session_state["selected_option"],
                 'praep_name': st.session_state["praep_name"],
+                'timestamp': datetime.datetime.now(),
                 'total_count': total_count,
-                'erythroblast_count': erythroblast_count,
-                'timestamp': datetime.datetime.now()
+                'erythroblast_count': int(df[df["Zelle"] == "Erythroblast"]["Anzahl"].values[0]) if "Erythroblast" in df["Zelle"].values else 0,
             }
         )
         st.switch_page("pages/2_Auswertung.py")
