@@ -21,7 +21,7 @@ st.image("https://raw.githubusercontent.com/Kiri034/Morphaway/bd399c4a2b974d03fc
 
 st.title("🔍 History")
 
-user = st.session_state.get("user")
+user = st.session_state.get("username")
 if user:
     history_directory = os.path.join("history_exports", user)
 else:
@@ -147,7 +147,7 @@ else:
 
     # Daten aus DataManager laden, falls vorhanden
     DataManager().load_user_data(
-        user=user,
+        user='username',
         data_directory='data',
         session_state_key='data_df',
         file_name='data.csv',
