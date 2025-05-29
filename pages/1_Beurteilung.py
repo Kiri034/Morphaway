@@ -34,6 +34,7 @@ thrombo = [ ]
 
 
 st.subheader("Neutrophile Granulozyten Beurteilung")
+
 cols = st.columns(5)
 
 for idx, neutro in enumerate(neutro):
