@@ -72,7 +72,7 @@ else:
 
     # Button zum Zurücksetzen der Zähler
     if st.button("🔙", key="undo_button"):
-        for i in range(15, 0, -1):
+        for i in range(14, 0, -1):
             if st.session_state[f"button_{i}_count"] > 0:
                 st.session_state[f"button_{i}_count"] -= 1
                 st.rerun()
