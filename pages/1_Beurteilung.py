@@ -16,7 +16,9 @@ st.title("🔬 Beurteilung der Zellen")
 st.markdown("Beurteile das Blutbild und fahre fort, sobald du mit der Beurteilung fertig bist.")
 
 # Erythrozyten Bilder und Beschriftungen
-erythro = [ ... ]
+erythro = [
+    {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/erythrozyt.jpg", "caption": "Erythrozyt"}
+]
 
 
 # Neutrophilen Bilder und Beschriftungen
