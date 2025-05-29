@@ -19,6 +19,9 @@ st.image("https://raw.githubusercontent.com/Kiri034/Morphaway/bd399c4a2b974d03fc
 
 st.title("🔍 History")
 
+st.write("Aktueller User:", user)
+st.write("DataFrame:", df)
+
 user = st.session_state.get("user")
 df = st.session_state.get("data_df", pd.DataFrame())
 
