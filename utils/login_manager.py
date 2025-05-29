@@ -146,4 +146,12 @@ class LoginManager:
             self.authenticator.logout() # create logout button
 
     def get_current_user(self):
-        return st.session_state.get("user")
+        """
+        Returns the currently logged-in user, or None if no user is authenticated.
+        
+        Returns:
+            str: The username of the currently authenticated user, or None if not authenticated
+        """
+        if st.session_state.get("authentication_status") is True:
+            return st.session_state["username"]
+        return None
