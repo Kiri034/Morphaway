@@ -6,7 +6,7 @@ from utils.login_manager import LoginManager
 from utils.style import set_background_color
 
 # Setze das Standard-Theme auf "light"
-st.set_page_config(page_title="Morphaway", page_icon="🔬", layout="centered", initial_sidebar_state="auto", theme="light")
+st.set_page_config(page_title="Morphaway", page_icon="🔬", layout="centered", initial_sidebar_state="auto")
 
 # Setze einen Hintergrund und ein Bild nur auf die rechte Seite
 set_background_color("#fbeaff", "#fae2ff", "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/ec_background_purple_20.png")  # Hauptbereich und Seitenleiste Hintergrundfarbe setzen
