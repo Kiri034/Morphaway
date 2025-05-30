@@ -146,4 +146,20 @@ for idx, throm in enumerate(thrombo):
         st.session_state["ratings_thrombo"][throm["caption"]] = rating
 thrombo_text = st.text_area("Kommentar zu den Thrombozyten", key="thrombo_text")
 
-# Button zum Speichern der Beurteilung
+# Speicherung der Beurteilung und zur Auswertung
+if st.button("zur Auswertung", key="auswertung_button"):
+        DataManager().append_record(
+            session_state_key='data_df',
+            record_dict={
+            'ratings_ery': st.session_state.get("ratings_ery", {}),
+            'erythro_text': st.session_state.get("erythro_text", ""),
+            'ratings_neutro': st.session_state.get("ratings_neutro", {}),
+            'neutro_text': st.session_state.get("neutro_text", ""),
+            'ratings_lympho': st.session_state.get("ratings_lympho", {}),
+            'lympho_text': st.session_state.get("lympho_text", ""),
+            'ratings_thrombo': st.session_state.get("ratings_thrombo", {}),
+            'thrombo_text': st.session_state.get("thrombo_text", "")
+            }
+        )
+        
+        st.switch_page("pages/3_Auswertung.py")
