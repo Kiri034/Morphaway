@@ -23,7 +23,7 @@ erythro = [
     {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/hypo.png", "caption": "Hypochromasie"},
     {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/hyper.png", "caption": "Hyperchromasie"},
     {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/polychromasie.png", "caption": "Polychromasie"},
-    
+    {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/poik.png", "caption": "Poikilozytose"},
     {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/akantozyt.png", "caption": "Akantozyt"},
     {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/basotuepfelung.png", "caption": "Basophile Tüpfelung"},
     {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/echino.png", "caption": "Echinocyte"},
