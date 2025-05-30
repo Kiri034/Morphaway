@@ -86,9 +86,26 @@ if counted:
     st.subheader("Beurteilung der Kategorien")
 
     erythro_text = st.text_area("Kommentar zu den Erythrozyten", key="erythro_text")
+    
+    erythro_rating = st.slider(
+        "Bewertung der Erythrozyten (0 = unauffällig, 3 = stark auffällig)",
+        min_value=0, max_value=3, value=0, key="rating_ery"
+    )
     neutro_text = st.text_area("Kommentar zu den Neutrophilen Granulozyten", key="neutro_text")
+    neutro_rating = st.slider(
+        "Bewertung der Neutrophilen Granulozyten (0 = unauffällig, 3 = stark auffällig)",
+        min_value=0, max_value=3, value=0, key="rating_neutro"
+    )
     lympho_text = st.text_area("Kommentar zu den Lymphozyten", key="lympho_text")
+    lympho_rating = st.slider(
+        "Bewertung der Lymphozyten (0 = unauffällig, 3 = stark auffällig)",
+        min_value=0, max_value=3, value=0, key="rating_lympho"
+    )
     thrombo_text = st.text_area("Kommentar zu den Thrombozyten", key="thrombo_text")
+    thrombo_rating = st.slider(
+        "Bewertung der Thrombozyten (0 = unauffällig, 3 = stark auffällig)",
+        min_value=0, max_value=3, value=0, key="rating_thrombo"
+    )
 
     filtered_df = df[(df["Anzahl"] > 0) & (df["Zelle"] != "Erythroblast")]
     img_bytes = None
@@ -139,7 +156,7 @@ if counted:
         # --- Neue Seite für Beurteilung ---
         pdf.add_page()
         pdf.set_font("Arial", "B", 14)
-        pdf.cell(0, 12, "Beurteilung der Kategorien", ln=True, align="C")
+        pdf.cell(0, 12, "Beurteilung der Zellen", ln=True, align="C")
         pdf.ln(6)
         pdf.set_font("Arial", "B", 12)
         pdf.cell(0, 10, "Erythrozyten:", ln=True)
