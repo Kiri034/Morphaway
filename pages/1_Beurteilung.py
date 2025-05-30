@@ -34,8 +34,8 @@ erythro = [
     {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/sichelzelle.png", "caption": "Sichelzelle"},
     {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/fragm.png", "caption": "Fragment"},
     {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/basotuepfelung.png", "caption": "Basophile Tüpfelung"},
-    {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/howelljolly.png", "caption": "Howell-Jolly-Körperchen"},
-    {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/pappenheimer.png", "caption": "Pappenheimer Körperchen"}
+    {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/howelljolly.png", "caption": "Howell-Jolly"},
+    {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/pappenheimer.png", "caption": "Pappenheimer"}
 ]
 
 
