@@ -148,4 +148,4 @@ if file_info:
         )
 
 else:
-    st.info("Es sind noch keine gespeicherten Auswertungen vorhanden.")
+    st.info("Es sind noch keine gespeicherten Auswertungen vorhanden.") 

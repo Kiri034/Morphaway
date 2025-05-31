@@ -33,7 +33,7 @@ data_manager.load_user_data(
 # ---------------------------
 
 st.image("https://raw.githubusercontent.com/Kiri034/Morphaway/bd399c4a2b974d03fc9117a45bd700e447c0a61b/Bilder/Logo.png", width=320)
-
+ 
 with st.sidebar:
     username = st.session_state.get("username")
     if username:

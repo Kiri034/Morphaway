@@ -127,7 +127,7 @@ else:
         </style>
         """, unsafe_allow_html=True
     )
-
+    # Warnung anzeigen, wenn Zielzahl erreicht oder überschritten
     if total_count >= max_cells:
         st.markdown(
             f"""

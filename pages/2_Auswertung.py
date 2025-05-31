@@ -77,7 +77,7 @@ if counted:
 
     st.subheader("Tabelle der Ergebnisse")
 
-    # Erythroblast-Zeile ausblenden
+    # Erythroblast-Zeile ausblenden 
     df_ohne_ery = df[df["Zelle"] != "Erythroblast"]
     st.dataframe(df_ohne_ery, hide_index=True, use_container_width=True)
 
