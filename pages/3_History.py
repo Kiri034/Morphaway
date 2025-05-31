@@ -126,7 +126,7 @@ if file_info:
             pdf.cell(36, 9, str(row["Relativer Anteil (%)"]), 1, 1, "C")
 
         pdf.ln(7)
-        pdf.set_font("Arial", "B", 12)
+        pdf.set_font("Arial", "B", 11)
         pdf.cell(0, 9, f"Erythroblasten / 100 Leukozyten: {eryblast_per_100}", ln=True)
 
         # Kreisdiagramm als Bild einfügen (temporär speichern)

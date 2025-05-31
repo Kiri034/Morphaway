@@ -113,13 +113,13 @@ if counted:
         pdf.cell(22, 9, "Anzahl", 1, 0, "C")
         pdf.cell(36, 9, "Rel. Anteil (%)", 1, 1, "C")
         pdf.set_font("Arial", "", 10)
-        for _, row in df.iterrows():
+        for _, row in df_ohne_ery.iterrows():
             pdf.cell(38, 9, str(row["Zelle"]), 1, 0, "C")
             pdf.cell(22, 9, str(row["Anzahl"]), 1, 0, "C")
             pdf.cell(36, 9, str(row["Relativer Anteil (%)"]), 1, 1, "C")
 
         pdf.ln(7)
-        pdf.set_font("Arial", "B", 12)
+        pdf.set_font("Arial", "B", 11)
         pdf.cell(0, 9, f"Erythroblasten / 100 Leukozyten: {eryblast_per_100}", ln=True)
 
         if img_bytes:
@@ -128,7 +128,7 @@ if counted:
                 f.write(img_bytes)
             pdf.ln(7)
             pdf.set_font("Arial", "B", 11)
-            pdf.cell(0, 9,txt="Kreisdiagramm:", ln=True)
+            pdf.cell(0, 9, txt="Kreisdiagramm:", ln=True)
             pdf.ln(4)
             pdf.image(img_path, x=30, w=120)
             os.remove(img_path)
