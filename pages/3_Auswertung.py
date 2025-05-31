@@ -100,7 +100,6 @@ if counted:
     else:
         st.warning("Keine Daten für das Kreisdiagramm verfügbar. Alle Zellen haben 0 oder nur Erythroblasten.")
 
-
     if st.button("📄 Export"):
         pdf = FPDF()
         pdf.add_page()
@@ -129,31 +128,6 @@ if counted:
             pdf.image(img_path, x=30, w=120)
             os.remove(img_path)
 
-        # --- Neue Seite für Beurteilung ---
-        pdf.add_page()
-        pdf.set_font("Arial", "B", 14)
-        pdf.cell(0, 12, "Beurteilung der Zellen", ln=True, align="C")
-        pdf.ln(6)
-        pdf.set_font("Arial", "B", 12)
-        pdf.cell(0, 10, "Erythrozyten:", ln=True)
-        pdf.set_font("Arial", "", 11)
-        pdf.multi_cell(0, 8, erythro_text if erythro_text else "-")
-        pdf.ln(2)
-        pdf.set_font("Arial", "B", 12)
-        pdf.cell(0, 10, "Neutrophile Granulozyten:", ln=True)
-        pdf.set_font("Arial", "", 11)
-        pdf.multi_cell(0, 8, neutro_text if neutro_text else "-")
-        pdf.ln(2)
-        pdf.set_font("Arial", "B", 12)
-        pdf.cell(0, 10, "Lymphozyten:", ln=True)
-        pdf.set_font("Arial", "", 11)
-        pdf.multi_cell(0, 8, lympho_text if lympho_text else "-")
-        pdf.ln(2)
-        pdf.set_font("Arial", "B", 12)
-        pdf.cell(0, 10, "Thrombozyten:", ln=True)
-        pdf.set_font("Arial", "", 11)
-        pdf.multi_cell(0, 8, thrombo_text if thrombo_text else "-")
-
         pdf_bytes = pdf.output(dest="S").encode("latin1")
         st.download_button(
             label="📄 PDF herunterladen",
@@ -169,16 +143,29 @@ if counted:
         export_data = {
             "praep_name": praep_name,
             "timestamp": timestamp,
-            "data": df.to_dict(orient="records"),
-            "beurteilung": {
-                "erythrozyten": erythro_text,
-                "neutrophile": neutro_text,
-                "lymphozyten": lympho_text,
-                "thrombozyten": thrombo_text
-            }
+            "data": df.to_dict(orient="records")
         }
         with open(filepath, "w", encoding="utf-8") as f:
             json.dump(export_data, f, ensure_ascii=False, indent=2)
 
         st.success("Auswertung gespeichert!")
         st.switch_page("pages/4_History.py")
+       
+
+else:
+    st.info("Noch keine Zellen gezählt. Es sind keine Auswertungen verfügbar.")
+    df = pd.DataFrame()
+    total_count = 0
+
+# Speichere die Auswertung in der Datenbank
+if not df.empty:
+    DataManager().append_record(
+        session_state_key='data_df',
+        record_dict={
+            "username": user if user else "Unbekannt",
+            "praep_name": praep_name,
+            "timestamp": datetime.now(),
+            "total_count": total_count,
+            "erythroblast_count": eryblast_per_100,
+        }
+    )
