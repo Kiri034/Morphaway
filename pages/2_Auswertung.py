@@ -149,7 +149,7 @@ if counted:
             json.dump(export_data, f, ensure_ascii=False, indent=2)
 
         st.success("Auswertung gespeichert!")
-        st.switch_page("pages/4_History.py")
+        st.switch_page("pages/3_History.py")
        
 
 else:

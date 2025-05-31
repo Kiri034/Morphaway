@@ -141,7 +141,7 @@ else:
         reset_all()
         st.rerun()
 
-    if st.button("zur Beurteilung", key="beurteilung_button"):
+    if st.button("zur Auswertung", key="auswertung_button"):
         DataManager().append_record(
             session_state_key='data_df',
             record_dict={
@@ -153,4 +153,4 @@ else:
             }
         )
 
-        st.switch_page("pages/2_Beurteilung.py")
+        st.switch_page("pages/2_Auswertung.py")
