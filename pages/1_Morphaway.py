@@ -9,12 +9,13 @@ import datetime
 from utils.data_manager import DataManager
 from utils.style import set_background_color
 
+# Sidebar-Konfiguration
 with st.sidebar:
     username = st.session_state.get("username")
     if username:
         st.markdown(f"**Eingeloggt als:** {username}")
 
-# Set background and sidebar image
+# Hintergrundfarbe und Bild für die Seite setzen
 set_background_color("#fbeaff", "#fae2ff", "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/ec_background_purple_20.png")
 
 st.title("🔬 Morphaway")
@@ -33,7 +34,7 @@ if "data_df" not in st.session_state or st.session_state["data_df"].empty:
         columns=["selected_option", "praep_name", "total_count", "erythroblast_count", "timestamp"]
     )
 
-# Schritt 1: Präparatname eingeben
+# Präparatname eingeben
 if "praep_name" not in st.session_state or not st.session_state["praep_name"]:
     st.info("Der Präparatname darf nur einmal verwendet werden. Wenn du denselben Namen nochmal brauchst, hänge eine Nummer an, z.B. 'Blutbild 2'.")
 
@@ -70,13 +71,14 @@ else:
 
     st.markdown(f"### Gesamtzahl: *{total_count}*")
 
-    # Button zum Zurücksetzen der Zähler
+    # Button zum rückgängig machen des letzten Zählers
     if st.button("🔙", key="undo_button"):
         for i in range(14, 0, -1):
             if st.session_state[f"button_{i}_count"] > 0:
                 st.session_state[f"button_{i}_count"] -= 1
                 st.rerun()
 
+    # Anzeige der Zähler für die einzelnen Zelltypen
     images = [
         {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/lymph_round.png", "label": "Lymphozyt"},
         {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/reaktlymph.png", "label": "reaktiver Lymphozyt"},
@@ -93,7 +95,7 @@ else:
         {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/smudgcell_round.png", "label": "Kernschatten"},
         {"path": "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/erythro_round.png", "label": "Erythroblast"}
     ]
-
+    # Raster für die Anzeige der Bilder und Buttons
     cols = st.columns(3)
 
     for idx, image in enumerate(images):
@@ -136,7 +138,7 @@ else:
             </div>
             """, unsafe_allow_html=True
         )
-
+    # Refreh-Button und Navigation zur Auswertung
     if st.button("⟳", key="refresh_button"):
         reset_all()
         st.rerun()
@@ -145,11 +147,11 @@ else:
         DataManager().append_record(
             session_state_key='data_df',
             record_dict={
-                'selected_option': st.session_state["selected_option"],
-                'praep_name': st.session_state["praep_name"],
-                'total_count': total_count,
-                'erythroblast_count': erythroblast_count,
-                'timestamp': datetime.datetime.now()
+                'selected_option': st.session_state["selected_option"], # Ausgewählte Option (50, 100 oder 200 Zellen)
+                'praep_name': st.session_state["praep_name"], # Präparatname
+                'total_count': total_count, # Gesamtzahl der gezählten Zellen
+                'erythroblast_count': erythroblast_count, # Anzahl der Erythroblasten
+                'timestamp': datetime.datetime.now() # Aktueller Zeitstempel
             }
         )
 

@@ -13,6 +13,7 @@ import json
 from utils.data_manager import DataManager
 from utils.style import set_background_color
 
+# Sidebar-Konfiguration
 with st.sidebar:
     username = st.session_state.get("username")
     if username:
@@ -21,7 +22,7 @@ with st.sidebar:
 # Hintergrundfarbe & Bild nur rechts
 set_background_color("#fbeaff", "#fae2ff", "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/ec_background_purple_20.png")
 
-# Logo anzeigen
+# Logo
 st.image("https://raw.githubusercontent.com/Kiri034/Morphaway/bd399c4a2b974d03fc9117a45bd700e447c0a61b/Bilder/Logo.png", width=320)
 
 st.title("🔍 History")
@@ -79,7 +80,7 @@ if file_info:
     # Tabelle anzeigen (ohne Erythroblast)
     st.subheader("Tabelle der Ergebnisse")
     df_ohne_ery = df_loaded[df_loaded["Zelle"] != "Erythroblast"]
-    st.dataframe(df_ohne_ery, hide_index=True, use_container_width=True)
+    st.dataframe(df_ohne_ery, hide_index=True, use_container_width=True) #Index ausblenden und volle Breite nutzen
 
     # Erythroblasten pro 100 Leukozyten anzeigen
     st.markdown(f"**Erythroblasten / 100 Leukozyten:** {eryblast_per_100}")

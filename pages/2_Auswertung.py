@@ -14,18 +14,23 @@ from datetime import datetime
 from utils.data_manager import DataManager
 from utils.style import set_background_color
 
+# Sidebar-Konfiguration
 with st.sidebar:
     username = st.session_state.get("username")
     if username:
         st.markdown(f"**Eingeloggt als:** {username}")
 
+# Hintergrundfarbe und Bild für die Seite setzen
 set_background_color("#fbeaff", "#fae2ff", "https://raw.githubusercontent.com/Kiri034/Morphaway/refs/heads/main/Bilder/ec_background_purple_20.png")
 
+# Logo
 st.image("https://raw.githubusercontent.com/Kiri034/Morphaway/bd399c4a2b974d03fc9117a45bd700e447c0a61b/Bilder/Logo.png", width=320)
 
+# Titel der Seite
 praep_name = st.session_state.get("praep_name", "Unbekanntes Präparat")
 st.title(f"📄Auswertung für {praep_name}")
 
+# Prüfen, ob der Nutzername gesetzt ist und das Verzeichnis für die History-Exports erstellen
 user = st.session_state.get("username")
 if user:
     history_directory = os.path.join("history_exports", user)
@@ -51,10 +56,11 @@ if counted:
         {"label": "Metamyelozyt"},
         {"label": "Plasmazelle"},
         {"label": "Kernschatten"},
-        {"label": "Erythroblast"},  # Index 13
+        {"label": "Erythroblast"},  # Index 14
     ]
 
-    erythroblast_index = 14  # weil enumerate(images, start=1)
+    # Erythroblast-Zelle hinzufügen und kalkulieren
+    erythroblast_index = 14
     total_count = sum(
         st.session_state.get(f"button_{i}_count", 0)
         for i in range(1, 15) if images[i-1]["label"] != "Erythroblast"
@@ -62,6 +68,7 @@ if counted:
     erythroblast_count = st.session_state.get(f"button_{erythroblast_index}_count", 0)
     eryblast_per_100 = round(erythroblast_count / total_count * 100, 2) if total_count > 0 else 0.0
 
+    # erstelle die Tabelle mit den Ergebnissen
     data = []
     for idx, cell in enumerate(images, start=1):
         count = st.session_state.get(f"button_{idx}_count", 0)
@@ -77,12 +84,14 @@ if counted:
 
     st.subheader("Tabelle der Ergebnisse")
 
-    # Erythroblast-Zeile ausblenden
+    # Erythroblast-Zeile in Tabelle ausblenden
     df_ohne_ery = df[df["Zelle"] != "Erythroblast"]
     st.dataframe(df_ohne_ery, hide_index=True, use_container_width=True)
 
+    # Erythroblast-Zelle separat anzeigen
     st.markdown(f"**Erythroblasten / 100 Leukozyten:** {eryblast_per_100}")
 
+    # Kreisdiagramm erstellen
     filtered_df = df[(df["Anzahl"] > 0) & (df["Zelle"] != "Erythroblast")]
     img_bytes = None
     if not filtered_df.empty:
@@ -100,6 +109,7 @@ if counted:
     else:
         st.warning("Keine Daten für das Kreisdiagramm verfügbar. Alle Zellen haben 0 oder nur Erythroblasten.")
 
+    # Export-Buttons
     if st.button("📄 Export"):
         pdf = FPDF()
         pdf.add_page()
@@ -149,7 +159,7 @@ if counted:
             json.dump(export_data, f, ensure_ascii=False, indent=2)
 
         st.success("Auswertung gespeichert!")
-        st.switch_page("pages/3_History.py")
+        st.switch_page("pages/3_History.py") # Navigiere zur History-Seite
        
 
 else:
@@ -162,10 +172,10 @@ if not df.empty:
     DataManager().append_record(
         session_state_key='data_df',
         record_dict={
-            "username": user if user else "Unbekannt",
-            "praep_name": praep_name,
-            "timestamp": datetime.now(),
-            "total_count": total_count,
-            "erythroblast_count": eryblast_per_100,
+            "username": user if user else "Unbekannt", # Nutzername
+            "praep_name": praep_name, # Präparatname
+            "timestamp": datetime.now(), # Aktueller Zeitstempel
+            "total_count": total_count, # Gesamtzahl der gezählten Zellen
+            "erythroblast_count": eryblast_per_100, # Erythroblast-Anteil
         }
     )
