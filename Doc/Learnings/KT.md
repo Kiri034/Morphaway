@@ -1,0 +1,14 @@
+### Reflexion
+Von Anfang bis Ende unserer kleinen App habe ich sehr viel gelernt. Nachdem wir den ersten Schritt – das Brainstorming für das Design – abgeschlossen hatten, standen wir direkt vor einer der grössten Herausforderungen: der Projektplanung. Anfangs hielt ich diesen Schritt für unnötig, da ich dachte, wir würden später sowieso nicht mehr darauf zurückgreifen. Doch schnell wurde mir klar, dass dieser MVP nicht nur zur Orientierung diente, sondern auch als Übersicht über alle anstehenden Aufgaben sehr hilfreich war.
+
+Während der Entwicklung haben wir die Aufgaben und die Verantwortung klar aufgeteilt, was dazu führte, dass es keine Missverständnisse in der Gruppe gab. Ich war hauptsächlich für das Programmieren zuständig und konnte dabei vieles Neues lernen. Da uns ChatGPT zur Verfügung stand, ging ich davon aus, dass alles sehr einfach werden würde – bis das erste Problem auftrat. Das AI-Tool konnte mir nämlich nicht genau sagen, welcher Code mit Streamlit funktioniert und welcher nicht mehr. Deshalb habe ich angefangen, öfter mit der API-Referenz zu arbeiten. Dabei lernte ich, den Code besser zu verstehen und auch ohne große Hilfe durch den Copilot selbstständig zu programmieren.
+Weil einem halt nicht immer alles serviert wird, kam das nächste Problem: Mein ChatGPT hat irgendwann komplett gestreikt, und ich musste auf ein anderes Tool aus dem Netz zurückgreifen, das hat überraschenderweise teilweise sogar besser funktioniert.
+
+Aber all diese Probleme waren eigentlich nur kleinere Hürden im Vergleich zur Arbeit mit dem Switch-Drive. Mir ist dabei aufgefallen, wie viel besser ich diesmal die Aufgaben verstanden habe, vor allem im Vergleich zum letzten Projekt. Dieses Mal habe ich viele Errors und Funktionen nicht nur funktioniert, sondern ich hab auch wirklich verstanden, was da im Hintergrund abläuft. 
+
+Ich finde, wir hatten eine richtig coole Idee, die wir nach unseren Vorstellungen umgesetzt haben. Klar, wir hätten gern noch mehr Features eingebaut, wie wir es anfangs geplant hatten. Aber wenn ich mir die Menge an Arbeit und die Zeit anschaue, die wir zur Verfügung hatten, war das Ergebnis echt optimal.
+
+Grundsätzlich hat mir das Coden sehr Spass gemacht. Zu sehen, wie aus einer Idee ein funktionierendes Produkt wird, hat mir sehr viel Freude bereitet. Die Zeit, die Fehler, die Probleme hat mir viel beigebracht.
+Da wir am Ende angekommen sind, blicke ich mit einem guten Gefühl zurück.Ich habe nicht nur viele neue Dinge gelernt, sondern auch gemerkt, wie viel mir das Coden und das Arbeiten an Projekten eigentlich Spaß macht. Auch wenn es manchmal frustrierend war, haben mich die Herausforderungen weitergebracht – und das Erfolgserlebnis am Ende war es auf jeden Fall wert. Ich nehme viel aus dieser Zeit mit und bin dankbar für die Erfahrungen, die ich im Informatikunterricht sammeln durfte.
+
+
