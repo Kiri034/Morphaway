@@ -105,7 +105,7 @@ if counted:
         pdf = FPDF()
         pdf.add_page()
         pdf.set_font("Arial", "B", 15)
-        pdf.cell(0, 12, f"Auswertung - Präparat: {praep_name}", ln=True, align="C")
+        pdf.cell(0, 12, f"Auswertung von {praep_name}", ln=True, align="C")
         pdf.ln(8)
 
         pdf.set_font("Arial", "B", 11)

@@ -111,13 +111,13 @@ if file_info:
         pdf = FPDF()
         pdf.add_page()
         pdf.set_font("Arial", "B", 15)
-        pdf.cell(0, 12, f"Auswertung für {loaded_data['praep_name']}", ln=True, align="C")
+        pdf.cell(0, 12, f"Auswertung von {loaded_data['praep_name']}", ln=True, align="C")
         pdf.ln(8)
 
         pdf.set_font("Arial", "B", 11)
         pdf.cell(38, 9, "Zelle", 1, 0, "C")
         pdf.cell(22, 9, "Anzahl", 1, 0, "C")
-        pdf.cell(36, 9, "Relativer Anteil (%)", 1, 1, "C")
+        pdf.cell(36, 9, "Rel. Anteil (%)", 1, 1, "C")
 
         pdf.set_font("Arial", "", 10)
         for _, row in df_ohne_ery.iterrows():
