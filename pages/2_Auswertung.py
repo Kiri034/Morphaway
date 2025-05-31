@@ -81,6 +81,7 @@ if counted:
     df_ohne_ery = df[df["Zelle"] != "Erythroblast"]
     st.dataframe(df_ohne_ery, hide_index=True, use_container_width=True)
 
+    eryblast_per_100 = round(erythroblast_count / total_count * 100, 2) if total_count > 0 else 0.0
     st.markdown(f"**Erythroblasten / 100 Leukozyten:** {eryblast_per_100}")
 
     filtered_df = df[(df["Anzahl"] > 0) & (df["Zelle"] != "Erythroblast")]
