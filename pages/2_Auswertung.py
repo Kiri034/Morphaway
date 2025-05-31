@@ -118,6 +118,10 @@ if counted:
             pdf.cell(22, 9, str(row["Anzahl"]), 1, 0, "C")
             pdf.cell(36, 9, str(row["Relativer Anteil (%)"]), 1, 1, "C")
 
+        pdf.ln(7)
+        pdf.set_font("Arial", "B", 12)
+        pdf.cell(0, 9, f"Erythroblasten / 100 Leukozyten: {eryblast_per_100}", ln=True)
+
         if img_bytes:
             img_path = "temp_chart.png"
             with open(img_path, "wb") as f:
