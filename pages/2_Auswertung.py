@@ -119,7 +119,7 @@ if counted:
             pdf.cell(36, 9, str(row["Relativer Anteil (%)"]), 1, 1, "C")
 
         pdf.ln(7)
-        pdf.set_font("Arial", "B", 11)
+        pdf.set_font("Arial", "B", 10)
         pdf.cell(0, 9, f"Erythroblasten / 100 Leukozyten: {eryblast_per_100}", ln=True)
 
         if img_bytes:
@@ -127,7 +127,7 @@ if counted:
             with open(img_path, "wb") as f:
                 f.write(img_bytes)
             pdf.ln(7)
-            pdf.set_font("Arial", "B", 11)
+            pdf.set_font("Arial", "B", 10)
             pdf.cell(0, 9, txt="Kreisdiagramm:", ln=True)
             pdf.ln(4)
             pdf.image(img_path, x=30, w=120)

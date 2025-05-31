@@ -118,7 +118,6 @@ if file_info:
         pdf.cell(38, 9, "Zelle", 1, 0, "C")
         pdf.cell(22, 9, "Anzahl", 1, 0, "C")
         pdf.cell(36, 9, "Rel. Anteil (%)", 1, 1, "C")
-
         pdf.set_font("Arial", "", 10)
         for _, row in df_ohne_ery.iterrows():
             pdf.cell(38, 9, str(row["Zelle"]), 1, 0, "C")
@@ -126,7 +125,7 @@ if file_info:
             pdf.cell(36, 9, str(row["Relativer Anteil (%)"]), 1, 1, "C")
 
         pdf.ln(7)
-        pdf.set_font("Arial", "B", 11)
+        pdf.set_font("Arial", "B", 10)
         pdf.cell(0, 9, f"Erythroblasten / 100 Leukozyten: {eryblast_per_100}", ln=True)
 
         # Kreisdiagramm als Bild einfügen (temporär speichern)
@@ -134,7 +133,7 @@ if file_info:
         if not filtered_df.empty:
             fig.write_image(img_path)
             pdf.ln(7)
-            pdf.set_font("Arial", "B", 12)
+            pdf.set_font("Arial", "B", 10)
             pdf.cell(0, 9, "Kreisdiagramm:", ln=True)
             pdf.image(img_path, x=30, w=120)
             os.remove(img_path)
