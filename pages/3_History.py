@@ -106,20 +106,6 @@ if file_info:
         st.success("Auswertung wurde gelöscht.")
         st.rerun()
 
-    # Beurteilungstexte laden (falls vorhanden)
-    beurteilung = loaded_data.get("beurteilung", {})
-    erythro_text = beurteilung.get("erythrozyten", "-")
-    neutro_text = beurteilung.get("neutrophile", "-")
-    lympho_text = beurteilung.get("lymphozyten", "-")
-    thrombo_text = beurteilung.get("thrombozyten", "-")
-
-    # Beurteilung anzeigen
-    st.subheader("Beurteilung der Kategorien")
-    st.markdown(f"**Erythrozyten:**<br>{erythro_text}", unsafe_allow_html=True)
-    st.markdown(f"**Neutrophile Granulozyten:**<br>{neutro_text}", unsafe_allow_html=True)
-    st.markdown(f"**Lymphozyten:**<br>{lympho_text}", unsafe_allow_html=True)
-    st.markdown(f"**Thrombozyten:**<br>{thrombo_text}", unsafe_allow_html=True)
-
     # PDF Export Button
     if st.button("📄 Exportiere als PDF"):
         pdf = FPDF()
@@ -152,31 +138,6 @@ if file_info:
             pdf.cell(0, 9, "Kreisdiagramm:", ln=True)
             pdf.image(img_path, x=30, w=120)
             os.remove(img_path)
-
-        # Neue Seite für Beurteilung
-        pdf.add_page()
-        pdf.set_font("Arial", "B", 14)
-        pdf.cell(0, 12, "Beurteilung der Kategorien", ln=True, align="C")
-        pdf.ln(6)
-        pdf.set_font("Arial", "B", 12)
-        pdf.cell(0, 10, "Erythrozyten:", ln=True)
-        pdf.set_font("Arial", "", 11)
-        pdf.multi_cell(0, 8, erythro_text if erythro_text else "-")
-        pdf.ln(2)
-        pdf.set_font("Arial", "B", 12)
-        pdf.cell(0, 10, "Neutrophile Granulozyten:", ln=True)
-        pdf.set_font("Arial", "", 11)
-        pdf.multi_cell(0, 8, neutro_text if neutro_text else "-")
-        pdf.ln(2)
-        pdf.set_font("Arial", "B", 12)
-        pdf.cell(0, 10, "Lymphozyten:", ln=True)
-        pdf.set_font("Arial", "", 11)
-        pdf.multi_cell(0, 8, lympho_text if lympho_text else "-")
-        pdf.ln(2)
-        pdf.set_font("Arial", "B", 12)
-        pdf.cell(0, 10, "Thrombozyten:", ln=True)
-        pdf.set_font("Arial", "", 11)
-        pdf.multi_cell(0, 8, thrombo_text if thrombo_text else "-")
 
         pdf_bytes = pdf.output(dest="S").encode("latin1")
         st.download_button(
