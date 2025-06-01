@@ -60,6 +60,8 @@ else:
     )
     st.session_state["selected_option"] = selected
 
+    st.markdown("### Zähle nun mithilfe der Zellbuttons dein Blutbild aus.")
+
     # Initialisiere Button-Zähler falls noch nicht vorhanden
     for i in range(1, 15):
         if f"button_{i}_count" not in st.session_state:
@@ -71,8 +73,8 @@ else:
 
     st.markdown(f"### Gesamtzahl: *{total_count}*")
 
-    # Button zum rückgängig machen des letzten Zählers
-    if st.button("🔙", key="undo_button"):
+    # Button zum rückgängig machen des letzten Zählers mit Tooltip
+    if st.button("🔙", key="undo_button", help="Letzte Zählung rückgängig machen"):
         for i in range(14, 0, -1):
             if st.session_state[f"button_{i}_count"] > 0:
                 st.session_state[f"button_{i}_count"] -= 1
@@ -139,7 +141,7 @@ else:
             """, unsafe_allow_html=True
         )
     # Refreh-Button und Navigation zur Auswertung
-    if st.button("⟳", key="refresh_button"):
+    if st.button("⟳", key="refresh_button", help="Präperat zurücksetzen und neu starten"):
         reset_all()
         st.rerun()
 
