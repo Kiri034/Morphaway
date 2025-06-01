@@ -60,7 +60,7 @@ else:
     )
     st.session_state["selected_option"] = selected
 
-    st.markdown("#### Zähle nun mithilfe der Zellbuttons dein Blutbild aus.")
+    st.markdown("#### ➜ Zähle nun mithilfe der Zellbuttons dein Blutbild aus.")
 
     # Initialisiere Button-Zähler falls noch nicht vorhanden
     for i in range(1, 15):
