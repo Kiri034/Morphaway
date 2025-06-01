@@ -112,7 +112,7 @@ else:
 
     max_cells = int(st.session_state["selected_option"].split()[0])
 
-    st.markdown("#### *Granulozyt")
+    st.markdown("##### *Granulozyt")
 
    # Sticky-Note für Zielwarnung
     st.markdown(
