@@ -30,7 +30,10 @@ Grundsätzlich hat mir das Coden sehr Spass gemacht. Zu sehen, wie aus einer Ide
 Da wir am Ende angekommen sind, blicke ich mit einem guten Gefühl zurück.Ich habe nicht nur viele neue Dinge gelernt, sondern auch gemerkt, wie viel mir das Coden und das Arbeiten an Projekten eigentlich Spaß macht. Auch wenn es manchmal frustrierend war, haben mich die Herausforderungen weitergebracht – und das Erfolgserlebnis am Ende war es auf jeden Fall wert. Ich nehme viel aus dieser Zeit mit und bin dankbar für die Erfahrungen, die ich im Informatikunterricht sammeln durfte.
 
 ### Katarina
-...
+Im Rahmen unseres Informatikprojekts haben wir eine App entwickelt, die bei der Leukozytendifferenzierung hilft. Ziel war es, mithilfe von Bilderkennung die unterschiedlichen Leukozytenarten zu klassifizieren und deren Anteile auszuwerten.
+Eine der grösste Herausforderungen für mich persönlich war es, während der Entwicklung an alle Details zu denken. Bei einem komplexen Projekt wie diesem, das sowohl eine funktionierende Benutzeroberfläche als auch eine zuverlässige KI-Logik erfordert, fiel es mir manchmal schwer, den Überblick zu behalten. Besonders bei der Planung der App-Struktur musste ich mich immer wieder darauf achten, dass keine Schritte ausgelassen werden. Diese Erfahrung hat mir gezeigt, wie wichtig sorgfältiges Arbeiten, gute Dokumentation, strukturierte Planung und gute Kommunikation im Team sind.
+Gleichzeitig war es sehr spannend, in diesem Projekt kreativ zu sein und technische Erfahrungen zu sammeln. Besonders motivierend fand ich den wissenschaftlichen und persönlichen Zusammenhang zur App.
+
 
 ### Chiara
 Es war spannend zu sehen, wie viel die Wireframe Nutzertests zu unserem Start beitragen konnten. So werden bereits früh später auftauchende Unklarheiten in der Anwendung ausgemerzt. Das Wireframe zu designen hat mir viel Spass bereitet. 
