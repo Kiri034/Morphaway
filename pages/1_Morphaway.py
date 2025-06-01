@@ -84,7 +84,7 @@ else:
     with info_col:
         st.markdown(
             """
-            <span title="Letzte Zählung rückgängig machen" style="font-size: 22px; cursor: pointer;">🛈</span>
+            <span title="Letzte Zählung rückgängig machen" style="font-size: 22px; cursor: pointer; vertical-align: middle;">🛈</span>
             """,
             unsafe_allow_html=True
         )
