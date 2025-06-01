@@ -142,8 +142,8 @@ else:
             </div>
             """, unsafe_allow_html=True
         )
-    # Refreh-Button und Navigation zur Auswertung
-    if st.button("⟳", key="refresh_button", help="Präperat zurücksetzen und neu starten"):
+    # Refresh-Button und Navigation zur Auswertung
+    if st.button("⟳", key="refresh_button", help="Präparat zurücksetzen und neu starten"):
         reset_all()
         st.rerun()
 
