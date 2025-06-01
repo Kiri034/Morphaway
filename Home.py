@@ -51,7 +51,7 @@ else:
 st.write("Morphaway ist eine einfache und übersichtliche Variante, um ein Blutbild auszuzählen.")
 st.write("Durch eine individuelle Auswahl der Differenzierungsoptionen ist unsere App sehr nutzerfreundlich aufgebaut und kann so in verschiedene Situationen angewendet werden.")
 st.write("Egal, ob du dein:e Dozent:in mit einer schnellen 50er-Leukozytendifferenzierung beeindrucken möchtest, 100 Leukozyten für eine genauere Bestimmung brauchst oder ganze 200 Leukozyten zur Labordiagnostik differenzieren möchtest - Morphaway bietet dir die Unterstützung.")
-st.write("Die Werte der ausgezählten Zellen findest du prozentual sowie grafisch dargestellt unter [History](pages/3_History.py). Durch dein Nutzerlogin kannst du sie jederzeit als PDF-Datei herunterladen.")
+st.write("Die Werte der ausgezählten Zellen findest du prozentual sowie grafisch dargestellt unter "History". Durch dein Nutzerlogin kannst du sie jederzeit als PDF-Datei herunterladen.")
 st.write("Drücke auf den unteren Knopf, um mit der Differenzierung zu starten oder öffne auf der linken oberen Seite die Menüleiste für andere Funktionen!")
 
 # Button zur Navigation zu Morphaway.py
