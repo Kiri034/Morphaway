@@ -113,7 +113,7 @@ if file_info:
         pdf.add_page()
         pdf.set_font("Arial", "B", 15)
         pdf.cell(0, 12, f"Auswertung von {loaded_data['praep_name']}", ln=True, align="C")
-        pdf.ln(8)
+        pdf.ln(4)
 
         pdf.set_font("Arial", "B", 11)
         pdf.cell(38, 9, "Zelle", 1, 0, "C")
@@ -125,7 +125,7 @@ if file_info:
             pdf.cell(22, 9, str(row["Anzahl"]), 1, 0, "C")
             pdf.cell(36, 9, str(row["Relativer Anteil (%)"]), 1, 1, "C")
 
-        pdf.ln(7)
+        pdf.ln(4)
         pdf.set_font("Arial", "B", 10)
         pdf.cell(0, 9, f"Erythroblasten / 100 Leukozyten: {eryblast_per_100}", ln=True)
 
@@ -133,7 +133,7 @@ if file_info:
         img_path = "temp_chart.png"
         if not filtered_df.empty:
             fig.write_image(img_path)
-            pdf.ln(7)
+            pdf.ln(4)
             pdf.set_font("Arial", "B", 10)
             pdf.cell(0, 9, "Kreisdiagramm:", ln=True)
             pdf.image(img_path, x=30, w=120)
