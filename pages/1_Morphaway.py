@@ -73,22 +73,12 @@ else:
 
     st.markdown(f"### Gesamtzahl: *{total_count}*")
 
-    # Button zum rückgängig machen des letzten Zählers
-    undo_col, info_col = st.columns([1, 0.07])
-    with undo_col:
-        if st.button("🔙", key="undo_button"):
-            for i in range(14, 0, -1):
-                if st.session_state[f"button_{i}_count"] > 0:
-                    st.session_state[f"button_{i}_count"] -= 1
-                    st.rerun()
-    with info_col:
-        st.markdown(
-            """
-            <span title="Letzte Zählung rückgängig machen" style="font-size: 22px; cursor: pointer; vertical-align: middle;">🛈</span>
-            """,
-            unsafe_allow_html=True
-        )
-
+    # Button zum rückgängig machen des letzten Zählers mit Tooltip
+    if st.button("🔙", key="undo_button", help="Letzte Zählung rückgängig machen"):
+        for i in range(14, 0, -1):
+            if st.session_state[f"button_{i}_count"] > 0:
+                st.session_state[f"button_{i}_count"] -= 1
+                st.rerun()
 
     # Anzeige der Zähler für die einzelnen Zelltypen
     images = [
