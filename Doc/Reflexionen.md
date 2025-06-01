@@ -7,7 +7,7 @@ Ja, wir konnten unsere Ziele erreichen, da wir es super vorgeplant hatten.
  Nichts, alles wurde umgesetzt!
 
 ### Müssen wir die Roadmap anpassen und falls ja, wie?
- Ja Kleinigkeiten! Der APP-Umfang war zu gross -> eine Funktion wurde herausgenommen. 
+ Ja, Kleinigkeiten! Der APP-Umfang war zu gross -> eine Funktion wurde herausgenommen. 
  Eine Alternative für den Knopf einfügen! 
 
 ### Welche Unterstützung brauchen wir, um unsere Ziele zu erreichen?
